@@ -54,7 +54,12 @@
                         Start Test App
                     </a>
                 </li>
-
+                <li ng-show="!authenticated">
+                    <a ui-sref="login">Login</a>
+                </li>
+                <li ng-show="authenticated">
+                    <a href="" ng-click="logout()">Logout</a>
+                </li>
             </ul>
         </div>
         <!-- /#sidebar-wrapper -->
