@@ -1,0 +1,36 @@
+buildscript {
+	repositories {
+		//Required repos
+		mavenCentral()
+		maven { url "http://repo.spring.io/snapshot" }
+		maven { url "http://repo.spring.io/milestone" }
+	}
+	dependencies {
+		//Required dependency for spring-boot plugin
+		classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.2.2.BUILD-SNAPSHOT'
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'spring-boot'
+
+war {
+	baseName = 'companies'
+	version =  '0.1'
+}
+
+repositories {
+	mavenCentral()
+	maven { url "http://repo.spring.io/snapshot" }
+	maven { url "http://repo.spring.io/milestone" }
+}
+
+dependencies {
+	compile 'org.springframework.boot:spring-boot-starter-web'
+	compile 'org.springframework.boot:spring-boot-starter-security'
+	compile 'javax.servlet:jstl:1.2'
+	testCompile 'org.seleniumhq.selenium:selenium-java:2.53.0'
+	testCompile 'junit:junit:4.12'
+	testCompile 'org.springframework.boot:spring-boot-starter-test'
+}
