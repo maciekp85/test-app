@@ -1,0 +1,46 @@
+<!-- LOGIN PAGE -->
+<div ng-show="error">Error during login. Check your credentials.</div>
+<div class="well">
+    <h2>Login Page</h2>
+    <br>
+    <p>Enter your credentials</p>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6">
+            <form name="userForm" ng-submit="login()">
+                <!-- LOGIN -->
+                <div class="form-group">
+                    <label>Login </label>
+                    <input type="text" name="login" class="form-control" ng-model="credentials.username">
+                </div>
+
+                <!-- PASSWORD -->
+                <div class="form-group">
+                    <label>Password </label>
+                    <input type="password" name="password" class="form-control" >
+                </div>
+
+                <!-- E-MAIL -->
+                <div class="form-group">
+                    <label>E-mail </label>
+                    <input type="email" name="email" ng-model="user" class="form-control" required>
+                </div>
+
+                <button class="btn btn-primary" type="submit">Submit</button>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-6">
+        <div ui-view="columnOne"></div>
+    </div>
+    <div class="col-sm-6">
+        <div ui-view="columnTwo"></div>
+    </div>
+</div>
+<br>
+<!-- /#login.html -->
