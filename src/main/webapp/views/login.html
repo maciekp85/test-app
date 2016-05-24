@@ -10,24 +10,30 @@
         <div class="col-sm-6">
             <form name="userForm" ng-submit="login()">
                 <!-- LOGIN -->
-                <div class="form-group">
-                    <label>Login </label>
-                    <input type="text" name="login" class="form-control" ng-model="credentials.username">
+                <div class="form-group" ng-class="{'has-error':userForm.login.$invalid && !userForm.login.$pristine}">
+                    <label>Login* </label>
+                    <input type="text" name="login" class="form-control" ng-model="credentials.username" ng-minlength="3" ng-maxlength="10" required>
+                    <p class="help-block" ng-show="userForm.login.$error.required && !userForm.login.$pristine">Login field is required!</p>
+                    <p class="help-block" ng-show="userForm.login.$error.minlength && !userForm.login.$pristine">Minimum length of login is 3!</p>
+                    <p class="help-block" ng-show="userForm.login.$error.maxlength && !userForm.login.$pristine">Minimum length of login is 10!</p>
                 </div>
 
                 <!-- PASSWORD -->
-                <div class="form-group">
-                    <label>Password </label>
-                    <input type="password" name="password" class="form-control" >
+                <div class="form-group" ng-class="{'has-error':userForm.password.$invalid && !userForm.password.$pristine}">
+                    <label>Password* </label>
+                    <input type="password" name="password" class="form-control" ng-model="credentials.password" required>
+                    <p class="help-block" ng-show="userForm.password.$error.required && !userForm.password.$pristine">Password field is required!</p>
                 </div>
 
                 <!-- E-MAIL -->
-                <div class="form-group">
-                    <label>E-mail </label>
+                <div class="form-group" ng-class="{'has-error':userForm.email.$invalid && !userForm.email.$pristine}">
+                    <label>E-mail* </label>
                     <input type="email" name="email" ng-model="user" class="form-control" required>
+                    <p class="help-block" ng-show="userForm.email.$error.required && !userForm.email.$pristine">Email field is required!</p>
+                    <p class="help-block" ng-show="userForm.email.$invalid && !userForm.email.$pristine">Email field is not corrected!</p>
                 </div>
 
-                <button class="btn btn-primary" type="submit">Submit</button>
+                <button ng-disabled="userForm.$invalid" class="btn btn-primary" type="submit">Submit</button>
 
             </form>
         </div>
