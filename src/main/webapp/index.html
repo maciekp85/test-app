@@ -39,7 +39,6 @@
     <!-- Our app -->
     <script src="app.js"></script>
 
-
 </head>
 
 <body ngCloak ng-controller="navigation" >
@@ -56,6 +55,9 @@
                 </li>
                 <li ng-show="!authenticated">
                     <a ui-sref="login">Login</a>
+                </li>
+                <li ng-controller="angular" ng-show="authenticated">
+                    <a ui-sref="angular" >Angular</a>
                 </li>
                 <li ng-show="authenticated">
                     <a href="" ng-click="logout()">Logout</a>

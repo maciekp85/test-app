@@ -1,0 +1,21 @@
+<!-- angular-basics-di.2.html -->
+<div class="panel-body" ng-controller="MathCtrl">
+    <form class="form-horizontal" role="form">
+        <div class="well">
+            Enter number:
+            <input type="number" ng-model="number" class="form-control">
+            <button ng-click="square()" class="btn btn-danger">x<sup>2</sup></button>
+            Result: {{result}}
+        </div>
+        <div class="well">
+            <p>Array: {{myArray}}</p>
+            <p>Min: {{min}}</p>
+            <p>Max: {{max}}</p>
+        </div>
+
+        <div class="well">
+            <b>{{myDecimal}}</b> after rounded {{round}}
+        </div>
+    </form>
+</div>
+<!-- /#angular-basics-di.2.html -->

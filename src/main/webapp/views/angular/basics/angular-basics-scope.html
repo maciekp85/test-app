@@ -1,0 +1,48 @@
+<!-- angular-basics-scope -->
+<div class="well">
+    <form class="form-horizontal" role="form" ng-controller="OneCtrl" >
+        <div class="form-group">
+            <label class="control-label col-sm-1">Enter text: </label>
+            <div class="col-sm-1">
+                <input ng-model="oneText"><br><br>
+            </div>
+        </div>
+        <div class="well">
+            <p>{{oneText}}</p>
+        </div>
+    </form>
+    <form class="form-horizontal" role="form" ng-controller="TwoCtrl">
+        <div class="form-group">
+            <label class="control-label col-sm-1">Enter text: </label>
+            <div class="col-sm-1">
+                <input ng-model="twoText"><br><br>
+            </div>
+        </div>
+        <div class="well">
+            <p>{{twoText}}</p>
+        </div>
+    </form>
+    <form class="form-horizontal" role="form" ng-controller="ThreeCtrl">
+        <div class="form-group">
+            <label class="control-label col-sm-1">Enter text: </label>
+            <div class="col-sm-1">
+                <input ng-model="threeText"><br><br>
+            </div>
+        </div>
+        <div class="well">
+            <p>{{threeText}}</p>
+            <div ng-controller="NestedCtrl">
+                <div class="form-group" >
+                    <label class="control-label col-sm-1">Enter text: </label>
+                    <div class="col-sm-1">
+                        <input ng-model="threeText"><br><br>
+                    </div>
+                </div>
+                <div class="well">
+                    <p>{{threeText}}</p>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<!-- /#angular-basics-scope.html -->
