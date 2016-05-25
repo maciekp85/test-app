@@ -1,0 +1,38 @@
+<!-- angular-basics.expressions.html -->
+<div class="panel-body" ng-controller="ExpCtrl">
+    <form class="form-horizontal" role="form" >
+        <div class="form-group">
+
+        </div>
+    </form>
+
+    <div class="well" ng-init="testObject={'a':'1'}">
+        Array: {{items}} <br />
+        Third item : {{items[2]}} <br />
+        Third item + number 15 : {{items[2]+15}} <br />
+        Third item + "has" + "cat" : {{items[2]+"has"+"cat"}} <br />
+        "Ola" + third item + number 15 + "has" + "cat" : {{"Ola"+items[2]+15+"has"+"cat"}} <br />
+        "Ola", third item + 9, 2+4 : {{"Ola"; items[2]+9; 2+4}} <br />
+        <hr />
+        2*(1+2) : {{2*(1+2)}} <br />
+        6/(4-2) : {{6/(4-2)}} <br />
+        <hr />
+        1>2 => : {{1>2}} <br />
+        1<2 => : {{1<2}} <br />
+        1>=2 => : {{1>=2}} <br />
+        1<=2 => : {{1<=2}} <br />
+        <hr />
+        1==2 => : {{1==2}} <br />
+        1!=2 => : {{1!=2}} <br />
+        1===2 => : {{1===2}} <br />
+        1!==2 => : {{1!==2}} <br />
+        <hr />
+        testObject => : {{testObject}}
+        <hr />
+        testFunc(2): {{testFunc(2)}}
+        <hr />
+        Text: {{text}}
+
+    </div>
+</div>
+<!-- /#angular-basics.expressions.html -->

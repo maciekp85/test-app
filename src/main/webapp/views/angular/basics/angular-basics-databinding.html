@@ -1,0 +1,28 @@
+<!-- angular-basics-databinding -->
+<div class="panel-default" ng-controller="DbCtrl">
+    <div class="panel-heading">
+        <div class="well">
+            <p ng-show="hiddenMessage">{{hiddenMessage}}</p>
+            <button class="btn btn-default" ng-click="changeColor($event)">Change color <span class="glyphicon glyphicon-edit"></span></button>
+            <br /><br />
+            <p>Press Alt key and button at the same time to show magical message</p>
+            <br />
+            <p style="color:{{::color}}">One-way binding: {{::color}}</p>
+            <p style="color:{{color}}">Two-way binding: {{color}}</p>
+            <input ng-model="color" style="color: {{color}}" class="form-control">
+            <button class="btn btn-danger" ng-show="color" ng-click="color=null">Remove color</button>
+        </div>
+        <div>
+            x={{x}}<br />
+            y={{y}}<br />
+            {{timeStamp | date: 'yyyy-MM-dd HH:mm:ss'}}
+        </div>
+        <div>
+
+        </div>
+        <div ui-view>
+
+        </div>
+    </div>
+</div>
+<!-- /#angular-basics.databinding.html -->

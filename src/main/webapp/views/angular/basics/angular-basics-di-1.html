@@ -1,0 +1,18 @@
+<!-- angular-basics-di-1.html -->
+<div class="panel-body" ng-controller="DiCtrl">
+    <form class="form-horizontal" role="form">
+        <div class="well">
+            {{DiFac0}}
+        </div>
+        <table class="table table-bordered">
+            <thead>
+            <tr><th>ID</th><th>Name</th></tr>
+            </thead>
+            <tr ng-repeat="item in DiFac0">
+                <td>{{item.id}}</td>
+                <td>{{item.name}}</td>
+            </tr>
+        </table>
+    </form>
+</div>
+<!-- /#angular-basics-di.1.html -->
