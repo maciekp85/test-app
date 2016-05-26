@@ -1,7 +1,7 @@
 /**
  * Created by nishi on 2016-05-21.
  */
-angular.module('app', ['ui.router']);
+angular.module('app', ['ui.router', 'ngSanitize']);
 
 angular.module('app')
     .config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function ($stateProvider, $urlRouterProvider, $httpProvider) {
@@ -81,6 +81,43 @@ angular.module('app')
                     .state('angular.basics.expressions', {
                         url: '/expressions',
                         templateUrl: 'views/angular/basics/angular-basics-expressions.html'
+                    })
+                // DIRECTIVES
+                .state('angular.directives', {
+                    url: '/directives',
+                    templateUrl: 'views/angular/directives/angular-directives.html'
+                })
+                    .state('angular.directives.a', {
+                        url: '/a',
+                        templateUrl: 'views/angular/directives/angular-directives-a.html'
+                    })
+                    .state('angular.directives.form', {
+                        url: '/form',
+                        templateUrl: 'views/angular/directives/angular-directives-form.html'
+                    })
+                    .state('angular.directives.ngbind', {
+                        url: '/ngbind',
+                        templateUrl: 'views/angular/directives/angular-directives-ngbind.html'
+                    })
+                    .state('angular.directives.ngcloak', {
+                        url: '/ngcloak',
+                        templateUrl: 'views/angular/directives/angular-directives-ngcloak.html'
+                    })
+                    .state('angular.directives.ngchange', {
+                        url: '/ngchange',
+                        templateUrl: 'views/angular/directives/angular-directives-ngchange.html'
+                    })
+                    .state('angular.directives.ngrepeat', {
+                        url: '/ngrepeat',
+                        templateUrl: 'views/angular/directives/angular-directives-ngrepeat.html'
+                    })
+                    .state('angular.directives.ngmouse', {
+                        url: '/ngmouse',
+                        templateUrl: 'views/angular/directives/angular-directives-ngmouse.html'
+                    })
+                    .state('angular.directives.ngscript', {
+                        url: '/ngscript',
+                        templateUrl: 'views/angular/directives/angular-directives-ngscript.html'
                     });
 
         $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
@@ -200,31 +237,31 @@ angular.module('app')
         var factory = {};
         factory.multiply = function (a, b) {
             return a*b;
-        }
+        };
         factory.max = function (numbers) {
             return Math.max.apply(null, numbers);
-        }
+        };
         factory.min = function (numbers) {
             return Math.min.apply(null, numbers);
-        }
+        };
         factory.round = function (number) {
             return Math.round(number);
-        }
+        };
         return factory;
     })
     .service("MathService", ['MathFactory', function (MathFactory) {
         this.square = function (a) {
             return MathFactory.multiply(a, a);
-        }
+        };
         this.max = function (numbers) {
             return MathFactory.max(numbers);
-        }
+        };
         this.min = function (numbers) {
             return MathFactory.min(numbers);
-        }
+        };
         this.round = function (number) {
             return MathFactory.round(number);
-        }
+        };
     }])
     .controller('MathCtrl', ['$scope', 'MathService', 'MyNumber', 'MyArray', 'MyDecimal', function ($scope, MathService, MyNumber, MyArray, MyDecimal) {
         $scope.number = MyNumber;
@@ -272,4 +309,65 @@ angular.module('app')
         $scope.testFunc = function (i) {
             return i*5;
         }
+    }])
+    // NEW CHAPTER
+    // Directives
+
+    // Directive a
+    .controller('aCtrl', ['$scope', function ($scope) {
+        $scope.test = function () {
+            $scope.message = "Test message";
+        }
+    }])
+    // Directive form
+    .controller('FormCtrl', ['$scope', function ($scope) {
+
+    }])
+    // Directive ng-bind
+    .controller('ngBindCtrl', ['$scope', function ($scope) {
+        $scope.testMessage1 = "Test messsage 1";
+        $scope.testMessage2 = "Test message 2";
+        $scope.testHtml = "<b>This is HTML</b>";
+    }])
+    // Directive change
+    .controller('defaultCtrl', ['$scope', function ($scope) {
+        $scope.focus = false;
+        $scope.blur = false;
+        $scope.tempText = [];
+
+        $scope.change = function () {
+            console.log($scope.text);
+            $scope.tempText.push($scope.text);
+        };
+    }])
+    // Directive ng-repeat
+    .controller('ngRepeatCtrl',['$scope', function ($scope) {
+        $scope.students = [
+            {id: '1', name: 'Adam', lastName: 'Kowalski', city: 'Szczecin'},
+            {id: '2', name: 'Ola', lastName: 'Kot', city: 'Warszawa'},
+            {id: '3', name: 'Ania', lastName: 'Góral', city: 'Radom'},
+            {id: '4', name: 'Ewa', lastName: 'Niemiec', city: 'Katowice'},
+            {id: '5', name: 'Ula', lastName: 'Polak', city: 'Lublin'}
+        ]
+    }])
+    // Directive ng-mouse
+    .controller('mouseCtrl', ['$scope', function ($scope) {
+        $scope.log = function (text) {
+            console.log(text);
+        };
+    }])
+    .controller('scriptCtrl', ["$scope", function ($scope) {
+        $scope.defaultValue = "Text from default controller"
+    }])
+    .controller('aCtrl', ["$scope", function ($scope) {
+        $scope.aValue = "Text from aCtrl controller";
+    }])
+    .controller('bCtrl', ["$scope", function ($scope) {
+        $scope.bValue = "Text from bCtrl controller";
+    }])
+    .controller('cCtrl', ["$scope", function ($scope) {
+        $scope.cValue = "Text from cCtrl controller";
+    }])
+    .controller('dCtrl', ["$scope", function ($scope) {
+        $scope.dValue = "Text from dCtrl controller";
     }]);

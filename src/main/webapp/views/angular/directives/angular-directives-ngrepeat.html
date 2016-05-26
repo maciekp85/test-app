@@ -1,0 +1,52 @@
+<!-- angular-directives-ngrepeat -->
+<style>
+    .first {
+        background-color: red;
+    }
+    .middle {
+        background-color: orange;
+    }
+    .last {
+        background-color: green;
+    }
+    .even {
+        font-style: italic;
+    }
+    .odd {
+        color: white;
+    }
+</style>
+<div class="panel-body" role="form" ng-controller="ngRepeatCtrl">
+    <div class="well">
+        <input ng-model="text" class="form-control"/><br>
+
+        <div class="well">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>$index</th>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Surname</th>
+                        <th>City</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="student in students | filter:text"
+                        ng-class="{'first':$first,
+                            'middle':$middle,
+                            'last':$last,
+                            'even':$even,
+                            'odd':$odd}">
+                        <td>{{$index}}</td>
+                        <td>{{student.id}}</td>
+                        <td>{{student.name}}</td>
+                        <td>{{student.lastName}}</td>
+                        <td>{{student.city}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- /#angular-directives-ngrepeat -->

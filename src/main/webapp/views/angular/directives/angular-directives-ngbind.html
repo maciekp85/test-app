@@ -1,0 +1,36 @@
+<!-- angular-directives-ngbind -->
+<div ng-controller="ngBindCtrl" class="panel-body" role="form">
+    <div class="well">
+        <div class="well">
+            <p>2.3.1 ng-bind</p>
+
+            <div ng-bind="testMessage1">
+                Test from div!
+            </div>
+            Interpolation: {{testMessage1}}
+        </div>
+        <div class="well">
+            <p>2.3.2 ng-bind</p>
+            <div ng-bind="testHtml">
+                Test from div!
+            </div>
+            Interpolation: {{testHtml}}
+        </div>
+
+        <div class="well">
+            <p>2.3.4 ng-bind-html</p>
+            <div ng-bind-html="testHtml">
+                Test from div!
+            </div>
+            Interpolation: {{testHtml}}
+        </div>
+
+        <div class="well">
+            <p>2.3.5 ng-bind-template</p>
+            <div ng-bind-template="{{testMessage1}} - {{testMessage2}}">
+                Test from div!
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /#angular-directives-ngbind -->
