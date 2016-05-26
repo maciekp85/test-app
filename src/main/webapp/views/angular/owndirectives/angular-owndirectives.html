@@ -1,0 +1,112 @@
+<!-- angular-owndirectives -->
+<div class="panel-group" id="angular-owndirectives.html" ng-show="tpl='/menu.html'" ng-controller="ownDirectivesCtrl">
+    <div class="panel-default">
+        <div class="panel-heading">
+
+            <!--Place where are included templates-->
+            <div id="tpl-content" ng-include src="tpl">Ups, something's wrong</div>
+
+        </div>
+    </div>
+
+    <script type="text/ng-template" id="/menu.html">
+        <div class="panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title well-sm">
+                    <a href="" ng-click="tpl_1='/start.html'">3.1 Start</a>
+                    |
+                    <a href="" ng-click="tpl_1='/restrict.html'">3.2 Restrict</a>
+                    |
+                    <a href="" ng-click="tpl_1='/use-builtin-directives.html'">3.3 Use built-in directives</a>
+                    |
+                    <a href="" ng-click="tpl_1='/templates.html'">3.4 Templates</a>
+                    |
+                    <a href="" ng-click="tpl_1='/events.html'">3.5 Events</a>
+                </h4>
+
+                <!--Place where are included templates-->
+                <div id="tpl_1-content" ng-include src="tpl_1">Ups, something's wrong</div>
+
+            </div>
+        </div>
+    </script>
+
+
+    <!--3.1 Start-->
+    <script type="text/ng-template" id="/start.html" ng-controller="startCtrl">
+        <div class="panel-body">
+            <div class="well">
+
+                <div class="well">
+                    <div start-dr></div>
+                    <hr>
+                    <start-dr></start-dr>
+                </div>
+            </div>
+        </div>
+    </script>
+    <!--#/3.1 Start-->
+
+    <!--3.2 Restrict-->
+    <script type="text/ng-template" id="/restrict.html" ng-controller="startCtrl">
+        <div class="panel-body">
+            <div class="well">
+
+                <p>restrict: 'AECM' </p>
+                <p>A - attribute, E - element, C - class, M - comment</p>
+
+                <div class="well">
+
+                    <!--In use-->
+                    <div start-dr2></div>
+                    <start-dr2></start-dr2>
+
+                    <!--Deprecated-->
+                    <div class="start-dr2"></div>
+                    <!-- directive: start-dr2 -->
+                </div>
+            </div>
+        </div>
+    </script>
+    <!--#/3.2 Restrict-->
+
+    <!--3.3 Use built-in directives-->
+    <script type="text/ng-template" id="/use-builtin-directives.html">
+        <div class="panel-body" ng-controller="startCtrl">
+            <div class="well">
+                <div start-dr3></div>
+            </div>
+        </div>
+    </script>
+    <!--#/3.3 Use built-in directives-->
+
+    <!--3.4 Templates-->
+    <script type="text/ng-template" id="/templates.html">
+        <div class="panel-body" ng-controller="startCtrl">
+            <div class="well">
+                <p>Templates</p>
+                <tpl-dr></tpl-dr>
+            </div>
+        </div>
+    </script>
+    <!--#/3.4 Templates -->
+
+    <!--3.5 Events-->
+    <script type="text/ng-template" id="/events.html">
+        <div class="panel-body" ng-controller="startCtrl">
+            <div class="well">
+
+                <div class="well">
+                    <start-dr3></start-dr3>
+                    Name: <input ng-model="name" class="form-control" /><br>
+                    City: <input ng-model="city" class="form-control" /><br>
+                    <a class="btn btn-danger" ng-click="add(name, city); name=''; city=''">Add</a>
+                </div>
+            </div>
+        </div>
+    </script>
+    <!--#/3.5 Events-->
+
+
+</div>
+<!-- #/angular-owndirectives -->

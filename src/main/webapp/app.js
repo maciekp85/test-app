@@ -118,8 +118,12 @@ angular.module('app')
                     .state('angular.directives.ngscript', {
                         url: '/ngscript',
                         templateUrl: 'views/angular/directives/angular-directives-ngscript.html'
-                    });
-
+                    })
+                // OWN DIRECTIVES
+            .state('angular.owndirectives', {
+                url: '/owndirectives',
+                templateUrl: "views/angular/owndirectives/angular-owndirectives.html"
+            });
         $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
     }])
     .controller('navigation',['$rootScope','$scope','$http', '$location', function($rootScope, $scope, $http, $location) {
@@ -314,10 +318,10 @@ angular.module('app')
     // Directives
 
     // Directive a
-    .controller('aCtrl', ['$scope', function ($scope) {
+    .controller('ACtrl', ['$scope', function ($scope) {
         $scope.test = function () {
             $scope.message = "Test message";
-        }
+        };
     }])
     // Directive form
     .controller('FormCtrl', ['$scope', function ($scope) {
@@ -356,6 +360,7 @@ angular.module('app')
             console.log(text);
         };
     }])
+    // Directive ng-script
     .controller('scriptCtrl', ["$scope", function ($scope) {
         $scope.defaultValue = "Text from default controller"
     }])
@@ -370,4 +375,51 @@ angular.module('app')
     }])
     .controller('dCtrl', ["$scope", function ($scope) {
         $scope.dValue = "Text from dCtrl controller";
+    }])
+
+    // NEW CHAPTER
+    // Own Directives
+    .controller('ownDirectivesCtrl', ['$scope', function ($scope) {
+
+    }])
+    .controller('startCtrl', ['$scope', function ($scope) {
+        $scope.myTable = [
+            {name: 'Ala', city: 'Radom'},
+            {name: 'Ola', city: 'Warszawa'},
+            {name: 'Ania', city: 'Radom'},
+            {name: 'Ewa', city: 'Warszawa'}
+        ];
+    }])
+    // Start
+    .directive('startDr', [function () {
+      return {
+          template: "Test <b>text</b>",
+      }
+    }])
+    // Restrict
+    .directive('startDr2', [function () {
+        return {
+            // template: "Test <b>text</b>",
+            // restrict: 'AEC',
+            restrict: 'M',
+            link: function () {
+                alert('M works')
+            }
+        }
+    }])
+    // Use built-in directives
+    .directive('startDr3', [function () {
+        return {
+            template: '<div class="well"><ul><li ng-repeat="item in myTable">Name: {{item.name}}, city: {{item.city}}</li></ul></div>',
+            controller: function ($scope) {
+                $scope.add = function (name, city) {
+                    $scope.myTable.push({'name':name, 'city': city});
+                }
+            }
+        };
+    }])
+    .directive('tplDr', [function () {
+        return {
+            templateUrl: 'views/angular/owndirectives/start-tmp.html'
+        };
     }]);
