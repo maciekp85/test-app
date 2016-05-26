@@ -1,0 +1,36 @@
+<!-- angular-directives-ngchange -->
+<style>
+    input[type="text"].testFocus {
+        background-color: green;
+    }
+
+    input[type="text"].testBlur {
+        background-color: red;
+    }
+</style>
+<div ng-controller="defaultCtrl" class="panel-body" role="form">
+    <div class="well">
+
+        <div class="well">
+            <p>ngClass, ngFocus, ngBlur, ngChange, ngRepeat</p>
+
+            <input type="text"
+                   class="form-control"
+                   ng-class="{testFocus:focus, testBlur:blur}"
+                   ng-focus="focus=true; blur=false"
+                   ng-blur="focus=false; blur=true"
+                   ng-change="change()"
+                   ng-model="text"
+                    />
+            <br>
+            <p>focus: {{focus}}</p>
+            <p>blur: {{blur}}</p>
+            <p>text: {{text}}</p>
+
+            <ul>
+                <li ng-repeat="item in tempText track by $index">{{item}}</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- /#angular-directives-ngchange -->

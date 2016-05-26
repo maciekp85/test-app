@@ -1,0 +1,40 @@
+<!-- angular-directives-ngscript -->
+<div class="panel-body" role="form" ng-controller="scriptCtrl">
+    <div class="well">
+        <h4>{{defaultValue}}</h4>
+
+        <div class="well">
+            <div id="tpl-content" ng-include src="tpl">Ups, something's wrong!</div>
+        </div>
+        <div class="btn-group">
+            <a ng-click="tpl='/a.html'" class="btn btn-default">A</a>
+            <a ng-click="tpl='/b.html'" class="btn btn-default">B</a>
+            <a ng-click="tpl='/c.html'" class="btn btn-default">C</a>
+            <a ng-click="tpl='/d.html'" class="btn btn-default">D</a>
+        </div>
+    </div>
+
+    <script type="text/ng-template" id="/a.html">
+        <div ng-controller="aCtrl">
+            <p class="alert-danger">{{aValue}}</p>
+        </div>
+    </script>
+    <script type="text/ng-template" id="/b.html">
+        <div ng-controller="bCtrl">
+            <p class="alert-info">{{bValue}}</p>
+        </div>
+    </script>
+    <script type="text/ng-template" id="/c.html">
+        <div ng-controller="cCtrl">
+            <p class="alert-success">{{cValue}}</p>
+        </div>
+    </script>
+    <script type="text/ng-template" id="/d.html">
+        <div ng-controller="dCtrl">
+            <p class="alert-warning">{{dValue}}</p>
+        </div>
+    </script>
+
+
+</div>
+<!-- /#angular-directives-ngscript -->
