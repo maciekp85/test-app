@@ -1,0 +1,26 @@
+<!-- angular-directives-form -->
+<style>
+    .my-form.ng-invalid {
+        background: indianred;
+    }
+    .my-form.ng-valid {
+        background: darkseagreen;
+    }
+</style>
+<div ng-controller="FormCtrl" class="panel-body" role="form">
+    <div class="well">
+        <form name="myForm">
+            Name: <input name="input" ng-model="name" required class="my-form">
+            <span class="error" ng-show="myForm.input.$error.required">Field required!</span><br>
+            <br>
+        </form>
+        <div class="well">
+            <cod>Print name: {{name}}</cod><br>
+            <code>myForm.input.$valid = {{myForm.input.$valid}}</code><br>
+            <code>myForm.input.$error = {{myForm.input.$error}}</code><br>
+            <code>mtForm.$valid = {{myForm.$valid}}</code><br>
+            <code>myForm.$error.required = {{!!myForm.$error.required}}</code>
+        </div>
+    </div>
+</div>
+<!-- /#angular-directives-form -->

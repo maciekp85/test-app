@@ -1,0 +1,18 @@
+<!-- angular-directives-ngmouse -->
+<div class="panel-body" role="form" ng-controller="mouseCtrl">
+    <div class="well">
+
+        <p>mgMousedown, ngMouseenter, mgMouseleave, ngMousemove, ngMouseover, mgMouseup</p>
+
+        <div class="well">
+            <input ng-model="md" class="form-control">
+                <div class="btn btn-xs btn-danger" ng-mousedown="log('ng-mousedown'); md='ng-mousedown'">ng-mousedown</div>
+                <div class="btn btn-xs btn-danger" ng-mouseenter="log('ng-mouseenter'); md='ng-mouseenter'">ng-mouseenter</div>
+                <div class="btn btn-xs btn-danger" ng-mouseleave="log('ng-mouseleave'); md='ng-mouseleave'">ng-mouseleave</div>
+                <div class="btn btn-xs btn-danger" ng-mousemove="log('ng-mousemove'); md='ng-mousemove'">ng-mousemove</div>
+                <div class="btn btn-xs btn-danger" ng-mouseover="log('ng-mouseover'); md='ng-mouseover'">ng-mouseover</div>
+                <div class="btn btn-xs btn-danger" ng-mouseup="log('ng-mouseup'); md='ng-mouseup'">ng-mouseup</div>
+        </div>
+    </div>
+</div>
+<!-- /#angular-directives-ngmouse -->
