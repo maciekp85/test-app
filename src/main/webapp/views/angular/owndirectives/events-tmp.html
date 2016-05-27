@@ -1,0 +1,8 @@
+<div class="well">
+    <ul>
+        <li ng-repeat="item in table">Name: {{item.name}}, city: {{item.city}}</li>
+    </ul>
+</div>
+Name: <input ng-model="name" class="form-control" /><br>
+City: <input ng-model="city" class="form-control" /><br>
+<a class="btn btn-danger" ng-click="add(name, city); name=''; city=''">Add</a>

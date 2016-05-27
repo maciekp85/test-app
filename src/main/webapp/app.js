@@ -422,4 +422,41 @@ angular.module('app')
         return {
             templateUrl: 'views/angular/owndirectives/start-tmp.html'
         };
-    }]);
+    }])
+    .controller('scopeCtrl', ['$scope', function ($scope) {
+        $scope.table = [
+            {name: 'Ala', city: 'Radom'},
+            {name: 'Ola', city: 'Warszawa'},
+            {name: 'Ania', city: 'Radom'},
+            {name: 'Ewa', city: 'Warszawa'}
+        ];
+        $scope.table1 = [
+            {name: 'Ala1', city: 'Radom'},
+            {name: 'Ola1', city: 'Warszawa'},
+            {name: 'Ania1', city: 'Radom'},
+            {name: 'Ewa1', city: 'Warszawa'}
+        ];
+        $scope.table2 = [
+            {name: 'Ala2', city: 'Radom'},
+            {name: 'Ola2', city: 'Warszawa'},
+            {name: 'Ania2', city: 'Radom'},
+            {name: 'Ewa2', city: 'Warszawa'}
+        ];
+        console.log('controller', $scope);
+    }])
+    .directive('scopeDr1', [function () {
+        return {
+            scope: {table:'='},
+            templateUrl: 'views/angular/owndirectives/events-tmp.html',
+            controller: function ($scope) {
+                $scope.add = function (name, city) {
+                    $scope.table.push({'name':name, 'city': city});
+                }
+
+                console.log('scope from directive', $scope);
+            }
+        };
+
+    }])
+
+;
