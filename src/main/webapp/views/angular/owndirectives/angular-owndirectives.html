@@ -115,6 +115,10 @@
             <div class="panel-heading">
                 <h4 class="panel-title well-sm" >
                     <a href="" ng-click="tpl_2='/scope1.html'" class="panel">First example</a>
+                    |
+                    <a href="" ng-click="tpl_2='/scope2.html'">Second example</a>
+                    |
+                    <a href="" ng-click="tpl_2='/scope3.html'">Third example</a>
                 </h4>
 
                 <!--Place where are included templates-->
@@ -130,6 +134,7 @@
         <script type="text/ng-template" id="/scope1.html">
             <div class="panel-body" ng-controller="scopeCtrl">
                 <div class="well">
+                    <p>First example</p>
                     <div class="well">
                         <div scope-dr1 table="table"></div>
                         <hr>
@@ -141,6 +146,36 @@
             </div>
         </script>
         <!--#/3.6.1 First example-->
+
+        <!--3.6.2 Second example-->
+    <script type="text/ng-template" id="/scope2.html">
+        <div class="panel-body" ng-controller="scopeCtrl">
+            <div class="well">
+                <p>Second example</p>
+                <div class="well">
+                    <div scope-dr2 table="table"></div>
+                    <hr>
+                    <div scope-dr2 table="table1"></div>
+                    <hr>
+                    <div scope-dr2 table="table2"></div>
+                </div>
+            </div>
+        </div>
+    </script>
+        <!--#/3.6.2 Second example-->
+
+        <!--3.6.3 Third example-->
+        <script type="text/ng-template" id="/scope3.html">
+            <div class="panel-body" ng-controller="scopeCtrl3">
+                <div class="well">
+
+                    <div scope-dr3 scope-dr3-two class="well">
+
+                    </div>
+                </div>
+            </div>
+        </script>
+        <!--#/3.6.3 Third example-->
 
 </div>
 <!-- #/angular-owndirectives -->

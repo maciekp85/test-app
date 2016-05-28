@@ -2,6 +2,7 @@
     <ul>
         <li ng-repeat="item in table">
             Name: {{item.name}}, city: {{item.city}}
+            <rem-person method="removePerson($index)"></rem-person>
         </li>
 
     </ul>
