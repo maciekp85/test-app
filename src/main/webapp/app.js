@@ -118,8 +118,13 @@ angular.module('app')
                     .state('angular.directives.ngscript', {
                         url: '/ngscript',
                         templateUrl: 'views/angular/directives/angular-directives-ngscript.html'
-                    });
-
+                    })
+            // SPRING
+            .state('spring', {
+                url: '/spring',
+                templateUrl: 'views/spring/spring.html',
+                controller: 'spring'
+            })
         $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
     }])
     .controller('navigation',['$rootScope','$scope','$http', '$location', function($rootScope, $scope, $http, $location) {
@@ -180,10 +185,12 @@ angular.module('app')
             $scope.error = true;
         }
     }])
-    .controller('home', ['$scope', '$http', function ($scope, $http) {
-        $http.get('/greeting/').success(function (data) {
-            $scope.greeting = data;
-        })
+    .controller('home', ['$rootScope', '$scope', '$http', function ($rootScope, $scope, $http) {
+        if($rootScope.authenticated) {
+            $http.get('/greeting/').success(function (data) {
+                $scope.greeting = data;
+            })
+        }
     }])
     // Scope
     .controller('OneCtrl', ['$scope', '$rootScope', function ($scope, $rootScope) {
@@ -314,10 +321,10 @@ angular.module('app')
     // Directives
 
     // Directive a
-    .controller('aCtrl', ['$scope', function ($scope) {
+    .controller('ACtrl', ['$scope', function ($scope) {
         $scope.test = function () {
             $scope.message = "Test message";
-        }
+        };
     }])
     // Directive form
     .controller('FormCtrl', ['$scope', function ($scope) {
@@ -356,6 +363,7 @@ angular.module('app')
             console.log(text);
         };
     }])
+    // Directive ng-script
     .controller('scriptCtrl', ["$scope", function ($scope) {
         $scope.defaultValue = "Text from default controller"
     }])
@@ -370,4 +378,24 @@ angular.module('app')
     }])
     .controller('dCtrl', ["$scope", function ($scope) {
         $scope.dValue = "Text from dCtrl controller";
+    }])
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // NEW CHAPTER
+    // Spring
+    .controller('spring', ['$rootScope', '$scope', '$http', '$location', function ($rootScope, $scope, $http, $location) {
+        if ($rootScope.authenticated) {
+            $location.path("/spring");
+            $scope.error = false;
+
+            $http.get('/greeting2/').success(function (data) {
+                $scope.model = data;
+            })
+            $http.get('/products/').success(function (data) {
+                $scope.products = data;
+            })
+
+        } else {
+            $location.path("/home");
+            $scope.error = true;
+        }
     }]);
