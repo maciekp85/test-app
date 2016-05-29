@@ -24,6 +24,12 @@
                     <a href="" ng-click="tpl_1='/events.html'">3.5 Events</a>
                     |
                     <a href="" ng-click="tpl_1='/scope.html'">3.6 Scope</a>
+                    |
+                    <a href="" ng-click="tpl_1='/overwriting.html'">3.7 Overwriting functionalities</a>
+                    |
+                    <a href="" ng-click="tpl_1='/isolation.html'">3.8 Isolation</a>
+                    |
+                    <a href="" ng-click="tpl_1='/decorating.html'">3.9 Decorating</a>
                 </h4>
 
                 <!--Place where are included templates-->
@@ -114,7 +120,7 @@
         <div class="panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title well-sm" >
-                    <a href="" ng-click="tpl_2='/scope1.html'" class="panel">First example</a>
+                    <a href="" ng-click="tpl_2='/scope1.html'">First example</a>
                     |
                     <a href="" ng-click="tpl_2='/scope2.html'">Second example</a>
                     |
@@ -130,7 +136,7 @@
     </script>
     <!--#/3.6 Scope-->
 
-        <!--3.6 First example-->
+        <!--3.6.1 First example-->
         <script type="text/ng-template" id="/scope1.html">
             <div class="panel-body" ng-controller="scopeCtrl">
                 <div class="well">
@@ -148,34 +154,120 @@
         <!--#/3.6.1 First example-->
 
         <!--3.6.2 Second example-->
-    <script type="text/ng-template" id="/scope2.html">
-        <div class="panel-body" ng-controller="scopeCtrl">
-            <div class="well">
-                <p>Second example</p>
+        <script type="text/ng-template" id="/scope2.html">
+            <div class="panel-body" ng-controller="scopeCtrl">
                 <div class="well">
-                    <div scope-dr2 table="table"></div>
-                    <hr>
-                    <div scope-dr2 table="table1"></div>
-                    <hr>
-                    <div scope-dr2 table="table2"></div>
+                    <p>Second example</p>
+                    <div class="well">
+                        <div scope-dr2 table="table"></div>
+                        <hr>
+                        <div scope-dr2 table="table1"></div>
+                        <hr>
+                        <div scope-dr2 table="table2"></div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </script>
+        </script>
         <!--#/3.6.2 Second example-->
 
         <!--3.6.3 Third example-->
         <script type="text/ng-template" id="/scope3.html">
             <div class="panel-body" ng-controller="scopeCtrl3">
                 <div class="well">
-
+                    <p>Third example</p>
                     <div scope-dr3 scope-dr3-two class="well">
-
+                        Look at the source code.
                     </div>
                 </div>
             </div>
         </script>
         <!--#/3.6.3 Third example-->
+
+    <!--3.7 Overwriting functionalities-->
+    <script type="text/ng-template" id="/overwriting.html">
+        <div class="panel-body" ng-controller="newClickCtrl">
+            <div class="well">
+
+                <div class="well" new-click="changeInfo(data)">
+                    {{data.info}}
+                </div>
+            </div>
+        </div>
+    </script>
+    <!--#/3.7 Overwriting functionalities-->
+
+    <!--3.8 Isolation-->
+    <script type="text/ng-template" id="/isolation.html">
+        <div class="panel-body" ng-controller="componentCtrl">
+            <div class="well">
+
+                <div class="well">
+                    <component-dir data1="data1">Ups, something were wrong.</component-dir>
+                </div>
+            </div>
+        </div>
+    </script>
+    <!--#/3.8 Isolation-->
+
+    <!--3.9 Decorating -->
+    <script type="text/ng-template" id="/decorating.html" ng-controller="startCtrl">
+        <div class="panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title well-sm" >
+                    <a href="" ng-click="tpl_2='/decorating1.html'">First example</a>
+                    |
+                    <a href="" ng-click="tpl_2='/decorating2.html'">Second example</a>
+                    |
+                    <a href="" ng-click="tpl_2='/decorating3.html'">Third example</a>
+                </h4>
+
+                <!--Place where are included templates-->
+                <div>
+                    <div id="tpl_3-content" ng-include src="tpl_2">Ups, something's wrong</div>
+                </div>
+            </div>
+        </div>
+    </script>
+    <!--#/3.9 Decorating-->
+
+        <!--3.9.1 First example-->
+        <script type="text/ng-template" id="/decorating1.html">
+            <div class="panel-body">
+                <div class="well">
+                    <p>First example - decorating</p>
+                    <div class="well">
+                        <div vp-one></div>
+                        <div class="vp-one"></div>
+                    </div>
+                </div>
+            </div>
+        </script>
+        <!--#/3.9.1 First example-->
+
+        <!--3.9.2 Second example-->
+        <script type="text/ng-template" id="/decorating2.html">
+            <div class="panel-body">
+                <div class="well">
+                    <p>Second example - decorating</p>
+                    <div class="well">
+                    </div>
+                </div>
+            </div>
+        </script>
+        <!--#/3.9.2 Second example-->
+
+        <!--3.9.3 Third example-->
+        <script type="text/ng-template" id="/decorating3.html">
+            <div class="panel-body">
+                <div class="well">
+                    <p>Third example - decorating</p>
+                    <div class="well">
+
+                    </div>
+                </div>
+            </div>
+        </script>
+        <!--#/3.9.3 Third example-->
 
 </div>
 <!-- #/angular-owndirectives -->

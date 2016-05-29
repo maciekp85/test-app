@@ -120,10 +120,10 @@ angular.module('app')
                         templateUrl: 'views/angular/directives/angular-directives-ngscript.html'
                     })
                 // OWN DIRECTIVES
-            .state('angular.owndirectives', {
-                url: '/owndirectives',
-                templateUrl: "views/angular/owndirectives/angular-owndirectives.html"
-            });
+                .state('angular.owndirectives', {
+                    url: '/owndirectives',
+                    templateUrl: "views/angular/owndirectives/angular-owndirectives.html"
+                })
         $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
     }])
     .controller('navigation',['$rootScope','$scope','$http', '$location', function($rootScope, $scope, $http, $location) {
@@ -184,10 +184,12 @@ angular.module('app')
             $scope.error = true;
         }
     }])
-    .controller('home', ['$scope', '$http', function ($scope, $http) {
-        $http.get('/greeting/').success(function (data) {
-            $scope.greeting = data;
-        })
+    .controller('home', ['$rootScope', '$scope', '$http', function ($rootScope, $scope, $http) {
+        if($rootScope.authenticated) {
+            $http.get('/greeting/').success(function (data) {
+                $scope.greeting = data;
+            })
+        }
     }])
     // Scope
     .controller('OneCtrl', ['$scope', '$rootScope', function ($scope, $rootScope) {
@@ -423,6 +425,8 @@ angular.module('app')
             templateUrl: 'views/angular/owndirectives/start-tmp.html'
         };
     }])
+
+    // Scope
     .controller('scopeCtrl', ['$scope', function ($scope) {
         $scope.table = [
             {name: 'Ala', city: 'Radom'},
@@ -456,7 +460,114 @@ angular.module('app')
                 console.log('scope from directive', $scope);
             }
         };
-
     }])
+    .directive('scopeDr2', [function () {
+        return {
+            scope: {table:'='},
+            templateUrl: 'views/angular/owndirectives/events-tmp2.html',
+            controller: function ($scope) {
+                $scope.add = function (name, city) {
+                    $scope.table.push({'name':name, 'city': city});
+                }
 
-;
+                $scope.removePerson = function (index) {
+                    if(index>-1) {
+                        $scope.table.splice(index, 1);
+                    }
+                }
+                console.log('scope from directive', $scope);
+            }
+        };
+    }])
+    .directive('remPerson', function () {
+        return {
+            scope: {
+                rem: '&method'
+            },
+            templateUrl: 'views/angular/owndirectives/rem-person.html',
+            controller: function ($scope) {
+                $scope.remove = function () {
+                    $scope.rem();
+                }
+            }
+        }
+    })
+    .controller('scopeCtrl3', ['$rootScope', '$scope', function ($rootScope, $scope) {
+        console.log('$rootScope', $rootScope);
+        console.log('$scope', $scope);
+    }])
+    .directive('scopeDr3', function () {
+        return {
+            // scope: {},
+            scope: true,
+            link: function (scope) {
+                console.log('scopeDr3', scope);
+            }
+        }
+    })
+    .directive('scopeDr3Two', function () {
+        return {
+            // scope: {},
+            scope: true,
+            link: function (scope) {
+                console.log('scopeDr3Two', scope);
+            }
+        }
+    })
+    // Overwriting functionalities
+    .controller('newClickCtrl', ['$scope', function ($scope) {
+        $scope.data={info: "Nobody doesn't click me yet"}
+        $scope.changeInfo = function (param) {
+            param.info = "It's working"
+        }
+    }])
+    .directive('newClick', function ($parse) {
+        return {
+            link: function (scope, el, attrs) {
+                var fn = $parse(attrs['newClick']);
+                el.on('click', function () {
+                    scope.$apply(function () {
+                        fn(scope);
+                    })
+                })
+            }
+        }
+    })
+    // Isolation
+    .controller('componentCtrl', ['$scope', function ($scope) {
+        $scope.data1={info: "Information text!", selected: false}
+    }])
+    .directive('componentDir', function () {
+        return {
+            restrict: 'E',
+            scope:{data1:'='},
+            template: '<div change-color ng-class="{\'alert-success\':data1.selected, \'alert-danger\':!data1.selected}">{{data1.info}}</div>',
+            replace: true,
+        }
+    })
+    .directive('changeColor', function () {
+        return {
+            link: function (scope, el, attrs) {
+                console.log('change-color start');
+                el.on('click', function () {
+                    console.log('change-color click');
+                    scope.data1.selected = !scope.data1.selected;
+                    scope.$apply();
+                })
+            }
+        }
+    })
+    // Decorating
+    .directive('vpOne', function () {
+        return{
+            replace: true,
+            template: '<div>This is magical text</div>'
+        }
+    })
+    .config(function ($provide) {
+        $provide.decorator('vpOneDirective', function ($delegate) {
+            var directive = $delegate[0];
+            directive.restrict="AC";
+            return $delegate;
+        })
+    });
