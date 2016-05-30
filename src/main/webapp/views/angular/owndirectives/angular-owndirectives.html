@@ -234,7 +234,7 @@
         <script type="text/ng-template" id="/decorating1.html">
             <div class="panel-body">
                 <div class="well">
-                    <p>First example - decorating</p>
+                    <p>First example - decorating: basics</p>
                     <div class="well">
                         <div vp-one></div>
                         <div class="vp-one"></div>
@@ -246,10 +246,12 @@
 
         <!--3.9.2 Second example-->
         <script type="text/ng-template" id="/decorating2.html">
-            <div class="panel-body">
+            <div class="panel-body" ng-controller="decoratorCtrl">
                 <div class="well">
-                    <p>Second example - decorating</p>
+                    <p>Second example - decorating ng-click</p>
                     <div class="well">
+                        <a class="btn btn-default" ng-click="click()" track>Click tracking</a>
+                        <a class="btn btn-danger" ng-click="click()">None click tracking</a>
                     </div>
                 </div>
             </div>

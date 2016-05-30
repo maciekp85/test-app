@@ -557,7 +557,7 @@ angular.module('app')
             }
         }
     })
-    // Decorating
+    // Decorating - first example
     .directive('vpOne', function () {
         return{
             replace: true,
@@ -568,6 +568,28 @@ angular.module('app')
         $provide.decorator('vpOneDirective', function ($delegate) {
             var directive = $delegate[0];
             directive.restrict="AC";
+            return $delegate;
+        })
+    })
+    // Decorating - second example
+    .controller('decoratorCtrl', ['$scope', function ($scope) {
+        $scope.click = function () {
+            console.log('click');
+        }
+    }])
+    .config(function ($provide) {
+        $provide.decorator('ngClickDirective', function ($delegate) {
+
+            var org = $delegate[0].compile;
+            $delegate[0].compile = function (element, attrs, transclude) {
+                if(attrs.track !== undefined) {
+                    element.bind('click', function () {
+                        console.log('Tracking!');
+                    });
+                }
+                return org(element, attrs, transclude);
+            };
+
             return $delegate;
         })
     });
