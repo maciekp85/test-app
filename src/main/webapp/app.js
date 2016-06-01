@@ -118,8 +118,12 @@ angular.module('app')
                     .state('angular.directives.ngscript', {
                         url: '/ngscript',
                         templateUrl: 'views/angular/directives/angular-directives-ngscript.html'
-                    });
-
+                    })
+                // OWN DIRECTIVES
+                .state('angular.owndirectives', {
+                    url: '/owndirectives',
+                    templateUrl: "views/angular/owndirectives/angular-owndirectives.html"
+                })
         $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
     }])
     .controller('navigation',['$rootScope','$scope','$http', '$location', function($rootScope, $scope, $http, $location) {
@@ -180,10 +184,12 @@ angular.module('app')
             $scope.error = true;
         }
     }])
-    .controller('home', ['$scope', '$http', function ($scope, $http) {
-        $http.get('/greeting/').success(function (data) {
-            $scope.greeting = data;
-        })
+    .controller('home', ['$rootScope', '$scope', '$http', function ($rootScope, $scope, $http) {
+        if($rootScope.authenticated) {
+            $http.get('/greeting/').success(function (data) {
+                $scope.greeting = data;
+            })
+        }
     }])
     // Scope
     .controller('OneCtrl', ['$scope', '$rootScope', function ($scope, $rootScope) {
@@ -314,10 +320,10 @@ angular.module('app')
     // Directives
 
     // Directive a
-    .controller('aCtrl', ['$scope', function ($scope) {
+    .controller('ACtrl', ['$scope', function ($scope) {
         $scope.test = function () {
             $scope.message = "Test message";
-        }
+        };
     }])
     // Directive form
     .controller('FormCtrl', ['$scope', function ($scope) {
@@ -356,6 +362,7 @@ angular.module('app')
             console.log(text);
         };
     }])
+    // Directive ng-script
     .controller('scriptCtrl', ["$scope", function ($scope) {
         $scope.defaultValue = "Text from default controller"
     }])
@@ -370,4 +377,254 @@ angular.module('app')
     }])
     .controller('dCtrl', ["$scope", function ($scope) {
         $scope.dValue = "Text from dCtrl controller";
-    }]);
+    }])
+
+    // NEW CHAPTER
+    // Own Directives
+    .controller('ownDirectivesCtrl', ['$scope', function ($scope) {
+
+    }])
+    .controller('startCtrl', ['$scope', function ($scope) {
+        $scope.myTable = [
+            {name: 'Ala', city: 'Radom'},
+            {name: 'Ola', city: 'Warszawa'},
+            {name: 'Ania', city: 'Radom'},
+            {name: 'Ewa', city: 'Warszawa'}
+        ];
+    }])
+    // Start
+    .directive('startDr', [function () {
+      return {
+          template: "Test <b>text</b>",
+      }
+    }])
+    // Restrict
+    .directive('startDr2', [function () {
+        return {
+            // template: "Test <b>text</b>",
+            // restrict: 'AEC',
+            restrict: 'M',
+            link: function () {
+                alert('M works')
+            }
+        }
+    }])
+    // Use built-in directives
+    .directive('startDr3', [function () {
+        return {
+            template: '<div class="well"><ul><li ng-repeat="item in myTable">Name: {{item.name}}, city: {{item.city}}</li></ul></div>',
+            controller: function ($scope) {
+                $scope.add = function (name, city) {
+                    $scope.myTable.push({'name':name, 'city': city});
+                }
+            }
+        };
+    }])
+    .directive('tplDr', [function () {
+        return {
+            templateUrl: 'views/angular/owndirectives/start-tmp.html'
+        };
+    }])
+
+    // Scope
+    .controller('scopeCtrl', ['$scope', function ($scope) {
+        $scope.table = [
+            {name: 'Ala', city: 'Radom'},
+            {name: 'Ola', city: 'Warszawa'},
+            {name: 'Ania', city: 'Radom'},
+            {name: 'Ewa', city: 'Warszawa'}
+        ];
+        $scope.table1 = [
+            {name: 'Ala1', city: 'Radom'},
+            {name: 'Ola1', city: 'Warszawa'},
+            {name: 'Ania1', city: 'Radom'},
+            {name: 'Ewa1', city: 'Warszawa'}
+        ];
+        $scope.table2 = [
+            {name: 'Ala2', city: 'Radom'},
+            {name: 'Ola2', city: 'Warszawa'},
+            {name: 'Ania2', city: 'Radom'},
+            {name: 'Ewa2', city: 'Warszawa'}
+        ];
+        console.log('controller', $scope);
+    }])
+    .directive('scopeDr1', [function () {
+        return {
+            scope: {table:'='},
+            templateUrl: 'views/angular/owndirectives/events-tmp.html',
+            controller: function ($scope) {
+                $scope.add = function (name, city) {
+                    $scope.table.push({'name':name, 'city': city});
+                }
+
+                console.log('scope from directive', $scope);
+            }
+        };
+    }])
+    .directive('scopeDr2', [function () {
+        return {
+            scope: {table:'='},
+            templateUrl: 'views/angular/owndirectives/events-tmp2.html',
+            controller: function ($scope) {
+                $scope.add = function (name, city) {
+                    $scope.table.push({'name':name, 'city': city});
+                }
+
+                $scope.removePerson = function (index) {
+                    if(index>-1) {
+                        $scope.table.splice(index, 1);
+                    }
+                }
+                console.log('scope from directive', $scope);
+            }
+        };
+    }])
+    .directive('remPerson', function () {
+        return {
+            scope: {
+                rem: '&method'
+            },
+            templateUrl: 'views/angular/owndirectives/rem-person.html',
+            controller: function ($scope) {
+                $scope.remove = function () {
+                    $scope.rem();
+                }
+            }
+        }
+    })
+    .controller('scopeCtrl3', ['$rootScope', '$scope', function ($rootScope, $scope) {
+        console.log('$rootScope', $rootScope);
+        console.log('$scope', $scope);
+    }])
+    .directive('scopeDr3', function () {
+        return {
+            // scope: {},
+            scope: true,
+            link: function (scope) {
+                console.log('scopeDr3', scope);
+            }
+        }
+    })
+    .directive('scopeDr3Two', function () {
+        return {
+            // scope: {},
+            scope: true,
+            link: function (scope) {
+                console.log('scopeDr3Two', scope);
+            }
+        }
+    })
+    // Overwriting functionalities
+    .controller('newClickCtrl', ['$scope', function ($scope) {
+        $scope.data={info: "Nobody doesn't click me yet"}
+        $scope.changeInfo = function (param) {
+            param.info = "It's working"
+        }
+    }])
+    .directive('newClick', function ($parse) {
+        return {
+            link: function (scope, el, attrs) {
+                var fn = $parse(attrs['newClick']);
+                el.on('click', function () {
+                    scope.$apply(function () {
+                        fn(scope);
+                    })
+                })
+            }
+        }
+    })
+    // Isolation
+    .controller('componentCtrl', ['$scope', function ($scope) {
+        $scope.data1={info: "Information text!", selected: false}
+    }])
+    .directive('componentDir', function () {
+        return {
+            restrict: 'E',
+            scope:{data1:'='},
+            template: '<div change-color ng-class="{\'alert-success\':data1.selected, \'alert-danger\':!data1.selected}">{{data1.info}}</div>',
+            replace: true,
+        }
+    })
+    .directive('changeColor', function () {
+        return {
+            link: function (scope, el, attrs) {
+                console.log('change-color start');
+                el.on('click', function () {
+                    console.log('change-color click');
+                    scope.data1.selected = !scope.data1.selected;
+                    scope.$apply();
+                })
+            }
+        }
+    })
+    // Decorating - first example
+    .directive('vpOne', function () {
+        return{
+            replace: true,
+            template: '<div>This is magical text</div>'
+        }
+    })
+    .config(function ($provide) {
+        $provide.decorator('vpOneDirective', function ($delegate) {
+            var directive = $delegate[0];
+            directive.restrict="AC";
+            return $delegate;
+        })
+    })
+    // Decorating - second example
+    .controller('decoratorCtrl', ['$scope', function ($scope) {
+        $scope.click = function () {
+            console.log('click');
+        }
+    }])
+    .config(function ($provide) {
+        $provide.decorator('ngClickDirective', function ($delegate) {
+
+            var org = $delegate[0].compile;
+            $delegate[0].compile = function (element, attrs, transclude) {
+                if(attrs.track !== undefined) {
+                    element.bind('click', function () {
+                        console.log('Tracking!');
+                    });
+                }
+                return org(element, attrs, transclude);
+            };
+
+            return $delegate;
+        })
+    })
+    // Decorating - third example
+    .controller('transcludeCtrl', ['$scope', function ($scope) {
+
+    }])
+    .directive('vpFrame', function () {
+        return {
+            templateUrl: 'views/angular/owndirectives/transclude-tmp.html',
+            // transclude: true,
+            replace: true
+        }
+    })
+    // Rating system
+    .controller('vpCtrl', ['$scope', function ($scope) {
+        console.log($scope);
+    }])
+    .directive('eventsEvaluation', function () {
+        return {
+            restrict: "E",
+            scope: {
+                text: "@",
+            },
+            templateUrl: "views/angular/owndirectives/evaluation-tmp.html",
+            replace: true,
+            controller: function ($scope) {
+                console.log($scope);
+                $scope.number = 5;
+                $scope.increase = function () {
+                    $scope.number++;
+                };
+                $scope.reduce = function () {
+                    $scope.number--;
+                };
+            }
+        }
+    });

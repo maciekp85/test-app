@@ -1,0 +1,10 @@
+<div class="form-group">
+    {{text}}:
+    <input ng-disabled="true" type="number" ng-model="number" class="form-control" />
+    <a ng-disabled='number<1' class="btn btn-default" href="" ng-click="reduce()">
+        <span class="glyphicon glyphicon-minus"></span></a>
+    </a>
+    <a ng-disabled='number>9' class="btn btn-default" href="" ng-click="increase()">
+        <span class="glyphicon glyphicon-plus"></span></a>
+    </a>
+</div>
