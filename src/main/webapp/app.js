@@ -592,4 +592,39 @@ angular.module('app')
 
             return $delegate;
         })
+    })
+    // Decorating - third example
+    .controller('transcludeCtrl', ['$scope', function ($scope) {
+
+    }])
+    .directive('vpFrame', function () {
+        return {
+            templateUrl: 'views/angular/owndirectives/transclude-tmp.html',
+            // transclude: true,
+            replace: true
+        }
+    })
+    // Rating system
+    .controller('vpCtrl', ['$scope', function ($scope) {
+        console.log($scope);
+    }])
+    .directive('eventsEvaluation', function () {
+        return {
+            restrict: "E",
+            scope: {
+                text: "@",
+            },
+            templateUrl: "views/angular/owndirectives/evaluation-tmp.html",
+            replace: true,
+            controller: function ($scope) {
+                console.log($scope);
+                $scope.number = 5;
+                $scope.increase = function () {
+                    $scope.number++;
+                };
+                $scope.reduce = function () {
+                    $scope.number--;
+                };
+            }
+        }
     });

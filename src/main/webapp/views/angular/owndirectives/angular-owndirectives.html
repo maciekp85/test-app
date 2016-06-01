@@ -30,6 +30,8 @@
                     <a href="" ng-click="tpl_1='/isolation.html'">3.8 Isolation</a>
                     |
                     <a href="" ng-click="tpl_1='/decorating.html'">3.9 Decorating</a>
+                    |
+                    <a href="" ng-click="tpl_1='/rating-system.html'">3.10 Rating system</a>
                 </h4>
 
                 <!--Place where are included templates-->
@@ -260,16 +262,56 @@
 
         <!--3.9.3 Third example-->
         <script type="text/ng-template" id="/decorating3.html">
-            <div class="panel-body">
+            <div class="panel-body" ng-controller="transcludeCtrl">
                 <div class="well">
                     <p>Third example - decorating</p>
                     <div class="well">
-
+                        <vp-frame>
+                            This is text from directive body ...
+                        </vp-frame>
                     </div>
                 </div>
             </div>
         </script>
         <!--#/3.9.3 Third example-->
+
+    <!--3.10 Rating system-->
+    <script type="text/ng-template" id="/rating-system.html">
+        <div class="panel-body" ng-controller="vpCtrl">
+                <div class="col-sm-6">
+                    <div class="well">
+                        <form>
+                            <h3>Rate event</h3>
+                            <div class="well">
+                                <div class="form-group">
+                                    <events-evaluation text="Localization" ng-model="number">
+
+                                    </events-evaluation>
+                                </div>
+                                <div class="form-group">
+                                    <events-evaluation text="Hotel" ng-model="number">
+
+                                    </events-evaluation>
+                                </div>
+                                <div class="form-group">
+                                    <events-evaluation text="Food" ng-model="number">
+
+                                    </events-evaluation>
+                                </div>
+                                <div class="form-group">
+                                    <events-evaluation text="Other" ng-model="number">
+
+                                    </events-evaluation>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+    </script>
+    <!--#/3.10 Rating system-->
+
 
 </div>
 <!-- #/angular-owndirectives -->
