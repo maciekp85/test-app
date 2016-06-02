@@ -1,0 +1,28 @@
+<!-- SPRING PAGE -->
+<div ng-show="authenticated">
+    <section >
+        <div class="jumbotron">
+            <div class="container">
+                <h1>Products</h1>
+                <p>Wszystkie produkty dostępne w naszym sklepie</p>
+            </div>
+        </div>
+        <p>{{model.greeting}}</p>
+        <p>{{model.tagline}}</p>
+    </section>
+    <section class="container">
+        <div class="row">
+            <div ng-repeat='product in products' class="col-sm-6 col-md-4" style="padding-bottom: 15px">
+                <div class="thumbnail">
+                    <div  class="caption">
+                        <h3>{{product.name}}</h3>
+                        <p>{{product.description}}</p>
+                        <p>{{product.unitPrice}}PLN</p>
+                        <p>Liczba sztuk w magazynie: {{product.unitsInStock}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<!-- /#spring.html -->
