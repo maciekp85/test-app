@@ -22301,7 +22301,7 @@ var inputType = {
         browser.executeScript(scr);
       }
 
-      it('should initialize to model', function() {
+      it(domain, function() {
         expect(value.getText()).toContain('2010-12-28T14:57:00');
         expect(valid.getText()).toContain('myForm.input.$valid = true');
       });

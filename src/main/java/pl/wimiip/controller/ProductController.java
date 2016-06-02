@@ -1,8 +1,10 @@
 package pl.wimiip.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pl.wimiip.model.Product;
+import pl.wimiip.domain.Product;
+import pl.wimiip.domain.repository.ProductRepository;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -14,15 +16,13 @@ import java.util.Map;
 @RestController
 public class ProductController {
 
+    @Autowired
+    ProductRepository productRepository;
+
     @RequestMapping("/products")
     public Map<String, Object> list() {
         Map<String, Object> model = new HashMap<>();
-        Product iphone = new Product("P1234","iPhone 5s", new BigDecimal(500));
-        iphone.setDescription("Apple iPhone 5s, smartfon z 4-calowym ekranem o rozdzielczości 640x1136 oraz 8-megapikselowym aparatem");
-        iphone.setCategory("Smart Phone");
-        iphone.setManufacturer("Apple");
-        iphone.setUnitsInStock(1000);
-        model.put("product", iphone);
+        model.put("products", productRepository.getAllProducts());
         return model;
     }
 }

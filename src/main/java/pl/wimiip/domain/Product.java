@@ -1,7 +1,6 @@
-package pl.wimiip.model;
+package pl.wimiip.domain;
 
 import java.math.BigDecimal;
-import java.util.Objects;
 
 /**
  * Created by nishi on 2016-05-27.

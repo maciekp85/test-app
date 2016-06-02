@@ -391,7 +391,11 @@ angular.module('app')
                 $scope.model = data;
             })
             $http.get('/products/').success(function (data) {
-                $scope.products = data;
+                var products = [];
+                for(var i=0; i<data.products.length; i++) {
+                    products[i] = data.products[i];
+                }
+                $scope.products = products;
             })
 
         } else {
