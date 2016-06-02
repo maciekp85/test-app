@@ -124,6 +124,12 @@ angular.module('app')
                     url: '/owndirectives',
                     templateUrl: "views/angular/owndirectives/angular-owndirectives.html"
                 })
+            // SPRING
+            .state('spring', {
+                url: '/spring',
+                templateUrl: 'views/spring/spring.html',
+                controller: 'spring'
+            })
         $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
     }])
     .controller('navigation',['$rootScope','$scope','$http', '$location', function($rootScope, $scope, $http, $location) {
@@ -627,4 +633,28 @@ angular.module('app')
                 };
             }
         }
-    });
+    })
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // NEW CHAPTER
+    // Spring
+    .controller('spring', ['$rootScope', '$scope', '$http', '$location', function ($rootScope, $scope, $http, $location) {
+        if ($rootScope.authenticated) {
+            $location.path("/spring");
+            $scope.error = false;
+
+            $http.get('/greeting2/').success(function (data) {
+                $scope.model = data;
+            })
+            $http.get('/products/').success(function (data) {
+                var products = [];
+                for(var i=0; i<data.products.length; i++) {
+                    products[i] = data.products[i];
+                }
+                $scope.products = products;
+            })
+
+        } else {
+            $location.path("/home");
+            $scope.error = true;
+        }
+    }]);
