@@ -642,19 +642,28 @@ angular.module('app')
             $location.path("/spring");
             $scope.error = false;
 
-            $http.get('/greeting2/').success(function (data) {
+            $http.get('/greeting2').success(function (data) {
                 $scope.model = data;
             })
-            $http.get('/products/').success(function (data) {
+            $http.get('/products').success(function (data) {
                 var products = [];
                 for(var i=0; i<data.products.length; i++) {
                     products[i] = data.products[i];
                 }
                 $scope.products = products;
             })
-
         } else {
             $location.path("/home");
             $scope.error = true;
         }
-    }]);
+    }])
+    .controller('orderCtrl', ['$scope', '$http','$location','$state', function ($scope, $http, $location, $window) {
+        $scope.ClickMeToRedirect = function () {
+            $http.get('/order/P1234/2').success(function () {
+                $window.reload("spring");
+                $location.path("/spring");
+            });
+
+        };
+
+    }])
