@@ -673,7 +673,7 @@ angular.module('app')
         })
         $scope.ClickMeToRedirect = function () {
             $http.get('/order/P1234/2').success(function () {
-                $http.get('/products').success(function (data) {
+                $http.get('/products/all').success(function (data) {
                     var products = [];
                     for(var i=0; i<data.products.length; i++) {
                         products[i] = data.products[i];
