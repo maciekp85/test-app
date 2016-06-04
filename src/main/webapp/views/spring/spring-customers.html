@@ -1,0 +1,26 @@
+<section >
+    <div class="jumbotron">
+        <div class="container">
+            <h2>Customers</h2>
+            <p>All customers in our test store!</p>
+        </div>
+    </div>
+</section>
+<section class="container">
+    <div>
+        <button ui-sref="spring" class="btn btn-default">Test Store</button><br><br>
+    </div>
+</section>
+<section class="container">
+    <div class="row">
+        <div ng-repeat='customer in customers' class="col-sm-6 col-md-4" style="padding-bottom: 15px">
+            <div class="thumbnail">
+                <div  class="caption">
+                    <h3>{{customer.name}}</h3>
+                    <p>{{customer.address}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

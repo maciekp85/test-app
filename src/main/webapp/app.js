@@ -123,8 +123,19 @@ angular.module('app')
             .state('spring', {
                 url: '/spring',
                 templateUrl: 'views/spring/spring.html',
-                controller: 'spring'
+                controller: 'springCtrl'
             })
+                .state('spring.products', {
+                    url: '/products',
+                    templateUrl: 'views/spring/spring-products.html',
+                    controller: 'productsCtrl'
+                })
+                .state('spring.customers', {
+                    url: '/customers',
+                    templateUrl: 'views/spring/spring-customers.html',
+                    controller: 'customersCtrl'
+                })
+
         $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
     }])
     .controller('navigation',['$rootScope','$scope','$http', '$location', function($rootScope, $scope, $http, $location) {
@@ -382,7 +393,7 @@ angular.module('app')
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // NEW CHAPTER
     // Spring
-    .controller('spring', ['$rootScope', '$scope', '$http', '$location', function ($rootScope, $scope, $http, $location) {
+    .controller('springCtrl', ['$rootScope', '$scope', '$http', '$location', function ($rootScope, $scope, $http, $location) {
         if ($rootScope.authenticated) {
             $location.path("/spring");
             $scope.error = false;
@@ -390,25 +401,42 @@ angular.module('app')
             $http.get('/greeting2').success(function (data) {
                 $scope.model = data;
             })
-            $http.get('/products').success(function (data) {
-                var products = [];
-                for(var i=0; i<data.products.length; i++) {
-                    products[i] = data.products[i];
-                }
-                $scope.products = products;
-            })
+
         } else {
             $location.path("/home");
             $scope.error = true;
         }
     }])
-    .controller('orderCtrl', ['$scope', '$http','$location','$state', function ($scope, $http, $location, $window) {
+    .controller('productsCtrl', ['$scope', '$http','$location','$window', function ($scope, $http, $location, $window) {
+
+        $http.get('/products').success(function (data) {
+            var products = [];
+            for(var i=0; i<data.products.length; i++) {
+                products[i] = data.products[i];
+            }
+            $scope.products = products;
+        })
         $scope.ClickMeToRedirect = function () {
             $http.get('/order/P1234/2').success(function () {
-                $window.reload("spring");
-                $location.path("/spring");
+                $http.get('/products').success(function (data) {
+                    var products = [];
+                    for(var i=0; i<data.products.length; i++) {
+                        products[i] = data.products[i];
+                    }
+                    $scope.products = products;
+                })
             });
-
         };
+
+    }])
+    .controller('customersCtrl', ['$scope','$http', function ($scope, $http) {
+
+        $http.get('/customers').success(function (data) {
+            var customers = [];
+            for(var i=0; i<data.customers.length; i++) {
+                customers[i] = data.customers[i];
+            }
+            $scope.customers = customers;
+        })
 
     }])

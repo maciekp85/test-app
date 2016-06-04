@@ -1,6 +1,7 @@
 package pl.wimiip.domain;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 /**
  * Created by nishi on 2016-05-27.
@@ -108,30 +109,23 @@ public class Product {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Product other = (Product) obj;
-        if (productId == null) {
-            if (other.productId != null)
-                return false;
-        } else if (!productId.equals(other.productId))
-            return false;
-        return true;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return Objects.equals(productId, product.productId);
     }
+
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((productId == null) ? 0 : productId.hashCode());
-        return result;
+        return Objects.hash(productId);
     }
+
     @Override
     public String toString() {
-        return "Product [productId=" + productId + ", name=" + name +"]";
+        return "Product{" +
+                "productId='" + productId + '\'' +
+                ", name='" + name + '\'' +
+                '}';
     }
 }
