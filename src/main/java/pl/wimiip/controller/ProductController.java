@@ -1,6 +1,7 @@
 package pl.wimiip.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.wimiip.domain.Product;
@@ -32,6 +33,13 @@ public class ProductController {
     public Map<String, Object> allProducts() {
         Map<String, Object> model = new HashMap<>();
         model.put("products", productService.getAllProducts());
+        return model;
+    }
+
+    @RequestMapping("/{category}")
+    public Map<String, Object> getProductsByCategory(@PathVariable("category") String productCategory) {
+        Map<String, Object> model = new HashMap<>();
+        model.put("products", productService.getProductsByCategory(productCategory));
         return model;
     }
 

@@ -12,6 +12,12 @@
 <section class="container">
     <div>
         <button ui-sref="spring" class="btn btn-default">Test Store</button><br><br>
+        <div class="btn-group">
+            <button class="btn btn-primary" ng-click="ClickMeToShowAllProducts()">Show all</button>
+            <button class="btn btn-primary" ng-click="ClickMeToShowProductsByCategory('tablet')">tablet</button>
+            <button class="btn btn-primary" ng-click="ClickMeToShowProductsByCategory('iphone')">iphone</button>
+        </div>
+        <br><br>
     </div>
 </section>
 <section class="container">

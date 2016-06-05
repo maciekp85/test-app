@@ -671,6 +671,26 @@ angular.module('app')
             }
             $scope.products = products;
         })
+
+        $scope.ClickMeToShowAllProducts = function () {
+            $http.get('/products/all').success(function (data) {
+                var products = [];
+                for(var i=0; i<data.products.length; i++) {
+                    products[i] = data.products[i];
+                }
+                $scope.products = products;
+            })
+        }
+        $scope.ClickMeToShowProductsByCategory = function (category) {
+            $http.get('/products/'+category).success(function (data) {
+                var products = [];
+                for(var i=0; i<data.products.length; i++) {
+                    products[i] = data.products[i];
+                }
+                $scope.products = products;
+            })
+        };
+
         $scope.ClickMeToRedirect = function () {
             $http.get('/order/P1234/2').success(function () {
                 $http.get('/products/all').success(function (data) {
