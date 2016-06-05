@@ -29,7 +29,7 @@ public class TestApp {
 					.httpBasic().and()
 					.logout().and()
 					.authorizeRequests()
-					.antMatchers("/index.html", "/views/login.html", "/", "/app.js").permitAll()
+					.antMatchers("/index.html", "/", "/app.js", "/app.route.js", "/assets/**", "/app/**").permitAll()
 					.anyRequest().authenticated().and()
 					.addFilterAfter( new CsrfHeaderFilter(), CsrfFilter.class)
 					.csrf().csrfTokenRepository( csrfTokenRepository() );

@@ -12,10 +12,10 @@
     <title>Test App - Start Test App Template</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="css/simple-sidebar.css" rel="stylesheet">
+    <link href="assets/css/simple-sidebar.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -25,26 +25,37 @@
     <![endif]-->
 
     <!-- jQuery -->
-    <script src="js/jquery.js"></script>
+    <script src="assets/lib/jquery.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
+    <script src="assets/lib/bootstrap.min.js"></script>
 
     <!-- AngularJS -->
-    <script src="js/angular.min.js"></script>
+    <script src="assets/lib/angular.min.js"></script>
 
     <!-- Angular UI Router -->
-    <script src="js/angular-ui-router.js"></script>
+    <script src="assets/lib/angular-ui-router.js"></script>
 
-    <!-- Our app -->
+    <!-- My controllers -->
+    <script src="app/core/home/home.ctrl.js"></script>
+    <script src="app/core/login/login.ctrl.js"></script>
+    <script src="app/core/login/navigation.ctrl.js"></script>
+
+    <script src="app/core/angular/angular.ctrl.js"></script>
+    <script src="app/core/spring/spring.ctrl.js"></script>
+
+    <!-- My app route -->
+    <script src="app.route.js"></script>
+
+    <!-- My app -->
     <script src="app.js"></script>
 
     <!-- Angular Sanitize -->
-    <script src="js/angular-sanitize.min.js"></script>
+    <script src="assets/lib/angular-sanitize.min.js"></script>
 
 </head>
 
-<body ngCloak ng-controller="navigation" >
+<body ngCloak ng-controller="navigationCtrl" >
 
     <div id="wrapper" >
 
@@ -52,14 +63,14 @@
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
                 <li class="sidebar-brand">
-                    <a href="" ui-sref="home" ng-controller="home">
+                    <a href="" ui-sref="home" ng-controller="homeCtrl">
                         Start Test App
                     </a>
                 </li>
                 <li ng-show="!authenticated">
                     <a ui-sref="login">Login</a>
                 </li>
-                <li ng-controller="angular" ng-show="authenticated">
+                <li ng-controller="angularCtrl" ng-show="authenticated">
                     <a ui-sref="angular" >Angular</a>
                 </li>
                 <li ng-controller="springCtrl" ng-show="authenticated">
