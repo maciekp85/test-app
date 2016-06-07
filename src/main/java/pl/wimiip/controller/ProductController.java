@@ -42,11 +42,4 @@ public class ProductController {
         return model;
     }
 
-    @RequestMapping("/filter/{ByCriteria}")
-    public Map<String, Object> getProductsByFilter(@MatrixVariable(pathVar = "ByCriteria")Map<String, List<String>> filterParams) {
-        Map<String, Object> model = new HashMap<>();
-        model.put("products", productService.getProductsByFilter(filterParams));
-        return model;
-    }
-
 }
