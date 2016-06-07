@@ -1,8 +1,8 @@
-package pl.wimiip.domain.repository.impl;
+package pl.wimiip.repository.impl;
 
 import org.springframework.stereotype.Repository;
-import pl.wimiip.domain.Customer;
-import pl.wimiip.domain.repository.CustomerRepository;
+import pl.wimiip.model.Customer;
+import pl.wimiip.repository.CustomerRepository;
 
 import java.util.ArrayList;
 import java.util.List;

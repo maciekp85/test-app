@@ -1,6 +1,6 @@
-package pl.wimiip.domain.repository;
+package pl.wimiip.repository;
 
-import pl.wimiip.domain.Customer;
+import pl.wimiip.model.Customer;
 
 import java.util.List;
 

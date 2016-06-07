@@ -1,4 +1,4 @@
-package pl.wimiip.domain;
+package pl.wimiip.model;
 
 import java.math.BigDecimal;
 import java.util.Objects;

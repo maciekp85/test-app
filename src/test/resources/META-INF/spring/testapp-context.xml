@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="engine" class="pl.wimiip.service.impl.SearchEngineServiceImpl" />
+
+    <bean id="documentType" class="pl.wimiip.model.Type">
+        <property name="name" value="WEB" />
+        <property name="desc" value="Lacze sieciowe" />
+        <property name="extension" value=".url" />
+    </bean>
+
+</beans>

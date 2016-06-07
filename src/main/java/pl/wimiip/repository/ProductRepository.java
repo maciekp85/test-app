@@ -1,8 +1,10 @@
-package pl.wimiip.domain.repository;
+package pl.wimiip.repository;
 
-import pl.wimiip.domain.Product;
+import pl.wimiip.model.Product;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by nishi on 2016-06-02.
@@ -12,4 +14,5 @@ public interface ProductRepository {
     List<Product> getAllProducts();
     Product getProductById(String productId);
     List<Product> getProductsByCategory(String category);
+    Set<Product> getProductsByFilter(Map<String, List<String>> filterParams);
 }

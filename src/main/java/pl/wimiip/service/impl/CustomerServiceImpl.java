@@ -2,8 +2,8 @@ package pl.wimiip.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.wimiip.domain.Customer;
-import pl.wimiip.domain.repository.CustomerRepository;
+import pl.wimiip.model.Customer;
+import pl.wimiip.repository.CustomerRepository;
 import pl.wimiip.service.CustomerService;
 
 import java.util.List;

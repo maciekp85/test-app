@@ -1,12 +1,11 @@
-package pl.wimiip.domain.repository.impl;
+package pl.wimiip.repository.impl;
 
 import org.springframework.stereotype.Repository;
-import pl.wimiip.domain.Product;
-import pl.wimiip.domain.repository.ProductRepository;
+import pl.wimiip.model.Product;
+import pl.wimiip.repository.ProductRepository;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by nishi on 2016-06-02.
@@ -66,6 +65,29 @@ public class InMemoryProductRepository implements ProductRepository {
                 productsByCategory.add(product);
             }
         }
+        return productsByCategory;
+    }
+
+    @Override
+    public Set<Product> getProductsByFilter(Map<String, List<String>> filterParams) {
+        Set<Product> productsByBrand = new HashSet<Product>();
+        Set<Product> productsByCategory = new HashSet<Product>();
+        Set<String> criterias = filterParams.keySet();
+        if(criterias.contains("brand")) {
+            for(String brandName: filterParams.get("brand")) {
+                for(Product product: listOfProducts) {
+                    if(brandName.equalsIgnoreCase(product.getManufacturer())) {
+                        productsByBrand.add(product);
+                    }
+                }
+            }
+        }
+        if(criterias.contains("category")) {
+            for(String category: filterParams.get("category")) {
+                productsByCategory.addAll(this.getProductsByCategory(category));
+            }
+        }
+        productsByCategory.retainAll(productsByBrand);
         return productsByCategory;
     }
 }

@@ -2,11 +2,13 @@ package pl.wimiip.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.wimiip.domain.Product;
-import pl.wimiip.domain.repository.ProductRepository;
+import pl.wimiip.model.Product;
+import pl.wimiip.repository.ProductRepository;
 import pl.wimiip.service.ProductService;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by nishi on 2016-06-04.
@@ -30,5 +32,10 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Product> getProductsByCategory(String category) {
         return productRepository.getProductsByCategory(category);
+    }
+
+    @Override
+    public Set<Product> getProductsByFilter(Map<String, List<String>> filterParams) {
+        return productRepository.getProductsByFilter(filterParams);
     }
 }

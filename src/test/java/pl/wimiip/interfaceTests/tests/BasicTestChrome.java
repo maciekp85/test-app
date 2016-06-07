@@ -1,4 +1,4 @@
-package pl.wimiip.selenium.tests;
+package pl.wimiip.interfaceTests;
 
 import org.junit.After;
 import org.junit.Before;
