@@ -9,7 +9,7 @@ import java.util.Set;
 /**
  * Created by nishi on 2016-06-02.
  */
-public interface ProductRepository {
+public interface ProductDAO {
 
     List<Product> getAllProducts();
     Product getProductById(String productId);

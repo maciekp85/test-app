@@ -2,7 +2,7 @@ package pl.wimiip.repository.impl;
 
 import org.springframework.stereotype.Repository;
 import pl.wimiip.model.Product;
-import pl.wimiip.repository.ProductRepository;
+import pl.wimiip.repository.ProductDAO;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -11,11 +11,11 @@ import java.util.*;
  * Created by nishi on 2016-06-02.
  */
 @Repository
-public class InMemoryProductRepository implements ProductRepository {
+public class ProductRepository implements ProductDAO {
 
     private List<Product> listOfProducts = new ArrayList<Product>();
 
-    public InMemoryProductRepository() {
+    public ProductRepository() {
 
         Product iphone = new Product("P1234","iPhone 5s", new BigDecimal(500));
         iphone.setDescription("Apple iPhone 5s, smartfon z 4-calowym ekranem o rozdzielczości 640x1136 i 8-megapikselowym aparatem");

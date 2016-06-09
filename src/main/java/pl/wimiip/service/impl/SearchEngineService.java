@@ -2,7 +2,7 @@ package pl.wimiip.service.impl;
 
 import pl.wimiip.model.Document;
 import pl.wimiip.model.Type;
-import pl.wimiip.service.SearchEngineService;
+import pl.wimiip.service.SearchEngine;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by nishi on 2016-06-07.
  */
-public class SearchEngineServiceImpl implements SearchEngineService {
+public class SearchEngineService implements SearchEngine {
 
     public List<Document> findByType(Type documentType) {
         List<Document> result = new ArrayList<Document>();

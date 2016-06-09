@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.MatrixVariable;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pl.wimiip.service.ProductService;
+import pl.wimiip.service.ProductManage;
 
 import java.util.HashMap;
 import java.util.List;
@@ -19,26 +19,26 @@ import java.util.Map;
 public class ProductController {
 
     @Autowired
-    ProductService productService;
+    ProductManage productManageService;
 
     @RequestMapping
     public Map<String, Object> list() {
         Map<String, Object> model = new HashMap<>();
-        model.put("products", productService.getAllProducts());
+        model.put("products", productManageService.getAllProducts());
         return model;
     }
 
     @RequestMapping("/all")
     public Map<String, Object> allProducts() {
         Map<String, Object> model = new HashMap<>();
-        model.put("products", productService.getAllProducts());
+        model.put("products", productManageService.getAllProducts());
         return model;
     }
 
     @RequestMapping("/{category}")
     public Map<String, Object> getProductsByCategory(@PathVariable("category") String productCategory) {
         Map<String, Object> model = new HashMap<>();
-        model.put("products", productService.getProductsByCategory(productCategory));
+        model.put("products", productManageService.getProductsByCategory(productCategory));
         return model;
     }
 

@@ -9,7 +9,7 @@ import java.util.Set;
 /**
  * Created by nishi on 2016-06-04.
  */
-public interface ProductService {
+public interface ProductManage {
     List<Product> getAllProducts();
     Product getProductById(String productId);
     List<Product> getProductsByCategory(String category);

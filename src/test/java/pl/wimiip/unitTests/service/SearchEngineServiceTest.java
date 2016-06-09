@@ -3,8 +3,8 @@ package pl.wimiip.unitTests.service;
 import org.junit.Test;
 import pl.wimiip.model.Document;
 import pl.wimiip.model.Type;
-import pl.wimiip.service.SearchEngineService;
-import pl.wimiip.service.impl.SearchEngineServiceImpl;
+import pl.wimiip.service.SearchEngine;
+import pl.wimiip.service.impl.SearchEngineService;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ import static org.junit.Assert.assertTrue;
  */
 public class SearchEngineServiceTest {
 
-    private SearchEngineService engine = new SearchEngineServiceImpl();
+    private SearchEngine engine = new SearchEngineService();
 
     @Test
     public void testFindByType() {

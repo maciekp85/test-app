@@ -3,7 +3,7 @@ package pl.wimiip.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pl.wimiip.repository.CustomerRepository;
+import pl.wimiip.repository.CustomerDAO;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,12 +15,12 @@ import java.util.Map;
 public class CustomerController {
 
     @Autowired
-    CustomerRepository customerRepository;
+    CustomerDAO customerDAO;
 
     @RequestMapping("/customers")
     public Map<String, Object> list() {
         Map<String, Object> model = new HashMap<>();
-        model.put("customers", customerRepository.getAllCustomers());
+        model.put("customers", customerDAO.getAllCustomers());
         return model;
     }
 }

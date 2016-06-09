@@ -3,8 +3,8 @@ package pl.wimiip.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.wimiip.model.Product;
-import pl.wimiip.repository.ProductRepository;
-import pl.wimiip.service.ProductService;
+import pl.wimiip.repository.ProductDAO;
+import pl.wimiip.service.ProductManage;
 
 import java.util.List;
 import java.util.Map;
@@ -14,10 +14,10 @@ import java.util.Set;
  * Created by nishi on 2016-06-04.
  */
 @Service
-public class ProductServiceImpl implements ProductService {
+public class ProductManageService implements ProductManage {
 
     @Autowired
-    ProductRepository productRepository;
+    ProductDAO productRepository;
 
     @Override
     public List<Product> getAllProducts() {

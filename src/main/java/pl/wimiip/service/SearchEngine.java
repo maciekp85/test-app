@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by nishi on 2016-06-07.
  */
-public interface SearchEngineService {
+public interface SearchEngine {
     public List<Document> findByType(Type type);
     public List<Document> listAll();
 }
