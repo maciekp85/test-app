@@ -1,4 +1,4 @@
-package pl.wimiip.interfaceTests;
+package pl.wimiip.interfaceTests.tests;
 
 import org.junit.After;
 import org.junit.Before;

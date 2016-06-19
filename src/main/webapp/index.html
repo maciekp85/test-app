@@ -42,6 +42,7 @@
     <script src="app/core/login/navigation.ctrl.js"></script>
 
     <script src="app/core/angular/angular.ctrl.js"></script>
+    <script src="app/core/selenium/selenium.ctrl.js"></script>
     <script src="app/core/spring/spring.ctrl.js"></script>
 
     <!-- My app route -->
@@ -72,6 +73,9 @@
                 </li>
                 <li ng-controller="angularCtrl" ng-show="authenticated">
                     <a ui-sref="angular" >Angular</a>
+                </li>
+                <li ng-controller="seleniumCtrl" ng-show="authenticated">
+                    <a ui-sref="selenium">Selenium</a>
                 </li>
                 <li ng-controller="springCtrl" ng-show="authenticated">
                     <a ui-sref="spring" >Spring</a>
