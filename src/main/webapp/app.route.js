@@ -139,6 +139,10 @@ appRoute
                         url: '/introduction',
                         templateUrl: 'app/core/selenium/views/locating/selenium-locating-introduction.html'
                     })
+                    .state('selenium.locating.id', {
+                        url: '/id',
+                        templateUrl: 'app/core/selenium/views/locating/selenium-locating-id.html'
+                    })
                 
             // SPRING
             .state('spring', {
