@@ -5,7 +5,10 @@
     </div>
     <div class="well">
         <code>
-            WebDriver driver = new ChromeDriver();<br>
+            // Optional, if not specified, WebDriver will search your path for chromedriver.<br />
+            System.setProperty("webdriver.chrome.driver", "/path/to/chromedriver");<br /><br />
+
+            WebDriver driver = new ChromeDriver();<br />
             driver.findElement(By.id("helloSeleniumWorld"));
         </code>
     </div>
