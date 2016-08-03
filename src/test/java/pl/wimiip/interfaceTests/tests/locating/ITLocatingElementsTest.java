@@ -9,20 +9,20 @@ import org.junit.runner.RunWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import pl.wimiip.TestApp;
 import pl.wimiip.interfaceTests.config.ITConfigurationForChromeBrowser;
 import pl.wimiip.interfaceTests.tests.CommonMethods;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Created by nishi on 2016-06-19.
  */
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = TestApp.class)
+@SpringBootTest(classes = TestApp.class)
 @WebAppConfiguration
 public class ITLocatingElementsTest extends ITConfigurationForChromeBrowser {
 
@@ -39,7 +39,7 @@ public class ITLocatingElementsTest extends ITConfigurationForChromeBrowser {
     }
 
     @Test
-    public void testLocatingElementById() {
+    public void inputFieldsOfLoginForm_LocatingElementById_NothingResultsOnlyAsserts() {
         assertTrue(wait.until(ExpectedConditions.urlContains("locating")));
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.partialLinkText("1.2"))).click();
         fillInForm("Maciek", "test");
@@ -47,7 +47,7 @@ public class ITLocatingElementsTest extends ITConfigurationForChromeBrowser {
     }
 
     @Test
-    public void testLocatingElementByName() {
+    public void previousAndNextButtons_LocatingElementByName_NothingResultsOnlyAsserts() {
         assertTrue(wait.until(ExpectedConditions.urlContains("locating")));
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.partialLinkText("1.3"))).click();
         WebElement previousButton = driver.findElement(By.name("previous"));
@@ -68,11 +68,32 @@ public class ITLocatingElementsTest extends ITConfigurationForChromeBrowser {
         assertEquals("Next", text);
     }
 
+    @Test
+    public void htmlHeadingElements_LocatingElementByName_NothingResultsOnlyAsserts() {
+        assertTrue(wait.until(ExpectedConditions.urlContains("locating")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.partialLinkText("1.4"))).click();
+        WebElement h1 = driver.findElement(By.className("h1"));
+        assertEquals("Bootstrap heading (36px)", h1.getText());
+        assertEquals("h1", h1.getAttribute("class"));
+        assertEquals("h1", h1.getTagName());
+        assertTrue(h1.isDisplayed());
+        String h4 = driver.findElement(By.className("h4")).getText();
+        assertNotSame(h1, h4);
+        assertNotEquals("Bootstrap heading (18px)", h1.getText());
+        assertEquals("Bootstrap heading (18px)", h4);
+    }
+
     @After
     public void tearDown() {
         System.out.println("Cleaning after " + name.getMethodName());
     }
 
+
+    /**
+     * Method which fills in a form
+     * @param login
+     * @param password
+     */
     private void fillInForm(String login, String password) {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("login"))).sendKeys(login);
         driver.findElement(By.id("password")).sendKeys(password);
@@ -80,6 +101,9 @@ public class ITLocatingElementsTest extends ITConfigurationForChromeBrowser {
         driver.findElement(By.id("clickMeButton")).click();
     }
 
+    /**
+     * Method clearing fields form. It does not accept any arguments.
+     */
     private void clearForm() {
         if(wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("login"))).isDisplayed()
             && wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("login"))).getText() != null) {

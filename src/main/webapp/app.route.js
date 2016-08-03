@@ -147,6 +147,10 @@ appRoute
                         url: '/name',
                         templateUrl: 'app/core/selenium/views/locating/selenium-locating.name.html'
                     })
+                    .state('selenium.locating.class', {
+                        url: '/class',
+                        templateUrl: 'app/core/selenium/views/locating/selenium-locating.class.html'
+                    })
                 
             // SPRING
             .state('spring', {
