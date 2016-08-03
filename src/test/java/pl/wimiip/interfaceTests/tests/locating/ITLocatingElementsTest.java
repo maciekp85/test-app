@@ -15,6 +15,10 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import pl.wimiip.TestApp;
 import pl.wimiip.interfaceTests.config.ITConfigurationForChromeBrowser;
 import pl.wimiip.interfaceTests.tests.CommonMethods;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -69,9 +73,10 @@ public class ITLocatingElementsTest extends ITConfigurationForChromeBrowser {
     }
 
     @Test
-    public void htmlHeadingElements_LocatingElementByName_NothingResultsOnlyAsserts() {
+    public void htmlHeadingElements_LocatingElementByClassName_NothingResultsOnlyAsserts() {
         assertTrue(wait.until(ExpectedConditions.urlContains("locating")));
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.partialLinkText("1.4"))).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("h1")));
         WebElement h1 = driver.findElement(By.className("h1"));
         assertEquals("Bootstrap heading (36px)", h1.getText());
         assertEquals("h1", h1.getAttribute("class"));
@@ -81,6 +86,36 @@ public class ITLocatingElementsTest extends ITConfigurationForChromeBrowser {
         assertNotSame(h1, h4);
         assertNotEquals("Bootstrap heading (18px)", h1.getText());
         assertEquals("Bootstrap heading (18px)", h4);
+    }
+
+    @Test
+    public void htmlUlElement_LocatingElementsByLinkText_NothingResultsOnlyAsserts() {
+        assertTrue(wait.until(ExpectedConditions.urlContains("locating")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.partialLinkText("1.5"))).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Onet")));
+        WebElement li1 = driver.findElement(By.linkText("Onet"));
+        assertEquals("http://onet.pl/", li1.getAttribute("href"));
+        WebElement li3 = driver.findElement(By.linkText("Wp"));
+        assertEquals("http://wp.pl/", li3.getAttribute("href"));
+    }
+
+    @Test
+    public void dropdownMenu_LocatingElementsUsingFindElementsMethod_NothingResultsOnlyAsserts() {
+        assertTrue(wait.until(ExpectedConditions.urlContains("locating")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.partialLinkText("1.6"))).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Pages"))).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Onet")));
+        List<WebElement> links = driver.findElements(By.xpath("//ul[@class='dropdown-menu']/li"));
+        assertEquals(3, links.size());
+
+        ArrayList list = new ArrayList();
+        list.add("Onet");
+        list.add("Interia");
+        list.add("Wp");
+
+        for(int i=0; i < links.size(); i++) {
+            assertEquals(list.get(i), links.get(i).getText());
+        }
     }
 
     @After
