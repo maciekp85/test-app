@@ -15,9 +15,6 @@ import pl.wimiip.TestApp;
  * Created by nishi on 2016-06-19.
  */
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = TestApp.class)
-@WebAppConfiguration
 public class ITConfigurationForFirefoxBrowser {
 
     protected static WebDriver driver;

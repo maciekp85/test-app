@@ -1,6 +1,7 @@
 package pl.wimiip.interfaceTests.tests;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import pl.wimiip.interfaceTests.config.ITConfigurationForChromeBrowser;
 
@@ -9,12 +10,19 @@ import pl.wimiip.interfaceTests.config.ITConfigurationForChromeBrowser;
  */
 public class CommonMethods extends ITConfigurationForChromeBrowser {
 
-    public void logIn() {
+    public void logInAndMoveToSeleniumPage() {
         driver.get("http://localhost:8080/#/");
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Login"))).click();
-        fillInForm();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Selenium"))).click();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.tagName("button"))).click();
+        try {
+            if(driver.findElement(By.linkText("Login")).isDisplayed()) {
+                wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Login"))).click();
+                fillInForm();
+                wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Selenium"))).click();
+                wait.until(ExpectedConditions.visibilityOfElementLocated(By.tagName("button"))).click();
+            }
+        } catch (NoSuchElementException exc) {
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Selenium"))).click();
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.tagName("button"))).click();
+        }
     }
 
     private void fillInForm() {

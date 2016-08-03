@@ -12,4 +12,12 @@ seleniumMod
             $location.path("/home");
             $scope.error = true;
         }
+    }])
+    .controller('byNameCtrl', ['$scope', function ($scope) {
+        $scope.clickPreviousButton = function () {
+            $scope.text = "Previous";
+        }
+        $scope.clickNextButton = function () {
+            $scope.text = "Next";
+        }
     }]);
