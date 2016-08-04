@@ -163,6 +163,10 @@ appRoute
                         url: '/partialtext',
                         templateUrl: 'app/core/selenium/views/locating/selenium-locating-partialtext.html'
                     })
+                    .state('selenium.locating.tagname', {
+                        url: '/tagname',
+                        templateUrl: 'app/core/selenium/views/locating/selenium-locating-tagname.html'
+                    })
 
             // SPRING
             .state('spring', {

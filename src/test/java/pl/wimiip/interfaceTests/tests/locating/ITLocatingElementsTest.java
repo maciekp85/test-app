@@ -54,6 +54,7 @@ public class ITLocatingElementsTest extends ITConfigurationForChromeBrowser {
     public void previousAndNextButtons_LocatingElementByName_NothingResultsOnlyAsserts() {
         assertTrue(wait.until(ExpectedConditions.urlContains("locating")));
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.partialLinkText("1.3"))).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("previous")));
         WebElement previousButton = driver.findElement(By.name("previous"));
         WebElement nextButton = driver.findElement(By.name("next"));
         assertNotNull(previousButton);
@@ -125,6 +126,17 @@ public class ITLocatingElementsTest extends ITConfigurationForChromeBrowser {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Onet")));
         WebElement li3 = driver.findElement(By.partialLinkText("Wirtualna"));
         assertEquals("http://wp.pl/", li3.getAttribute("href"));
+    }
+
+    @Test
+    public void thAndTrTagsInTable_LocatingElementsByTagName_NothingResultsOnlyAsserts() {
+        assertTrue(wait.until(ExpectedConditions.urlContains("locating")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.partialLinkText("1.8"))).click();
+        WebElement table = driver.findElement(By.id("myTable"));
+        List<WebElement> columns = table.findElements(By.tagName("th"));
+        assertEquals(3, columns.size());
+        List<WebElement> rows = table.findElements(By.tagName("tr"));
+        assertEquals(3, rows.size());
     }
 
     @After
