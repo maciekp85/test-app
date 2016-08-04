@@ -151,7 +151,23 @@ appRoute
                         url: '/class',
                         templateUrl: 'app/core/selenium/views/locating/selenium-locating.class.html'
                     })
-                
+                    .state('selenium.locating.linktext', {
+                        url: '/linktext',
+                        templateUrl: 'app/core/selenium/views/locating/selenium-locating-linktext.html'
+                    })
+                    .state('selenium.locating.findelements', {
+                        url: '/findelements',
+                        templateUrl: 'app/core/selenium/views/locating/selenium-locating-findelements.html'
+                    })
+                    .state('selenium.locating.partialtext', {
+                        url: '/partialtext',
+                        templateUrl: 'app/core/selenium/views/locating/selenium-locating-partialtext.html'
+                    })
+                    .state('selenium.locating.tagname', {
+                        url: '/tagname',
+                        templateUrl: 'app/core/selenium/views/locating/selenium-locating-tagname.html'
+                    })
+
             // SPRING
             .state('spring', {
                 url: '/spring',
