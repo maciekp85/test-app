@@ -159,6 +159,10 @@ appRoute
                         url: '/findelements',
                         templateUrl: 'app/core/selenium/views/locating/selenium-locating-findelements.html'
                     })
+                    .state('selenium.locating.partialtext', {
+                        url: '/partialtext',
+                        templateUrl: 'app/core/selenium/views/locating/selenium-locating-partialtext.html'
+                    })
 
             // SPRING
             .state('spring', {

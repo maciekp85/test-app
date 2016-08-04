@@ -118,6 +118,15 @@ public class ITLocatingElementsTest extends ITConfigurationForChromeBrowser {
         }
     }
 
+    @Test
+    public void htmlUIElement_LocatingElementsByPartialText_NothingResultsOnlyAsserts() {
+        assertTrue(wait.until(ExpectedConditions.urlContains("locating")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.partialLinkText("1.7"))).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Onet")));
+        WebElement li3 = driver.findElement(By.partialLinkText("Wirtualna"));
+        assertEquals("http://wp.pl/", li3.getAttribute("href"));
+    }
+
     @After
     public void tearDown() {
         System.out.println("Cleaning after " + name.getMethodName());
