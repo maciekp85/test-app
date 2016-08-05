@@ -188,6 +188,27 @@ public class ITLocatingElementsTest extends ITConfigurationForChromeBrowser {
         // A Boolean not() pseudo-class can also be used to locate elements not matching the specified criteria.
         List<WebElement> imagesWithoutAlt = driver.findElements(By.cssSelector("img:not([alt])"));
         assertEquals(1, imagesWithoutAlt.size());
+
+        // Performing partial match on attribute values
+        // first button id = "firstButtonPrimary"
+        // second button id = "secondButtonValue"
+        // third button id = "thirdButtonRocketPower"
+
+        //  ^=
+        WebElement firstButton = driver.findElement(By.cssSelector("button[id^='first']"));
+        assertEquals("firstButtonPrimary", firstButton.getAttribute("id"));
+        WebElement secondButton = driver.findElement(By.cssSelector("input[id^='second']"));
+        assertEquals("secondButtonValue", secondButton.getAttribute("id"));
+
+        // $=
+        firstButton = driver.findElement(By.cssSelector("button[id$='Primary']"));
+        assertEquals("firstButtonPrimary", firstButton.getAttribute("id"));
+        secondButton = driver.findElement(By.cssSelector("input[id$='Value']"));
+        assertEquals("secondButtonValue", secondButton.getAttribute("id"));
+
+        // *=
+        WebElement thirdButton = driver.findElement(By.cssSelector("input[id*=Rocket]"));
+        assertEquals("thirdButtonRocketPower", thirdButton.getAttribute("id"));
     }
 
     @After
