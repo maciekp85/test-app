@@ -167,6 +167,10 @@ appRoute
                         url: '/tagname',
                         templateUrl: 'app/core/selenium/views/locating/selenium-locating-tagname.html'
                     })
+                    .state('selenium.locating.css', {
+                        url: '/css',
+                        templateUrl: 'app/core/selenium/views/locating/selenium-locating-css.html'
+                    })
 
             // SPRING
             .state('spring', {

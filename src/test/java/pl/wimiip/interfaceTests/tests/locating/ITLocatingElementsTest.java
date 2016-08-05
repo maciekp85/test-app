@@ -139,6 +139,57 @@ public class ITLocatingElementsTest extends ITConfigurationForChromeBrowser {
         assertEquals(3, rows.size());
     }
 
+    @Test
+    public void usernameInput_LocatingElementsUsingCssSelectors_NothingResultsOnlyAsserts() {
+        assertTrue(wait.until(ExpectedConditions.urlContains("locating")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.partialLinkText("1.9"))).click();
+
+        // Finding elements with
+        // ABSOLUTE PATH
+        WebElement userName = driver.findElement(By.cssSelector("html body div div div div div div div div div div div div form div div input"));
+        // ... by describing the direct parent to child relationships with > separator
+        userName = driver.findElement(By.cssSelector("html > body > div > div > div > div > div > div > div > div > div > div > div > div > form > div > div > input"));
+
+        // Finding elements with
+        // RELATIVE PATH
+        userName = driver.findElement(By.cssSelector("input"));
+
+        // Finding elements
+        // USING THE CLASS SELECTOR
+        WebElement loginButton = driver.findElement(By.cssSelector("input.form-control"));
+
+        // ... there is also shortcut but this will return all the elements with class as form-control and the test may not return the correct element.
+        loginButton = driver.findElement(By.cssSelector(".form-control"));
+
+        // Finding elements
+        // USING ID SELECTOR
+        userName = driver.findElement(By.cssSelector("input#login"));
+
+        // ... there is also shortcut but this will return all the elements with id as login and the test may not return the correct element.
+        userName = driver.findElement(By.cssSelector("#login"));
+
+        // Finding elements
+        // USING ATTRIBUTES SELECTOR
+        userName = driver.findElement(By.cssSelector("input[name=username]"));
+
+        // ... locating of the <img> element by using alt attribute
+        WebElement picture = driver.findElement(By.cssSelector("img[alt='picture with alt']"));
+
+        // MULTIPLE ATTRIBUTES
+        WebElement valueButton = driver.findElement(By.cssSelector("input[type='button'][value='ButtonValue']"));
+
+        // Finding elements
+        // USING ATTRIBUTES NAME SELECTOR
+
+        // to lookup all the <img> elements which have alt attribute
+        List<WebElement> imagesWithAlt = driver.findElements(By.cssSelector("img[alt]"));
+        assertEquals(1, imagesWithAlt.size());
+
+        // A Boolean not() pseudo-class can also be used to locate elements not matching the specified criteria.
+        List<WebElement> imagesWithoutAlt = driver.findElements(By.cssSelector("img:not([alt])"));
+        assertEquals(1, imagesWithoutAlt.size());
+    }
+
     @After
     public void tearDown() {
         System.out.println("Cleaning after " + name.getMethodName());
