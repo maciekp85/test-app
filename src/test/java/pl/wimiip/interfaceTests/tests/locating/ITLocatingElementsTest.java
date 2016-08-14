@@ -309,6 +309,19 @@ public class ITLocatingElementsTest extends ITConfigurationForChromeBrowser {
         assertEquals("Product 2", firstColumnOfThirdRow.getText());
     }
 
+    @Test
+    public void tableHtmlElement_LocatingElementsUsingText_NothingResultsOnlyAsserts() {
+        assertTrue(wait.until(ExpectedConditions.urlContains("locating")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.partialLinkText("1.11"))).click();
+
+        WebElement cell = driver.findElement(By.xpath("//td[contains(text(), 'Item 1')]"));
+        assertEquals("Item 1", cell.getText());
+
+        cell = driver.findElement(By.xpath("//td[.='Item 2']"));
+        assertEquals("Item 2", cell.getText());
+
+    }
+
 
     @After
     public void tearDown() {
