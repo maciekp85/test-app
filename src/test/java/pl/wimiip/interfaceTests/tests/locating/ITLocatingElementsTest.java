@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.rules.TestName;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.By;
+import org.openqa.selenium.InvalidSelectorException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,6 +24,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Created by nishi on 2016-06-19.
+ * Based partly on examples from the "Selenium Testing Tools Cookbook" book by Unmesh Gundecha
  */
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -140,7 +142,7 @@ public class ITLocatingElementsTest extends ITConfigurationForChromeBrowser {
     }
 
     @Test
-    public void usernameInput_LocatingElementsUsingCssSelectors_NothingResultsOnlyAsserts() {
+    public void htmlElements_LocatingElementsUsingCssSelectors_NothingResultsOnlyAsserts() {
         assertTrue(wait.until(ExpectedConditions.urlContains("locating")));
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.partialLinkText("1.9"))).click();
 
@@ -188,7 +190,125 @@ public class ITLocatingElementsTest extends ITConfigurationForChromeBrowser {
         // A Boolean not() pseudo-class can also be used to locate elements not matching the specified criteria.
         List<WebElement> imagesWithoutAlt = driver.findElements(By.cssSelector("img:not([alt])"));
         assertEquals(1, imagesWithoutAlt.size());
+
+        // Performing partial match on attribute values
+        // first button id = "firstButtonPrimary"
+        // second button id = "secondButtonValue"
+        // third button id = "thirdButtonRocketPower"
+
+        //  ^=
+        WebElement firstButton = driver.findElement(By.cssSelector("button[id^='first']"));
+        assertEquals("firstButtonPrimary", firstButton.getAttribute("id"));
+        WebElement secondButton = driver.findElement(By.cssSelector("input[id^='second']"));
+        assertEquals("secondButtonValue", secondButton.getAttribute("id"));
+
+        // $=
+        firstButton = driver.findElement(By.cssSelector("button[id$='Primary']"));
+        assertEquals("firstButtonPrimary", firstButton.getAttribute("id"));
+        secondButton = driver.findElement(By.cssSelector("input[id$='Value']"));
+        assertEquals("secondButtonValue", secondButton.getAttribute("id"));
+
+        // *=
+        WebElement thirdButton = driver.findElement(By.cssSelector("input[id*=Rocket]"));
+        assertEquals("thirdButtonRocketPower", thirdButton.getAttribute("id"));
     }
+
+    @Test
+    public void htmlElements_LocatingElementsUsingXPathSelectors_NothingResultsOnlyAsserts() {
+        assertTrue(wait.until(ExpectedConditions.urlContains("locating")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.partialLinkText("1.10"))).click();
+
+        // Finding elements with
+        // ABSOLUTE PATH
+        WebElement userName = driver.findElement(By.xpath("html/body/div/div/div/div/div/div/div/div/div/div/div/div/form/div/div/input"));
+
+        // Finding elements with
+        // RELATIVE PATH
+        userName = driver.findElement(By.xpath("//input"));
+
+        // Finding elements
+        // USING INDEX
+        WebElement password = driver.findElement(By.xpath("//form/div[2]//input"));
+
+        // Finding elements using attributes values with XPath
+        userName = driver.findElement(By.xpath("//input[@id='username']"));
+        WebElement picture = driver.findElement(By.xpath("//img[@alt='picture 1 with alt']"));
+
+        WebElement previousButton = driver.findElement(By.xpath("//input[@alt='Previous']"));
+        WebElement nextButton = driver.findElement(By.xpath("//input[@type='submit'][@value='Next']"));
+
+        // Operator and
+        nextButton = driver.findElement(By.xpath("//input[@type='submit' and @value='Next']"));
+        // Operator or
+        nextButton = driver.findElement(By.xpath("//input[@value='Previous' or @value='Next']"));
+
+        // Finding elements using attributes with XPath
+        List<WebElement> pictures = driver.findElements(By.xpath("//img[@alt]"));
+        assertEquals(2, pictures.size());
+
+        // Performing partial match on attribute values
+
+        // starts-with()
+        WebElement maciek = driver.findElement(By.xpath("//label[starts-with(@id, 'maciek_123')]"));
+        assertEquals("Maciek", maciek.getText());
+
+        // ends-with()
+        try {
+            WebElement krzysiek = driver.findElement(By.xpath("//label[ends-with(@id, 'krzysiek')]"));
+            assertEquals("Krzysiek", krzysiek.getText());
+        } catch (InvalidSelectorException exc) {
+            // The ends-with function is part of xpath 2.0 but browsers (for example chrome) generally only support 1.0
+            // This is only explanation which I have found in the net.
+        }
+
+        // contains()
+        WebElement robert = driver.findElement(By.xpath("//label[contains(@id, 'robert')]"));
+        assertEquals("Robert", robert.getText());
+
+        // Matching any attribute using a value
+        WebElement username = driver.findElement(By.xpath("//input[@*='username']"));
+        assertEquals("username", username.getAttribute("id"));
+
+        // Locating elements wth XPath axis
+
+        // ANCESTOR
+        // Selects all ancestors (parent, grandparent, and so on) of the current node
+        // This will get the table element
+        WebElement table = driver.findElement(By.xpath("//td[text()='Product 1']/ancestor::table"));
+        assertEquals("table", table.getTagName());
+
+        // DESCENDANT
+        // Selects all descendants (children, grandchildren, and so on) of the current node.
+        // This will get the input element from the third column pf the second row from the table.
+        WebElement qty12 = driver.findElement(By.xpath("//table/descendant::td/input"));
+        assertEquals("12", qty12.getAttribute("value"));
+
+        // FOLLOWING
+        // Selects everything in the document after the closing tag of the current node.
+        // This will get the second row from the table
+        WebElement secondRow = driver.findElement(By.xpath("//td[text()='Product 1']/following::tr"));
+        assertEquals("Product 2 $150", secondRow.getText());
+
+        // FOLLOWING-SIBLING
+        // Selects all siblings after the current node
+        // This will get the second column from the second row immediately after the column that has Product 1
+        // as the text value
+        WebElement secondRowSecondColumn = driver.findElement(By.xpath("//td[text()='Product 1']/following-sibling::td"));
+        assertEquals("$100", secondRowSecondColumn.getText());
+
+        // PRECEDING
+        // Select all nodes that appear before the current node in the document, except ancestors, attribute nodes,
+        // and namespaces nodes.
+        // This will get the header row.
+        WebElement headerRow = driver.findElement(By.xpath("//td[text()='$150']/preceding::tr"));
+        assertEquals("Product Price Qty", headerRow.getText());
+
+        // PRECEDING-SIBLING
+        // Selects all siblings before the current node.
+        WebElement firstColumnOfThirdRow = driver.findElement(By.xpath("//td[text()='$150']/preceding-sibling::td"));
+        assertEquals("Product 2", firstColumnOfThirdRow.getText());
+    }
+
 
     @After
     public void tearDown() {
