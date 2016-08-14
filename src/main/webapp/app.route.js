@@ -171,6 +171,10 @@ appRoute
                         url: '/css',
                         templateUrl: 'app/core/selenium/views/locating/selenium-locating-css.html'
                     })
+                    .state('selenium.locating.xpath', {
+                        url: '/xpath',
+                        templateUrl: 'app/core/selenium/views/locating/selenium-locating-xpath.html'
+                    })
 
             // SPRING
             .state('spring', {
