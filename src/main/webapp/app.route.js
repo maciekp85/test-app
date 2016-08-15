@@ -183,6 +183,10 @@ appRoute
                         url: '/advancedcss',
                         templateUrl: 'app/core/selenium/views/locating/selenium-locating-advancedcss.html'
                     })
+                    .state('selenium.locating.jquery', {
+                        url: '/jquery',
+                        templateUrl: 'app/core/selenium/views/locating/selenium-locating-jquery.html'
+                    })
 
             // SPRING
             .state('spring', {

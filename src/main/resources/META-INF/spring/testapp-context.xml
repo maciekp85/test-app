@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="engine" class="pl.wimiip.service.impl.SearchEngineService" />
+
+    <bean id="documentType" class="pl.wimiip.model.Type">
+        <property name="name" value="WEB" />
+        <property name="desc" value="Lacze sieciowe" />
+        <property name="extension" value=".url" />
+    </bean>
+
+    <bean id="customerManage" class="pl.wimiip.service.impl.CustomerManageService">
+        <property name="customerDAO" ref="customerDAO" />
+    </bean>
+
+    <bean id="customerDAO" class="pl.wimiip.repository.impl.CustomerRepository">
+        <property name="tester" ref="tester" />
+        <property name="developer" ref="developer" />
+        <property name="producOwner" ref="productOwner" />
+    </bean>
+
+    <bean id="tester" class="pl.wimiip.model.Customer">
+        <property name="customerId" value="C1234" />
+        <property name="name" value="Mark" />
+        <property name="address" value="Kazimierza 3" />
+    </bean>
+
+    <bean id="developer" class="pl.wimiip.model.Customer">
+        <property name="customerId" value="C1235" />
+        <property name="name" value="Maciek" />
+        <property name="address" value="złota 10" />
+    </bean>
+
+    <bean id="productOwner" class="pl.wimiip.model.Customer">
+        <property name="customerId" value="C1236" />
+        <property name="name" value="Karol" />
+        <property name="address" value="wadowicka 5" />
+    </bean>
+
+</beans>
