@@ -319,7 +319,62 @@ public class ITLocatingElementsTest extends ITConfigurationForChromeBrowser {
 
         cell = driver.findElement(By.xpath("//td[.='Item 2']"));
         assertEquals("Item 2", cell.getText());
+    }
 
+    @Test
+    public void htmlElements_LocatingElementsUsingAdvancedCssSelectors_NothingResultsOnlyAsserts() {
+        assertTrue(wait.until(ExpectedConditions.urlContains("locating")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.partialLinkText("1.12"))).click();
+
+        // Finding child elements
+
+        // Locating the Username field in the login form
+        WebElement username = driver.findElement(By.cssSelector("form#loginForm > input"));
+        assertEquals("Maciek", username.getAttribute("value"));
+
+        // Here, the second element in <form> is the Username field.
+        username = driver.findElement(By.cssSelector("form#loginForm :nth-child(2)"));
+        assertEquals("Maciek", username.getAttribute("value"));
+
+        // This will locate the first element under the form, that is, the label for username.
+        WebElement firstLabel = driver.findElement(By.cssSelector("form#loginForm :first-child"));
+        assertEquals("UserName:", firstLabel.getText());
+        assertEquals("label", firstLabel.getTagName());
+
+        // This will locate the last element under the form, that is, the Login button.
+        WebElement loginButton = driver.findElement(By.cssSelector("form#loginForm :last-child"));
+        assertEquals("login", loginButton.getAttribute("value"));
+        assertEquals("submit", loginButton.getAttribute("type"));
+
+        // Finding sibling elements
+
+        // OPERATOR +
+        // The first child of div#top5 wil be <p> with Description for Product 1 and its immediate sibling
+        // will be Description for Product 2.
+        WebElement productDescription2 = driver.findElement(By.cssSelector("div#top5 > p + p"));
+        assertEquals("Description for Product 2", productDescription2.getText());
+
+        // Following sibling with one intermediary. This will locate Description for Product 3.
+        WebElement productDescription3 = driver.findElement(By.cssSelector("div#top5 > p + * + p"));
+        assertEquals("Description for Product 3", productDescription3.getText());
+
+        // Using user action pseudo-classes
+        driver.findElement(By.className("username")).click();
+        // Locating element which has current input focus (you can also locate elements using
+        // :hover and :active pseudoclasses.
+        WebElement usernameMaciek = driver.findElement(By.cssSelector("input:focus"));
+        assertEquals("Maciek", usernameMaciek.getAttribute("value"));
+
+        // Using UI state pseudo-classes
+        // Using UI spc we can locate elements for various states such as control is enabled, disabled and checked.
+        WebElement disabled = driver.findElement(By.cssSelector("input:disabled"));
+        assertEquals("Disabled", disabled.getAttribute("value"));
+
+        WebElement checked = driver.findElement(By.cssSelector("input:checked"));
+        assertEquals("Checked", checked.getAttribute("value"));
+
+        List<WebElement> enabledInputs = driver.findElements(By.cssSelector("input:enabled"));
+        assertEquals(5, enabledInputs.size());
     }
 
 
