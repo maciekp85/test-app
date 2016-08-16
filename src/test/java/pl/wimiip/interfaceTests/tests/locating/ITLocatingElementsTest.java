@@ -6,9 +6,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
 import org.junit.runner.RunWith;
-import org.openqa.selenium.By;
-import org.openqa.selenium.InvalidSelectorException;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -18,6 +16,7 @@ import pl.wimiip.interfaceTests.config.ITConfigurationForChromeBrowser;
 import pl.wimiip.interfaceTests.tests.CommonMethods;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -33,6 +32,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ITLocatingElementsTest extends ITConfigurationForChromeBrowser {
 
     private CommonMethods commonMethods;
+    private JavascriptExecutor js = (JavascriptExecutor) driver;
 
     @Rule
     public TestName name = new TestName();
@@ -377,6 +377,52 @@ public class ITLocatingElementsTest extends ITConfigurationForChromeBrowser {
         assertEquals(5, enabledInputs.size());
     }
 
+    @Test
+    public void defaultSelectedCheckbox_LocatingElementsUsingJQuerySelectors_NothingResultsOnlyAsserts() {
+        assertTrue(wait.until(ExpectedConditions.urlContains("locating")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.partialLinkText("1.13"))).click();
+
+        // Expected list of selected Checkbox
+        List<String> checked = Arrays.asList(new String[]{"user128_admin", "user220_browser"});
+
+        injectjQueryIfNeeded();
+
+        // Create an instance of JavaScript Executor from driver
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+
+        // Locate all the Checkbox which are checked by calling jQuery find() method.
+        // find() method returns elements in array
+        List<WebElement> elements = (List<WebElement>)js.executeScript("return jQuery.find(':checked')");
+
+        // Verify two Checkbox are selected
+        assertEquals(2, elements.size());
+
+        // Verify correct Checkbox are selected
+        for (WebElement element: elements)
+            assertTrue(checked.contains(element.getAttribute("id")));
+    }
+
+    @Test
+    public void tableRowsAndCells_Locating_NothingResultsOnlyAsserts() {
+        assertTrue(wait.until(ExpectedConditions.urlContains("locating")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.partialLinkText("1.14"))).click();
+
+        WebElement simpleTable = driver.findElement(By.id("items"));
+
+        // Get all rows
+        List<WebElement> rows = driver.findElements(By.tagName("tr"));
+        assertEquals(3, rows.size());
+
+        // Print data from each row
+        for (WebElement row: rows) {
+            List<WebElement> cols = row.findElements(By.tagName("td"));
+            for(WebElement col: cols) {
+                System.out.println(col.getText() + "\t");
+            }
+            System.out.println();
+        }
+    }
+
 
     @After
     public void tearDown() {
@@ -409,5 +455,36 @@ public class ITLocatingElementsTest extends ITConfigurationForChromeBrowser {
                 && wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password"))).getText() != null)
             driver.findElement(By.id("password")).clear();
             assertEquals("", driver.findElement(By.id("login")).getText());
+    }
+
+    /**
+     * The injectjQueryIfNeeded() method will internally call the jQueryLoaded() method to see if the jQuery
+     * object is available on the page. If the page does not have the jQuery object defined, the injectjQueryIfNeeded() method
+     * will call the injectjQuery() method to attach the jQuery library to the page header at runtime.
+     * It does not accept any arguments.
+     */
+    private void injectjQueryIfNeeded() {
+        if (!jQueryLoaded())
+            injectjQuery();
+    }
+
+    public Boolean jQueryLoaded() {
+        Boolean loaded;
+
+        try {
+            loaded = (Boolean) js.executeScript("return jQuery()!=null");
+        } catch (WebDriverException e) {
+            loaded = false;
         }
+
+        return loaded;
+    }
+
+    public void injectjQuery() {
+        js.executeScript(" var headID = document.getElementsByTagName(\"head\")[0];"
+                + "var newScript = document.createElement('script');"
+                + "newScript.type = 'text/javascript';"
+                + "newScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js';"
+                + "headID.appendChild(newScript);");
+    }
 }
