@@ -187,6 +187,10 @@ appRoute
                         url: '/jquery',
                         templateUrl: 'app/core/selenium/views/locating/selenium-locating-jquery.html'
                     })
+                    .state('selenium.locating.table', {
+                        url: '/table',
+                        templateUrl: 'app/core/selenium/views/locating/selenium-locating-table.html'
+                    })
 
             // SPRING
             .state('spring', {

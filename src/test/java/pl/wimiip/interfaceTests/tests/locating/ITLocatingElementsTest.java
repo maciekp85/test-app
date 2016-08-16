@@ -402,6 +402,27 @@ public class ITLocatingElementsTest extends ITConfigurationForChromeBrowser {
             assertTrue(checked.contains(element.getAttribute("id")));
     }
 
+    @Test
+    public void tableRowsAndCells_Locating_NothingResultsOnlyAsserts() {
+        assertTrue(wait.until(ExpectedConditions.urlContains("locating")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.partialLinkText("1.14"))).click();
+
+        WebElement simpleTable = driver.findElement(By.id("items"));
+
+        // Get all rows
+        List<WebElement> rows = driver.findElements(By.tagName("tr"));
+        assertEquals(3, rows.size());
+
+        // Print data from each row
+        for (WebElement row: rows) {
+            List<WebElement> cols = row.findElements(By.tagName("td"));
+            for(WebElement col: cols) {
+                System.out.println(col.getText() + "\t");
+            }
+            System.out.println();
+        }
+    }
+
 
     @After
     public void tearDown() {
