@@ -191,6 +191,10 @@ appRoute
                         url: '/table',
                         templateUrl: 'app/core/selenium/views/locating/selenium-locating-table.html'
                     })
+                    .state('selenium.locating.childelements', {
+                        url: '/childelements',
+                        templateUrl: 'app/core/selenium/views/locating/selenium-locating-childelements.html'
+                    })
 
             // SPRING
             .state('spring', {
