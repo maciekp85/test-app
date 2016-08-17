@@ -14,7 +14,7 @@ import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 import pl.wimiip.security.CsrfHeaderFilter;
 
 @SpringBootApplication
-//@ImportResource("classpath:META-INF/spring/testapp-context.xml")
+@ImportResource("classpath:META-INF/spring/testapp-context.xml")
 public class TestApp {
 
 	public static void main(String[] args) {

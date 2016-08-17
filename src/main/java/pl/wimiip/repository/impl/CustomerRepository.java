@@ -41,13 +41,14 @@ public class CustomerRepository implements CustomerDAO {
         this.productOwner = producOwner;
     }
 
-    private List<Customer> listofCustomers = new ArrayList<Customer>();
+    private List<Customer> listofCustomers;
 
     public CustomerRepository() {
     }
 
     @Override
     public List<Customer> getAllCustomers() {
+        listofCustomers = new ArrayList<>();
         listofCustomers.add(tester);
         listofCustomers.add(developer);
         listofCustomers.add(productOwner);

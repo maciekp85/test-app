@@ -63,13 +63,7 @@ springMod
     }])
 
     .controller('customersCtrl', ['$scope','$http', function ($scope, $http) {
-
         $http.get('/customers').success(function (data) {
-            var customers = [];
-            for(var i=0; i<data.customers.length; i++) {
-                customers[i] = data.customers[i];
-            }
-            $scope.customers = customers;
+            $scope.customers = data.customers;
         })
-
     }])
