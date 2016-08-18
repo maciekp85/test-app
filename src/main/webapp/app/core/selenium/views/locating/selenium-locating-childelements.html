@@ -1,0 +1,50 @@
+<div class="well" role="form">
+    <div class="form-group">
+        <label class="controls-pane">Locating child elements in a table</label>
+    </div>
+    <div>
+        <table id="items" border="1">
+            <thead>
+            <tr>
+                <td>User Name</td>
+                <td>E-mail</td>
+                <td>Access</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Rick</td>
+                <td>
+                    <a href="mailto:rick@test.com">Rick@test.com</a>
+                </td>
+                <td>
+                    <div>
+                        <label for="user128_admin">Admin</label>
+                        <input id="user128_admin" type="checkbox" checked="true">
+                        <label for="user128_cm">Content Manager</label>
+                        <input id="user128_cm" type="checkbox">
+                        <label for="user128_browser">Browser</label>
+                        <input id="user128_browser" type="checkbox">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td> John </td>
+                <td>
+                    <a href="mailto:user1@test.com">John@test.com</a>
+                </td>
+                <td>
+                    <div>
+                        <label for="user220_admin">Admin</label>
+                        <input id="user220_admin" type="checkbox">
+                        <label for="user220_cm">Content Manager</label>
+                        <input id="user220_cm" type="checkbox">
+                        <label for="user220_browser">Browser</label>
+                        <input id="user220_browser" type="checkbox" checked="true" name="browser">
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

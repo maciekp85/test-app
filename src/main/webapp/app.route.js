@@ -191,6 +191,19 @@ appRoute
                         url: '/table',
                         templateUrl: 'app/core/selenium/views/locating/selenium-locating-table.html'
                     })
+                    .state('selenium.locating.childelements', {
+                        url: '/childelements',
+                        templateUrl: 'app/core/selenium/views/locating/selenium-locating-childelements.html'
+                    })
+                // WORKING WITH SELENIUM API
+                .state('selenium.api', {
+                    url: '/api',
+                    templateUrl: 'app/core/selenium/views/api/selenium-api.html'
+                })
+                    .state('selenium.api.introduction', {
+                        url: '/introduction',
+                        templateUrl: 'app/core/selenium/views/api/selenium-api-introduction.html'
+                    })
 
             // SPRING
             .state('spring', {

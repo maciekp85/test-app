@@ -403,7 +403,7 @@ public class ITLocatingElementsTest extends ITConfigurationForChromeBrowser {
     }
 
     @Test
-    public void tableRowsAndCells_Locating_NothingResultsOnlyAsserts() {
+    public void table_LocatingRowsAndCells_NothingResultsOnlyAsserts() {
         assertTrue(wait.until(ExpectedConditions.urlContains("locating")));
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.partialLinkText("1.14"))).click();
 
@@ -423,6 +423,20 @@ public class ITLocatingElementsTest extends ITConfigurationForChromeBrowser {
         }
     }
 
+    @Test
+    public void table_LocatingChildElements_NothingResultsOnlyAsserts() {
+        assertTrue(wait.until(ExpectedConditions.urlContains("locating")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.partialLinkText("1.15"))).click();
+
+        // It does not work. Result: method threw 'org.openqa.selenium.InvalidSelectorException' exception.
+        // WebElement adminCheckbox = driver.findElement(By.cssSelector("td:contains('Rick')+td+td>div>label:contains('Admin')+input"));
+        // adminCheckbox.click();
+
+        WebElement adminCheckbox = driver.findElement(By.xpath("//td[contains(text(), 'Rick')]/following-sibling::td/descendant::div/label[contains(text(), 'Admin')]/following-sibling::input"));
+        adminCheckbox.click();
+
+        assertFalse(adminCheckbox.isSelected());
+    }
 
     @After
     public void tearDown() {
