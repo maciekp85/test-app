@@ -204,6 +204,10 @@ appRoute
                         url: '/introduction',
                         templateUrl: 'app/core/selenium/views/api/selenium-api-introduction.html'
                     })
+                    .state('selenium.api.checkingelementtext', {
+                        url: '/checkingelementtext',
+                        templateUrl: 'app/core/selenium/views/api/selenium-api-checkingelementtext.html'
+                    })
 
             // SPRING
             .state('spring', {

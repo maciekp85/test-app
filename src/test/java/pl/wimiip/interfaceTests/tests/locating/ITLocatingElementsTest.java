@@ -42,6 +42,7 @@ public class ITLocatingElementsTest extends ITConfigurationForChromeBrowser {
         System.out.println("Starting " + name.getMethodName());
         commonMethods = new CommonMethods();
         commonMethods.logInAndMoveToSeleniumPage();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.tagName("button"))).click();
     }
 
     @Test

@@ -17,11 +17,9 @@ public class CommonMethods extends ITConfigurationForChromeBrowser {
                 wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Login"))).click();
                 fillInForm();
                 wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Selenium"))).click();
-                wait.until(ExpectedConditions.visibilityOfElementLocated(By.tagName("button"))).click();
             }
         } catch (NoSuchElementException exc) {
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Selenium"))).click();
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.tagName("button"))).click();
         }
     }
 
