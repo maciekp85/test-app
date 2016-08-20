@@ -41,8 +41,9 @@ public class ITWorkingWithSeleniumApiTest extends ITConfigurationForChromeBrowse
 
     @Test
     public void button_CheckingElementText_NothingResultsOnlyAsserts() {
-        assertTrue(wait.until(ExpectedConditions.urlContains("api")));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.partialLinkText("2.2"))).click();
+
+        // Move to proper view
+        moveToExample("api", "2.2");
 
         // Get the button element
         WebElement button = driver.findElement(By.id("button"));
@@ -68,8 +69,39 @@ public class ITWorkingWithSeleniumApiTest extends ITConfigurationForChromeBrowse
         assertEquals("Div's Text\nSpan's Text", areaText);
     }
 
+    @Test
+    public void paragraph_CheckingElementAttributeValue_NothingResultsOnlyAsserts() {
+
+        // Move to proper view
+        moveToExample("api", "2.3");
+
+        // Get the paragraph element
+        WebElement message = driver.findElement(By.id("message"));
+
+        // Checking whether align attribute is correct
+        assertEquals("justify", message.getAttribute("align"));
+    }
+
     @After
     public void tearDown() {
         System.out.println("Cleaning after " + name.getMethodName());
+    }
+
+    /**
+     * OTHER METHODS
+     */
+
+    /**
+     * Method who moves you to proper view based on chapter and example string values
+     * @param url name within url address
+     * @param numberExample number within title of example
+     */
+    private void moveToExample(String url, String numberExample) {
+
+        // Check whether url contains passed value
+        assertTrue(wait.until(ExpectedConditions.urlContains(url)));
+
+        // Wait until located element will be visibility and then click on it.
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.partialLinkText(numberExample))).click();
     }
 }
