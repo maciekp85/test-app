@@ -82,6 +82,22 @@ public class ITWorkingWithSeleniumApiTest extends ITConfigurationForChromeBrowse
         assertEquals("justify", message.getAttribute("align"));
     }
 
+    @Test
+    public void htmlElement_CheckingElementStyle_NothingResultsOnlyAsserts() {
+
+        // Move to proper view
+        moveToExample("api", "2.4");
+
+        // Get the button element
+        WebElement button = driver.findElement(By.id("button"));
+
+        // Get css value for button element
+        String width = button.getCssValue("width");
+
+        // Check whether css value is correct
+        assertEquals("150px", width);
+    }
+
     @After
     public void tearDown() {
         System.out.println("Cleaning after " + name.getMethodName());

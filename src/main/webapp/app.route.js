@@ -212,6 +212,10 @@ appRoute
                         url: '/checkingelementattributevalues',
                         templateUrl: 'app/core/selenium/views/api/selenium-api-checkingelementattributevalues.html'
                     })
+                    .state('selenium.api.checkingelementcssvalues', {
+                        url: '/checkingelementcssvalues',
+                        templateUrl: 'app/core/selenium/views/api/selenium-api-checkingelementcssvalues.html'
+                    })
 
             // SPRING
             .state('spring', {
