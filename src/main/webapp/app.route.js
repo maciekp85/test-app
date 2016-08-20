@@ -204,6 +204,14 @@ appRoute
                         url: '/introduction',
                         templateUrl: 'app/core/selenium/views/api/selenium-api-introduction.html'
                     })
+                    .state('selenium.api.checkingelementtext', {
+                        url: '/checkingelementtext',
+                        templateUrl: 'app/core/selenium/views/api/selenium-api-checkingelementtext.html'
+                    })
+                    .state('selenium.api.checkingelementattributevalues', {
+                        url: '/checkingelementattributevalues',
+                        templateUrl: 'app/core/selenium/views/api/selenium-api-checkingelementattributevalues.html'
+                    })
 
             // SPRING
             .state('spring', {
