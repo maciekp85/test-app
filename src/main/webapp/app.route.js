@@ -216,6 +216,10 @@ appRoute
                         url: '/checkingelementcssvalues',
                         templateUrl: 'app/core/selenium/views/api/selenium-api-checkingelementcssvalues.html'
                     })
+                    .state('selenium.api.mouseandkeyboardevents', {
+                        url: '/mouseandkeyboardevents',
+                        templateUrl: 'app/core/selenium/views/api/selenium-api-mouseandkeyboardevents.html'
+                    })
 
             // SPRING
             .state('spring', {
