@@ -224,6 +224,10 @@ appRoute
                         url: '/doubleclickonelement',
                         templateUrl: 'app/core/selenium/views/api/selenium-api-doubleclickonelement.html'
                     })
+                    .state('selenium.api.draganddropoperations', {
+                        url: '/draganddropoperations',
+                        templateUrl: 'app/core/selenium/views/api/selenium-api-draganddropoperations.html'
+                    })
                         
             // SPRING
             .state('spring', {

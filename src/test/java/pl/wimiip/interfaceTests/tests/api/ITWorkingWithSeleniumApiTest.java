@@ -127,7 +127,7 @@ public class ITWorkingWithSeleniumApiTest extends ITConfigurationForChromeBrowse
     }
 
     @Test
-    public void buttonAndMessageText_PerformingDoubleClickOnElementAndCheckedWhetherTextIsDisplayed_NothingResultsOnlyAsserts() {
+    public void button_PerformingDoubleClickOnElementAndCheckedWhetherTextIsDisplayed_NothingResultsOnlyAsserts() {
 
         // Move to proper view
         moveToExample("api", "2.6");
@@ -147,6 +147,24 @@ public class ITWorkingWithSeleniumApiTest extends ITConfigurationForChromeBrowse
         // Verify whether text is visible and proper
         assertFalse(paragraph.getText().isEmpty());
         assertEquals("Hello World", paragraph.getText());
+    }
+
+    @Test
+    public void twoDivElements_PerformingDragAndDropOperations_NothingResultsOnlyAsserts() {
+
+        // Move to proper view
+        moveToExample("api", "2.7");
+
+        // Get source element
+        WebElement source = driver.findElement(By.id("draggable"));
+
+        // Get target element
+        WebElement target = driver.findElement(By.id("droppable"));
+
+        Actions builder = new Actions(driver);
+        builder.dragAndDrop(source, target).build().perform();
+
+        assertEquals("Dropped!", target.getText());
     }
 
     @After
