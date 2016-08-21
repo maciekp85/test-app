@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.rules.TestName;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -165,6 +166,24 @@ public class ITWorkingWithSeleniumApiTest extends ITConfigurationForChromeBrowse
         builder.dragAndDrop(source, target).build().perform();
 
         assertEquals("Dropped!", target.getText());
+    }
+
+    @Test
+    public void pageTitleAndInputs_JavaScriptCalls_NothingResultsOnlyAsserts() {
+
+        // Move to proper view
+        moveToExample("api", "2.8");
+
+        // Casting the WebDriver instance to a JavascriptExecutor interface
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+
+        // Get page title and check whether is correct
+        String title = (String) js.executeScript("return document.title");
+        assertEquals("Test App - Start Test App Template", title);
+
+        // Get count of input elements on page and check whether is proper
+        long inputs = (Long) js.executeScript("var inputs = document.getElementsByTagName('input'); return inputs.length; ");
+        assertEquals(2, inputs);
     }
 
     @After

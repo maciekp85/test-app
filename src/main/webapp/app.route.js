@@ -228,6 +228,10 @@ appRoute
                         url: '/draganddropoperations',
                         templateUrl: 'app/core/selenium/views/api/selenium-api-draganddropoperations.html'
                     })
+                    .state('selenium.api.executingjavascriptcode', {
+                        url: '/executingjavascriptcode',
+                        templateUrl: 'app/core/selenium/views/api/selenium-api-executingjavascriptcode.html'
+                    })
                         
             // SPRING
             .state('spring', {
