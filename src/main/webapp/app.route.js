@@ -212,7 +212,23 @@ appRoute
                         url: '/checkingelementattributevalues',
                         templateUrl: 'app/core/selenium/views/api/selenium-api-checkingelementattributevalues.html'
                     })
-
+                    .state('selenium.api.checkingelementcssvalues', {
+                        url: '/checkingelementcssvalues',
+                        templateUrl: 'app/core/selenium/views/api/selenium-api-checkingelementcssvalues.html'
+                    })
+                    .state('selenium.api.mouseandkeyboardevents', {
+                        url: '/mouseandkeyboardevents',
+                        templateUrl: 'app/core/selenium/views/api/selenium-api-mouseandkeyboardevents.html'
+                    })
+                    .state('selenium.api.doubleclickonelement', {
+                        url: '/doubleclickonelement',
+                        templateUrl: 'app/core/selenium/views/api/selenium-api-doubleclickonelement.html'
+                    })
+                    .state('selenium.api.draganddropoperations', {
+                        url: '/draganddropoperations',
+                        templateUrl: 'app/core/selenium/views/api/selenium-api-draganddropoperations.html'
+                    })
+                        
             // SPRING
             .state('spring', {
                 url: '/spring',

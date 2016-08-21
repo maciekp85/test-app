@@ -7,13 +7,17 @@ import org.junit.Test;
 import org.junit.rules.TestName;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import pl.wimiip.TestApp;
 import pl.wimiip.interfaceTests.config.ITConfigurationForChromeBrowser;
 import pl.wimiip.interfaceTests.tests.CommonMethods;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -80,6 +84,87 @@ public class ITWorkingWithSeleniumApiTest extends ITConfigurationForChromeBrowse
 
         // Checking whether align attribute is correct
         assertEquals("justify", message.getAttribute("align"));
+    }
+
+    @Test
+    public void htmlElement_CheckingElementStyle_NothingResultsOnlyAsserts() {
+
+        // Move to proper view
+        moveToExample("api", "2.4");
+
+        // Get the button element
+        WebElement button = driver.findElement(By.id("button"));
+
+        // Get css value for button element
+        String width = button.getCssValue("width");
+
+        // Check whether css value is correct
+        assertEquals("150px", width);
+    }
+
+    @Test
+    public void multipleSelectList_HoldingCtrlKeyAndThenSelectingSeveralOptions_NothingResultsOnlyAsserts() {
+
+        // Move to proper view
+        moveToExample("api", "2.5");
+
+        // Get options from multiple select list
+        List<WebElement> selectList = driver.findElements(By.tagName("option"));
+
+        // Select second and fourth option from select list using Ctrl key
+        // Option index start at 0
+        Actions builder = new Actions(driver);
+
+        builder.click(selectList.get(1))
+                .keyDown(Keys.CONTROL)
+                .click(selectList.get(3))
+                .keyUp(Keys.CONTROL)
+                .build().perform();
+
+        // Verify selected select list shows two options selected
+        List<WebElement> options = driver.findElements(By.cssSelector("option:checked"));
+        assertEquals(2, options.size());
+    }
+
+    @Test
+    public void button_PerformingDoubleClickOnElementAndCheckedWhetherTextIsDisplayed_NothingResultsOnlyAsserts() {
+
+        // Move to proper view
+        moveToExample("api", "2.6");
+
+        // Get button element
+        WebElement button = driver.findElement(By.id("button"));
+
+        // Get paragraph element
+        WebElement paragraph = driver.findElement(By.id("helloMessage"));
+
+        // Verify text within paragraph is not visible
+        assertTrue(paragraph.getText().isEmpty());
+
+        Actions builder = new Actions(driver);
+        builder.doubleClick(button).build().perform();
+
+        // Verify whether text is visible and proper
+        assertFalse(paragraph.getText().isEmpty());
+        assertEquals("Hello World", paragraph.getText());
+    }
+
+    @Test
+    public void twoDivElements_PerformingDragAndDropOperations_NothingResultsOnlyAsserts() {
+
+        // Move to proper view
+        moveToExample("api", "2.7");
+
+        // Get source element
+        WebElement source = driver.findElement(By.id("draggable"));
+
+        // Get target element
+        WebElement target = driver.findElement(By.id("droppable"));
+
+        Actions builder = new Actions(driver);
+        builder.dragAndDrop(source, target).build().perform();
+
+        assertEquals("Dropped!", target.getText());
     }
 
     @After

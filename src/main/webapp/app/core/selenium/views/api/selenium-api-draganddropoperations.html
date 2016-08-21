@@ -1,0 +1,27 @@
+<div class="well" role="form">
+    <div class="form-group">
+        <label class="controls-pane">Performing drag-and-drop operations</label>
+    </div>
+    <div>
+        <div id="draggable" style="position: relative"; >
+            <p>Drag me to my target</p>
+        </div>
+        <div id="droppable" class="well">
+            <p>Drop here</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function() {
+        $( "#draggable" ).draggable();
+        $( "#droppable" ).droppable({
+            drop: function( event, ui ) {
+                $( this )
+                        .addClass( "ui-state-highlight" )
+                        .find( "p" )
+                            .html( "Dropped!" );
+            }
+        });
+    });
+</script>
