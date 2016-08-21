@@ -126,6 +126,29 @@ public class ITWorkingWithSeleniumApiTest extends ITConfigurationForChromeBrowse
         assertEquals(2, options.size());
     }
 
+    @Test
+    public void buttonAndMessageText_PerformingDoubleClickOnElementAndCheckedWhetherTextIsDisplayed_NothingResultsOnlyAsserts() {
+
+        // Move to proper view
+        moveToExample("api", "2.6");
+
+        // Get button element
+        WebElement button = driver.findElement(By.id("button"));
+
+        // Get paragraph element
+        WebElement paragraph = driver.findElement(By.id("helloMessage"));
+
+        // Verify text within paragraph is not visible
+        assertTrue(paragraph.getText().isEmpty());
+
+        Actions builder = new Actions(driver);
+        builder.doubleClick(button).build().perform();
+
+        // Verify whether text is visible and proper
+        assertFalse(paragraph.getText().isEmpty());
+        assertEquals("Hello World", paragraph.getText());
+    }
+
     @After
     public void tearDown() {
         System.out.println("Cleaning after " + name.getMethodName());

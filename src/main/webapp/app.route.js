@@ -220,7 +220,11 @@ appRoute
                         url: '/mouseandkeyboardevents',
                         templateUrl: 'app/core/selenium/views/api/selenium-api-mouseandkeyboardevents.html'
                     })
-
+                    .state('selenium.api.doubleclickonelement', {
+                        url: '/doubleclickonelement',
+                        templateUrl: 'app/core/selenium/views/api/selenium-api-doubleclickonelement.html'
+                    })
+                        
             // SPRING
             .state('spring', {
                 url: '/spring',

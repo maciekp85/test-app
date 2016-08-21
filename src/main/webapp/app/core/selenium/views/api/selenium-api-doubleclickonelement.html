@@ -1,0 +1,15 @@
+<div class="well" role="form">
+    <div class="form-group">
+        <label class="controls-pane">Performing double click on an element</label>
+    </div>
+    <div class="well">
+        <button id="button" class="btn btn-primary" ondblclick="myFunction()">Double click me</button>
+        <p id="helloMessage"></p>
+    </div>
+</div>
+
+<script>
+    function myFunction() {
+        document.getElementById("helloMessage").innerHTML = "Hello World";
+    }
+</script>
