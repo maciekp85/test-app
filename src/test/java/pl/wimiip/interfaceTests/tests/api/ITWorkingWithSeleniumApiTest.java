@@ -227,6 +227,18 @@ public class ITWorkingWithSeleniumApiTest extends ITConfigurationForChromeBrowse
         }
     }
 
+    @Test
+    public void browserWindow_MaximizingAndSetPosition_NothingResultsOnlyAsserts() {
+
+        // Set the position of the current window and then get it. This is relative to the upper left corner of the screen.
+        driver.manage().window().setPosition(new Point(200, 200));
+        Point position = driver.manage().window().getPosition();
+        assertEquals(new Point(200, 200), position);
+
+        // Maximizes the current window
+        driver.manage().window().maximize();
+    }
+
     @After
     public void tearDown() {
         System.out.println("Cleaning after " + name.getMethodName());
