@@ -1,22 +1,24 @@
 package pl.wimiip.interfaceTests.tests.api;
 
+import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
 import org.junit.runner.RunWith;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.Augmenter;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import pl.wimiip.TestApp;
 import pl.wimiip.interfaceTests.config.ITConfigurationForChromeBrowser;
 import pl.wimiip.interfaceTests.tests.CommonMethods;
 
+import java.io.File;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -165,6 +167,132 @@ public class ITWorkingWithSeleniumApiTest extends ITConfigurationForChromeBrowse
         builder.dragAndDrop(source, target).build().perform();
 
         assertEquals("Dropped!", target.getText());
+    }
+
+    @Test
+    public void pageTitleAndInputs_JavaScriptCalls_NothingResultsOnlyAsserts() {
+
+        // Move to proper view
+        moveToExample("api", "2.8");
+
+        // Casting the WebDriver instance to a JavascriptExecutor interface
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+
+        // Get page title and check whether is correct
+        String title = (String) js.executeScript("return document.title");
+        assertEquals("Test App - Start Test App Template", title);
+
+        // Get count of input elements on page and check whether is proper
+        long inputs = (Long) js.executeScript("var inputs = document.getElementsByTagName('input'); return inputs.length; ");
+        assertEquals(2, inputs);
+    }
+
+    @Test
+    public void page_CapturingScreenshotWithSeleniumWebDriver_SavesFileToAppropriateDirectory() {
+
+        // Move to proper view
+        moveToExample("api", "2.9");
+
+        // The TakesScreenshot interface provides the getScreenshotAs() method to capture a screenshot of the page displayed in the driver instance.
+        try {
+            File srcFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+            // Using the copyFile() method of the FileUtils class from org.apache.commons.io.FileUtils class to save the file object returned by the getScreenshotAs() method.
+            FileUtils.copyFile(srcFile, new File("c:\\screenshots\\page_view_2.9.png"));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    @Test
+    public void page_CapturingScreenshotWithRemoteWebDriverOrGrid_SavesFileToAppropriateDirectory() {
+
+        // Move to proper view
+        moveToExample("api", "2.10");
+
+        // While running tests with RemoteWebDriver or Grid it is not possible to take screenshots, as the TakesScreenshot interface is not implemented in RemoteWebDriver.
+        // However, we can use the Augmenter class which adds the TakesScreenshot interface to the remote driver instance
+        // (in this case I do not use RemoteWebDriver instance, it is only example to show how to fix this problem!)
+        driver = new Augmenter().augment(driver);
+
+        try {
+            // The TakesScreenshot interface provides the getScreenshotAs() method to capture a screenshot of the page displayed in the driver instance.
+            File srcFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+
+            // Using the copyFile() method of the FileUtils class from org.apache.commons.io.FileUtils class to save the file object returned by the getScreenshotAs() method.
+            FileUtils.copyFile(srcFile, new File("c:\\screenshots\\page_view.2.10.png"));
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    @Test
+    public void browserWindow_MaximizingAndSetPosition_NothingResultsOnlyAsserts() {
+
+        // Set the position of the current window and then get it. This is relative to the upper left corner of the screen.
+        driver.manage().window().setPosition(new Point(200, 200));
+        Point position = driver.manage().window().getPosition();
+        assertEquals(new Point(200, 200), position);
+
+        // Maximizes the current window
+        driver.manage().window().maximize();
+    }
+
+    @Test
+    public void dropdown_BasicChecksAndCallVariousMethodsToSelectOptions_NothingResultsOnlyAsserts() {
+
+        // Move to proper view
+        moveToExample("api", "2.11");
+
+        // Get the Dropdown as a Select using its name attribute
+        Select dropdown = new Select(driver.findElement(By.name("dropdown")));
+
+        // Verify Dropdown does not support multiple selection
+        assertFalse(dropdown.isMultiple());
+        // Verify Dropdown has four options for selection
+        assertEquals(4, dropdown.getOptions().size());
+
+        // With Select class we can select an option in Dropdown using Visible Text
+        dropdown.selectByVisibleText("2");
+        assertEquals("2", dropdown.getFirstSelectedOption().getText());
+
+        // or we can select an option in Dropdown using value attribute
+        dropdown.selectByValue("three");
+        assertEquals("3", dropdown.getFirstSelectedOption().getText());
+
+        // or we can select an option in Dropdown using index
+        dropdown.selectByIndex(0);
+        assertEquals("1", dropdown.getFirstSelectedOption().getText());
+    }
+
+    @Test
+    public void multipleSelectList_BasicChecksAndCallVariousMethodsToSelectMultipleOptions_NothingResultsOnlyAsserts() {
+
+        // Move to proper view
+        moveToExample("api", "2.11");
+
+        // Get the List as a Select using its name attribute
+        Select colorList = new Select(driver.findElement(By.name("colorList")));
+
+        // Verify List support multiple selection
+        assertTrue(colorList.isMultiple());
+
+        // Verify List has eight options for selection
+        assertEquals(8, colorList.getOptions().size());
+
+        // Select multiple options in the list using visible text
+        colorList.selectByVisibleText("Red");
+        colorList.selectByVisibleText("Green");
+        colorList.selectByVisibleText("Yellow");
+
+        // Deselect an option using visible text (green color)
+        colorList.deselectByVisibleText("Green");
+
+        // Deselect and option using value attribute of the option (red color)
+        colorList.deselectByValue("rd");
+
+        // Deselect an option using index of the option (yellow color)
+        colorList.deselectByIndex(5);
     }
 
     @After

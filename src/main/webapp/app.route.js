@@ -228,7 +228,23 @@ appRoute
                         url: '/draganddropoperations',
                         templateUrl: 'app/core/selenium/views/api/selenium-api-draganddropoperations.html'
                     })
-                        
+                    .state('selenium.api.executingjavascriptcode', {
+                        url: '/executingjavascriptcode',
+                        templateUrl: 'app/core/selenium/views/api/selenium-api-executingjavascriptcode.html'
+                    })
+                    .state('selenium.api.capturingscreenshotseleniumwebdriver', {
+                        url: '/capturingscreenshotseleniumwebdriver',
+                        templateUrl: 'app/core/selenium/views/api/selenium-api-capturingscreenshotseleniumwebdriver.html'
+                    })
+                    .state('selenium.api.capturingscreenshotremotewebdrivergrid', {
+                        url: '/capturingscreenshotremotewebdrivergrid',
+                        templateUrl: 'app/core/selenium/views/api/selenium-api-capturingscreenshotremotewebdrivergrid.html'
+                    })
+                    .state('selenium.api.automatingdropdownslists', {
+                        url: '/automatingdropdownslists',
+                        templateUrl: 'app/core/selenium/views/api/selenium-api-automatingdropdownslists.html'
+                    })
+
             // SPRING
             .state('spring', {
                 url: '/spring',
