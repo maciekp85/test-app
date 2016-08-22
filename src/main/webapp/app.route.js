@@ -232,6 +232,10 @@ appRoute
                         url: '/executingjavascriptcode',
                         templateUrl: 'app/core/selenium/views/api/selenium-api-executingjavascriptcode.html'
                     })
+                    .state('selenium.api.capturingscreenshotseleniumwebdriver', {
+                        url: '/capturingscreenshotseleniumwebdriver',
+                        templateUrl: 'app/core/selenium/views/api/selenium-api-capturingscreenshotseleniumwebdriver.html'
+                    })
                         
             // SPRING
             .state('spring', {

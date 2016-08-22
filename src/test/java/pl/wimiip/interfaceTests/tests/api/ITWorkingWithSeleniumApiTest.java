@@ -1,15 +1,13 @@
 package pl.wimiip.interfaceTests.tests.api;
 
+import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
 import org.junit.runner.RunWith;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,6 +16,8 @@ import pl.wimiip.TestApp;
 import pl.wimiip.interfaceTests.config.ITConfigurationForChromeBrowser;
 import pl.wimiip.interfaceTests.tests.CommonMethods;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -184,6 +184,22 @@ public class ITWorkingWithSeleniumApiTest extends ITConfigurationForChromeBrowse
         // Get count of input elements on page and check whether is proper
         long inputs = (Long) js.executeScript("var inputs = document.getElementsByTagName('input'); return inputs.length; ");
         assertEquals(2, inputs);
+    }
+
+    @Test
+    public void page_CapturingScreenshotWithSeleniumWebDriver_SavesFileToAppropriateDirectory() {
+
+        // Move to proper view
+        moveToExample("api", "2.9");
+
+        // The TakesScreenshot interface provides the getScreenshotAs() method to capture a screenshot of the page displayed in the driver instance.
+        try {
+            File srcFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+            // Using the copyFile() method of the FileUtils class from org.apache.commons.io.FileUtils class to save the file object returned by the getScreenshotAs() method.
+            FileUtils.copyFile(srcFile, new File("c:\\screenshots\\page_view_2.9.png"));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     @After
