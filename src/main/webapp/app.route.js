@@ -236,7 +236,11 @@ appRoute
                         url: '/capturingscreenshotseleniumwebdriver',
                         templateUrl: 'app/core/selenium/views/api/selenium-api-capturingscreenshotseleniumwebdriver.html'
                     })
-                        
+                    .state('selenium.api.capturingscreenshotremotewebdrivergrid', {
+                        url: '/capturingscreenshotremotewebdrivergrid',
+                        templateUrl: 'app/core/selenium/views/api/selenium-api-capturingscreenshotremotewebdrivergrid.html'
+                    })
+
             // SPRING
             .state('spring', {
                 url: '/spring',

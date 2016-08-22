@@ -8,7 +8,10 @@ import org.junit.Test;
 import org.junit.rules.TestName;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.Augmenter;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -17,7 +20,6 @@ import pl.wimiip.interfaceTests.config.ITConfigurationForChromeBrowser;
 import pl.wimiip.interfaceTests.tests.CommonMethods;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -197,6 +199,29 @@ public class ITWorkingWithSeleniumApiTest extends ITConfigurationForChromeBrowse
             File srcFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
             // Using the copyFile() method of the FileUtils class from org.apache.commons.io.FileUtils class to save the file object returned by the getScreenshotAs() method.
             FileUtils.copyFile(srcFile, new File("c:\\screenshots\\page_view_2.9.png"));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    @Test
+    public void page_CapturingScreenshotWithRemoteWebDriverOrGrid_SavesFileToAppropriateDirectory() {
+
+        // Move to proper view
+        moveToExample("api", "2.10");
+
+        // While running tests with RemoteWebDriver or Grid it is not possible to take screenshots, as the TakesScreenshot interface is not implemented in RemoteWebDriver.
+        // However, we can use the Augmenter class which adds the TakesScreenshot interface to the remote driver instance
+        // (in this case I do not use RemoteWebDriver instance, it is only example to show how to fix this problem!)
+        driver = new Augmenter().augment(driver);
+
+        try {
+            // The TakesScreenshot interface provides the getScreenshotAs() method to capture a screenshot of the page displayed in the driver instance.
+            File srcFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+
+            // Using the copyFile() method of the FileUtils class from org.apache.commons.io.FileUtils class to save the file object returned by the getScreenshotAs() method.
+            FileUtils.copyFile(srcFile, new File("c:\\screenshots\\page_view.2.10.png"));
+
         } catch (Exception ex) {
             ex.printStackTrace();
         }
