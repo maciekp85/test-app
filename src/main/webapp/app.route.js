@@ -240,6 +240,10 @@ appRoute
                         url: '/capturingscreenshotremotewebdrivergrid',
                         templateUrl: 'app/core/selenium/views/api/selenium-api-capturingscreenshotremotewebdrivergrid.html'
                     })
+                    .state('selenium.api.automatingdropdownslists', {
+                        url: '/automatingdropdownslists',
+                        templateUrl: 'app/core/selenium/views/api/selenium-api-automatingdropdownslists.html'
+                    })
 
             // SPRING
             .state('spring', {

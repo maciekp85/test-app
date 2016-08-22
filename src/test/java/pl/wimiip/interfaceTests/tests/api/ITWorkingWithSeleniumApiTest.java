@@ -8,11 +8,10 @@ import org.junit.Test;
 import org.junit.rules.TestName;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.Augmenter;
-import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import pl.wimiip.TestApp;
@@ -237,6 +236,63 @@ public class ITWorkingWithSeleniumApiTest extends ITConfigurationForChromeBrowse
 
         // Maximizes the current window
         driver.manage().window().maximize();
+    }
+
+    @Test
+    public void dropdown_BasicChecksAndCallVariousMethodsToSelectOptions_NothingResultsOnlyAsserts() {
+
+        // Move to proper view
+        moveToExample("api", "2.11");
+
+        // Get the Dropdown as a Select using its name attribute
+        Select dropdown = new Select(driver.findElement(By.name("dropdown")));
+
+        // Verify Dropdown does not support multiple selection
+        assertFalse(dropdown.isMultiple());
+        // Verify Dropdown has four options for selection
+        assertEquals(4, dropdown.getOptions().size());
+
+        // With Select class we can select an option in Dropdown using Visible Text
+        dropdown.selectByVisibleText("2");
+        assertEquals("2", dropdown.getFirstSelectedOption().getText());
+
+        // or we can select an option in Dropdown using value attribute
+        dropdown.selectByValue("three");
+        assertEquals("3", dropdown.getFirstSelectedOption().getText());
+
+        // or we can select an option in Dropdown using index
+        dropdown.selectByIndex(0);
+        assertEquals("1", dropdown.getFirstSelectedOption().getText());
+    }
+
+    @Test
+    public void multipleSelectList_BasicChecksAndCallVariousMethodsToSelectMultipleOptions_NothingResultsOnlyAsserts() {
+
+        // Move to proper view
+        moveToExample("api", "2.11");
+
+        // Get the List as a Select using its name attribute
+        Select colorList = new Select(driver.findElement(By.name("colorList")));
+
+        // Verify List support multiple selection
+        assertTrue(colorList.isMultiple());
+
+        // Verify List has eight options for selection
+        assertEquals(8, colorList.getOptions().size());
+
+        // Select multiple options in the list using visible text
+        colorList.selectByVisibleText("Red");
+        colorList.selectByVisibleText("Green");
+        colorList.selectByVisibleText("Yellow");
+
+        // Deselect an option using visible text (green color)
+        colorList.deselectByVisibleText("Green");
+
+        // Deselect and option using value attribute of the option (red color)
+        colorList.deselectByValue("rd");
+
+        // Deselect an option using index of the option (yellow color)
+        colorList.deselectByIndex(5);
     }
 
     @After
