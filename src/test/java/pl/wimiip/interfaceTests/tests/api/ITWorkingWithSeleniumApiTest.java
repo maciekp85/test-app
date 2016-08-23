@@ -19,6 +19,8 @@ import pl.wimiip.interfaceTests.config.ITConfigurationForChromeBrowser;
 import pl.wimiip.interfaceTests.tests.CommonMethods;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -252,6 +254,17 @@ public class ITWorkingWithSeleniumApiTest extends ITConfigurationForChromeBrowse
         // Verify Dropdown has four options for selection
         assertEquals(4, dropdown.getOptions().size());
 
+        // We will verify Dropdown has expected values as listed in a array
+        List<String> exp_options = Arrays.asList(new String[]{"1", "2", "3", "4"});
+        List<String> act_options = new ArrayList<String>();
+
+        // Retrieve the option values from Dropdown using getOptions() method
+        for (WebElement option: dropdown.getOptions())
+                act_options.add(option.getText());
+
+        // Verify expected options array and actual options array match
+        assertArrayEquals(exp_options.toArray(), act_options.toArray());
+
         // With Select class we can select an option in Dropdown using Visible Text
         dropdown.selectByVisibleText("2");
         assertEquals("2", dropdown.getFirstSelectedOption().getText());
@@ -285,14 +298,33 @@ public class ITWorkingWithSeleniumApiTest extends ITConfigurationForChromeBrowse
         colorList.selectByVisibleText("Green");
         colorList.selectByVisibleText("Yellow");
 
+        // We will verify list has multiple options selected as listed in a array
+        List<String> exp_sel_options= Arrays.asList(new String[]{"Red", "Green", "Yellow"});
+        List<String> act_sel_options = new ArrayList<String>();
+
+        for (WebElement option: colorList.getAllSelectedOptions())
+                act_sel_options.add(option.getText());
+
+        // Verify expected array for selected options match with actual options selected
+        assertArrayEquals(exp_sel_options.toArray(), act_sel_options.toArray());
+
+        // Verify there 3 options selected in the list
+        assertEquals(3, colorList.getAllSelectedOptions().size());
+
         // Deselect an option using visible text (green color)
         colorList.deselectByVisibleText("Green");
+        // Verify selected options count
+        assertEquals(2, colorList.getAllSelectedOptions().size());
 
         // Deselect and option using value attribute of the option (red color)
         colorList.deselectByValue("rd");
+        // Verify selected options count
+        assertEquals(1, colorList.getAllSelectedOptions().size());
 
         // Deselect an option using index of the option (yellow color)
         colorList.deselectByIndex(5);
+        // Verify selected options count
+        assertEquals(0, colorList.getAllSelectedOptions().size());
     }
 
     @After
