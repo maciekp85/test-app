@@ -244,6 +244,10 @@ appRoute
                         url: '/automatingdropdownslists',
                         templateUrl: 'app/core/selenium/views/api/selenium-api-automatingdropdownslists.html'
                     })
+                    .state('selenium.api.automatingradiobuttonsradiogroups', {
+                        url: '/automatingradiobuttonsradiogroups',
+                        templateUrl: 'app/core/selenium/views/api/selenium-api-automatingradiobuttonsradiogroups.html'
+                    })
 
             // SPRING
             .state('spring', {

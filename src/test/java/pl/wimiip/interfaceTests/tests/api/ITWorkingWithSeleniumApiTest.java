@@ -327,6 +327,39 @@ public class ITWorkingWithSeleniumApiTest extends ITConfigurationForChromeBrowse
         assertEquals(0, colorList.getAllSelectedOptions().size());
     }
 
+    @Test
+    public void radioButtonAndGroup_CheckSelectOperations_NothingResultsOnlyAsserts() {
+
+        // Move to proper view
+        moveToExample("api", "2.12");
+
+        // Get the radio button as WebElement using its value attribute
+        WebElement petrol = driver.findElement(By.xpath("//input[@value='Petrol']"));
+
+        // Check if it is alreaady selected? otherwise select the Radiobutton by calling click() method
+        if(!petrol.isSelected())
+            petrol.click();
+
+        // Verify Radiobutton is selected
+        assertTrue(petrol.isSelected());
+
+        // We can also get all the Radiobuttons from a Radio Group in a list using findElements() method along with Radio Group identifier
+        List<WebElement> fuel_type = driver.findElements(By.name("type"));
+
+        for (WebElement type: fuel_type) {
+            // Search for Diesel Radiobutton in the Radio Group and select it
+            if(type.getAttribute("value").contains("Diesel"))
+            {
+                if(!type.isSelected())
+                    type.click();
+
+                assertTrue(type.isSelected());
+                break;
+            }
+        }
+
+    }
+
     @After
     public void tearDown() {
         System.out.println("Cleaning after " + name.getMethodName());
