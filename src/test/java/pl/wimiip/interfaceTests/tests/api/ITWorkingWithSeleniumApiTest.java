@@ -9,6 +9,7 @@ import org.junit.rules.TestName;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.os.WindowsUtils;
 import org.openqa.selenium.remote.Augmenter;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -382,6 +383,19 @@ public class ITWorkingWithSeleniumApiTest extends ITConfigurationForChromeBrowse
 
         // Verify Checkbox is Deselected
         assertFalse(robertCheckbox.isSelected());
+    }
+
+    @Test
+    public void registryWindows_ControlProcessAndPerformVariousTasks_NothingResultsOnlyAsserts() {
+
+        // Close or kill any process running on the Windows OS by using the tryToKillByName() function of the WindowsUtils class.
+        // We need to pass the name of process we wish to close. If the process does not exist, an exception will be thrown up.
+        // However, the test will continue with the next steps.
+        WindowsUtils.tryToKillByName("firefox");
+
+        // Use WindowsUtil to read the exact name of the operating system on which the test is running and print this information in our test logs.
+        String os = WindowsUtils.readStringRegistryValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\ProductName");
+        System.out.println(os);
     }
 
     @After
