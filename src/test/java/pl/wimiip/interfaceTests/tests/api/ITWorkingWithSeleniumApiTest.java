@@ -360,6 +360,30 @@ public class ITWorkingWithSeleniumApiTest extends ITConfigurationForChromeBrowse
 
     }
 
+    @Test
+    public void checkBox_CheckSelectAndDeselectOperations_NothingResultsOnlyAsserts() {
+
+        // Move to proper view
+        moveToExample("api", "2.13");
+
+        // Get the Checkbox as WebElement using its value attribute
+        WebElement robertCheckbox = driver.findElement(By.xpath("//input[@value='robert']"));
+
+        // Check if its already selected? otherwise select the Checkbox by calling click() method
+        if(!robertCheckbox.isSelected())
+            robertCheckbox.click();
+
+        // Verify Checkbox is Selected
+        assertTrue(robertCheckbox.isSelected());
+
+        // Check Checkbox id selected? If yes, deselect it
+        if(robertCheckbox.isSelected())
+            robertCheckbox.click();
+
+        // Verify Checkbox is Deselected
+        assertFalse(robertCheckbox.isSelected());
+    }
+
     @After
     public void tearDown() {
         System.out.println("Cleaning after " + name.getMethodName());

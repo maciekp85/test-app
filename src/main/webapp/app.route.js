@@ -248,6 +248,10 @@ appRoute
                         url: '/automatingradiobuttonsradiogroups',
                         templateUrl: 'app/core/selenium/views/api/selenium-api-automatingradiobuttonsradiogroups.html'
                     })
+                    .state('selenium.api.automatingcheckboxes', {
+                        url: '/automatingcheckboxes',
+                        templateUrl: 'app/core/selenium/views/api/selenium-api-automatingcheckboxes.html'
+                    })
 
             // SPRING
             .state('spring', {
