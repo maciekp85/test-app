@@ -52,7 +52,7 @@ public class ITWorkingWithSeleniumApiTest extends ITConfigurationForChromeBrowse
     public void button_CheckingElementText_NothingResultsOnlyAsserts() {
 
         // Move to proper view
-        moveToExample("api", "2.2");
+        commonMethods.moveToExample("api", "2.2");
 
         // Get the button element
         WebElement button = driver.findElement(By.id("button"));
@@ -82,7 +82,7 @@ public class ITWorkingWithSeleniumApiTest extends ITConfigurationForChromeBrowse
     public void paragraph_CheckingElementAttributeValue_NothingResultsOnlyAsserts() {
 
         // Move to proper view
-        moveToExample("api", "2.3");
+        commonMethods.moveToExample("api", "2.3");
 
         // Get the paragraph element
         WebElement message = driver.findElement(By.id("message"));
@@ -95,7 +95,7 @@ public class ITWorkingWithSeleniumApiTest extends ITConfigurationForChromeBrowse
     public void htmlElement_CheckingElementStyle_NothingResultsOnlyAsserts() {
 
         // Move to proper view
-        moveToExample("api", "2.4");
+        commonMethods.moveToExample("api", "2.4");
 
         // Get the button element
         WebElement button = driver.findElement(By.id("button"));
@@ -111,7 +111,7 @@ public class ITWorkingWithSeleniumApiTest extends ITConfigurationForChromeBrowse
     public void multipleSelectList_HoldingCtrlKeyAndThenSelectingSeveralOptions_NothingResultsOnlyAsserts() {
 
         // Move to proper view
-        moveToExample("api", "2.5");
+        commonMethods.moveToExample("api", "2.5");
 
         // Get options from multiple select list
         List<WebElement> selectList = driver.findElements(By.tagName("option"));
@@ -135,7 +135,7 @@ public class ITWorkingWithSeleniumApiTest extends ITConfigurationForChromeBrowse
     public void button_PerformingDoubleClickOnElementAndCheckedWhetherTextIsDisplayed_NothingResultsOnlyAsserts() {
 
         // Move to proper view
-        moveToExample("api", "2.6");
+        commonMethods.moveToExample("api", "2.6");
 
         // Get button element
         WebElement button = driver.findElement(By.id("button"));
@@ -158,7 +158,7 @@ public class ITWorkingWithSeleniumApiTest extends ITConfigurationForChromeBrowse
     public void twoDivElements_PerformingDragAndDropOperations_NothingResultsOnlyAsserts() {
 
         // Move to proper view
-        moveToExample("api", "2.7");
+        commonMethods.moveToExample("api", "2.7");
 
         // Get source element
         WebElement source = driver.findElement(By.id("draggable"));
@@ -176,7 +176,7 @@ public class ITWorkingWithSeleniumApiTest extends ITConfigurationForChromeBrowse
     public void pageTitleAndInputs_JavaScriptCalls_NothingResultsOnlyAsserts() {
 
         // Move to proper view
-        moveToExample("api", "2.8");
+        commonMethods.moveToExample("api", "2.8");
 
         // Casting the WebDriver instance to a JavascriptExecutor interface
         JavascriptExecutor js = (JavascriptExecutor) driver;
@@ -194,7 +194,7 @@ public class ITWorkingWithSeleniumApiTest extends ITConfigurationForChromeBrowse
     public void page_CapturingScreenshotWithSeleniumWebDriver_SavesFileToAppropriateDirectory() {
 
         // Move to proper view
-        moveToExample("api", "2.9");
+        commonMethods.moveToExample("api", "2.9");
 
         // The TakesScreenshot interface provides the getScreenshotAs() method to capture a screenshot of the page displayed in the driver instance.
         try {
@@ -210,7 +210,7 @@ public class ITWorkingWithSeleniumApiTest extends ITConfigurationForChromeBrowse
     public void page_CapturingScreenshotWithRemoteWebDriverOrGrid_SavesFileToAppropriateDirectory() {
 
         // Move to proper view
-        moveToExample("api", "2.10");
+        commonMethods.moveToExample("api", "2.10");
 
         // While running tests with RemoteWebDriver or Grid it is not possible to take screenshots, as the TakesScreenshot interface is not implemented in RemoteWebDriver.
         // However, we can use the Augmenter class which adds the TakesScreenshot interface to the remote driver instance
@@ -245,7 +245,7 @@ public class ITWorkingWithSeleniumApiTest extends ITConfigurationForChromeBrowse
     public void dropdown_BasicChecksAndCallVariousMethodsToSelectOptions_NothingResultsOnlyAsserts() {
 
         // Move to proper view
-        moveToExample("api", "2.11");
+        commonMethods.moveToExample("api", "2.11");
 
         // Get the Dropdown as a Select using its name attribute
         Select dropdown = new Select(driver.findElement(By.name("dropdown")));
@@ -283,7 +283,7 @@ public class ITWorkingWithSeleniumApiTest extends ITConfigurationForChromeBrowse
     public void multipleSelectList_BasicChecksAndCallVariousMethodsToSelectMultipleOptions_NothingResultsOnlyAsserts() {
 
         // Move to proper view
-        moveToExample("api", "2.11");
+        commonMethods.moveToExample("api", "2.11");
 
         // Get the List as a Select using its name attribute
         Select colorList = new Select(driver.findElement(By.name("colorList")));
@@ -332,7 +332,7 @@ public class ITWorkingWithSeleniumApiTest extends ITConfigurationForChromeBrowse
     public void radioButtonAndGroup_CheckSelectOperations_NothingResultsOnlyAsserts() {
 
         // Move to proper view
-        moveToExample("api", "2.12");
+        commonMethods.moveToExample("api", "2.12");
 
         // Get the radio button as WebElement using its value attribute
         WebElement petrol = driver.findElement(By.xpath("//input[@value='Petrol']"));
@@ -365,7 +365,7 @@ public class ITWorkingWithSeleniumApiTest extends ITConfigurationForChromeBrowse
     public void checkBox_CheckSelectAndDeselectOperations_NothingResultsOnlyAsserts() {
 
         // Move to proper view
-        moveToExample("api", "2.13");
+        commonMethods.moveToExample("api", "2.13");
 
         // Get the Checkbox as WebElement using its value attribute
         WebElement robertCheckbox = driver.findElement(By.xpath("//input[@value='robert']"));
@@ -401,23 +401,5 @@ public class ITWorkingWithSeleniumApiTest extends ITConfigurationForChromeBrowse
     @After
     public void tearDown() {
         System.out.println("Cleaning after " + name.getMethodName());
-    }
-
-    /**
-     * OTHER METHODS
-     */
-
-    /**
-     * Method who moves you to proper view based on chapter and example string values
-     * @param url name within url address
-     * @param numberExample number within title of example
-     */
-    private void moveToExample(String url, String numberExample) {
-
-        // Check whether url contains passed value
-        assertTrue(wait.until(ExpectedConditions.urlContains(url)));
-
-        // Wait until located element will be visibility and then click on it.
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.partialLinkText(numberExample))).click();
     }
 }
