@@ -9,6 +9,7 @@ import org.junit.rules.TestName;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.os.WindowsUtils;
 import org.openqa.selenium.remote.Augmenter;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -19,6 +20,8 @@ import pl.wimiip.interfaceTests.config.ITConfigurationForChromeBrowser;
 import pl.wimiip.interfaceTests.tests.CommonMethods;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -49,7 +52,7 @@ public class ITWorkingWithSeleniumApiTest extends ITConfigurationForChromeBrowse
     public void button_CheckingElementText_NothingResultsOnlyAsserts() {
 
         // Move to proper view
-        moveToExample("api", "2.2");
+        commonMethods.moveToExample("api", "2.2");
 
         // Get the button element
         WebElement button = driver.findElement(By.id("button"));
@@ -79,7 +82,7 @@ public class ITWorkingWithSeleniumApiTest extends ITConfigurationForChromeBrowse
     public void paragraph_CheckingElementAttributeValue_NothingResultsOnlyAsserts() {
 
         // Move to proper view
-        moveToExample("api", "2.3");
+        commonMethods.moveToExample("api", "2.3");
 
         // Get the paragraph element
         WebElement message = driver.findElement(By.id("message"));
@@ -92,7 +95,7 @@ public class ITWorkingWithSeleniumApiTest extends ITConfigurationForChromeBrowse
     public void htmlElement_CheckingElementStyle_NothingResultsOnlyAsserts() {
 
         // Move to proper view
-        moveToExample("api", "2.4");
+        commonMethods.moveToExample("api", "2.4");
 
         // Get the button element
         WebElement button = driver.findElement(By.id("button"));
@@ -108,7 +111,7 @@ public class ITWorkingWithSeleniumApiTest extends ITConfigurationForChromeBrowse
     public void multipleSelectList_HoldingCtrlKeyAndThenSelectingSeveralOptions_NothingResultsOnlyAsserts() {
 
         // Move to proper view
-        moveToExample("api", "2.5");
+        commonMethods.moveToExample("api", "2.5");
 
         // Get options from multiple select list
         List<WebElement> selectList = driver.findElements(By.tagName("option"));
@@ -132,7 +135,7 @@ public class ITWorkingWithSeleniumApiTest extends ITConfigurationForChromeBrowse
     public void button_PerformingDoubleClickOnElementAndCheckedWhetherTextIsDisplayed_NothingResultsOnlyAsserts() {
 
         // Move to proper view
-        moveToExample("api", "2.6");
+        commonMethods.moveToExample("api", "2.6");
 
         // Get button element
         WebElement button = driver.findElement(By.id("button"));
@@ -155,7 +158,7 @@ public class ITWorkingWithSeleniumApiTest extends ITConfigurationForChromeBrowse
     public void twoDivElements_PerformingDragAndDropOperations_NothingResultsOnlyAsserts() {
 
         // Move to proper view
-        moveToExample("api", "2.7");
+        commonMethods.moveToExample("api", "2.7");
 
         // Get source element
         WebElement source = driver.findElement(By.id("draggable"));
@@ -173,7 +176,7 @@ public class ITWorkingWithSeleniumApiTest extends ITConfigurationForChromeBrowse
     public void pageTitleAndInputs_JavaScriptCalls_NothingResultsOnlyAsserts() {
 
         // Move to proper view
-        moveToExample("api", "2.8");
+        commonMethods.moveToExample("api", "2.8");
 
         // Casting the WebDriver instance to a JavascriptExecutor interface
         JavascriptExecutor js = (JavascriptExecutor) driver;
@@ -191,7 +194,7 @@ public class ITWorkingWithSeleniumApiTest extends ITConfigurationForChromeBrowse
     public void page_CapturingScreenshotWithSeleniumWebDriver_SavesFileToAppropriateDirectory() {
 
         // Move to proper view
-        moveToExample("api", "2.9");
+        commonMethods.moveToExample("api", "2.9");
 
         // The TakesScreenshot interface provides the getScreenshotAs() method to capture a screenshot of the page displayed in the driver instance.
         try {
@@ -207,7 +210,7 @@ public class ITWorkingWithSeleniumApiTest extends ITConfigurationForChromeBrowse
     public void page_CapturingScreenshotWithRemoteWebDriverOrGrid_SavesFileToAppropriateDirectory() {
 
         // Move to proper view
-        moveToExample("api", "2.10");
+        commonMethods.moveToExample("api", "2.10");
 
         // While running tests with RemoteWebDriver or Grid it is not possible to take screenshots, as the TakesScreenshot interface is not implemented in RemoteWebDriver.
         // However, we can use the Augmenter class which adds the TakesScreenshot interface to the remote driver instance
@@ -242,7 +245,7 @@ public class ITWorkingWithSeleniumApiTest extends ITConfigurationForChromeBrowse
     public void dropdown_BasicChecksAndCallVariousMethodsToSelectOptions_NothingResultsOnlyAsserts() {
 
         // Move to proper view
-        moveToExample("api", "2.11");
+        commonMethods.moveToExample("api", "2.11");
 
         // Get the Dropdown as a Select using its name attribute
         Select dropdown = new Select(driver.findElement(By.name("dropdown")));
@@ -251,6 +254,17 @@ public class ITWorkingWithSeleniumApiTest extends ITConfigurationForChromeBrowse
         assertFalse(dropdown.isMultiple());
         // Verify Dropdown has four options for selection
         assertEquals(4, dropdown.getOptions().size());
+
+        // We will verify Dropdown has expected values as listed in a array
+        List<String> exp_options = Arrays.asList(new String[]{"1", "2", "3", "4"});
+        List<String> act_options = new ArrayList<String>();
+
+        // Retrieve the option values from Dropdown using getOptions() method
+        for (WebElement option: dropdown.getOptions())
+                act_options.add(option.getText());
+
+        // Verify expected options array and actual options array match
+        assertArrayEquals(exp_options.toArray(), act_options.toArray());
 
         // With Select class we can select an option in Dropdown using Visible Text
         dropdown.selectByVisibleText("2");
@@ -269,7 +283,7 @@ public class ITWorkingWithSeleniumApiTest extends ITConfigurationForChromeBrowse
     public void multipleSelectList_BasicChecksAndCallVariousMethodsToSelectMultipleOptions_NothingResultsOnlyAsserts() {
 
         // Move to proper view
-        moveToExample("api", "2.11");
+        commonMethods.moveToExample("api", "2.11");
 
         // Get the List as a Select using its name attribute
         Select colorList = new Select(driver.findElement(By.name("colorList")));
@@ -285,36 +299,107 @@ public class ITWorkingWithSeleniumApiTest extends ITConfigurationForChromeBrowse
         colorList.selectByVisibleText("Green");
         colorList.selectByVisibleText("Yellow");
 
+        // We will verify list has multiple options selected as listed in a array
+        List<String> exp_sel_options= Arrays.asList(new String[]{"Red", "Green", "Yellow"});
+        List<String> act_sel_options = new ArrayList<String>();
+
+        for (WebElement option: colorList.getAllSelectedOptions())
+                act_sel_options.add(option.getText());
+
+        // Verify expected array for selected options match with actual options selected
+        assertArrayEquals(exp_sel_options.toArray(), act_sel_options.toArray());
+
+        // Verify there 3 options selected in the list
+        assertEquals(3, colorList.getAllSelectedOptions().size());
+
         // Deselect an option using visible text (green color)
         colorList.deselectByVisibleText("Green");
+        // Verify selected options count
+        assertEquals(2, colorList.getAllSelectedOptions().size());
 
         // Deselect and option using value attribute of the option (red color)
         colorList.deselectByValue("rd");
+        // Verify selected options count
+        assertEquals(1, colorList.getAllSelectedOptions().size());
 
         // Deselect an option using index of the option (yellow color)
         colorList.deselectByIndex(5);
+        // Verify selected options count
+        assertEquals(0, colorList.getAllSelectedOptions().size());
+    }
+
+    @Test
+    public void radioButtonAndGroup_CheckSelectOperations_NothingResultsOnlyAsserts() {
+
+        // Move to proper view
+        commonMethods.moveToExample("api", "2.12");
+
+        // Get the radio button as WebElement using its value attribute
+        WebElement petrol = driver.findElement(By.xpath("//input[@value='Petrol']"));
+
+        // Check if it is alreaady selected? otherwise select the Radiobutton by calling click() method
+        if(!petrol.isSelected())
+            petrol.click();
+
+        // Verify Radiobutton is selected
+        assertTrue(petrol.isSelected());
+
+        // We can also get all the Radiobuttons from a Radio Group in a list using findElements() method along with Radio Group identifier
+        List<WebElement> fuel_type = driver.findElements(By.name("type"));
+
+        for (WebElement type: fuel_type) {
+            // Search for Diesel Radiobutton in the Radio Group and select it
+            if(type.getAttribute("value").contains("Diesel"))
+            {
+                if(!type.isSelected())
+                    type.click();
+
+                assertTrue(type.isSelected());
+                break;
+            }
+        }
+
+    }
+
+    @Test
+    public void checkBox_CheckSelectAndDeselectOperations_NothingResultsOnlyAsserts() {
+
+        // Move to proper view
+        commonMethods.moveToExample("api", "2.13");
+
+        // Get the Checkbox as WebElement using its value attribute
+        WebElement robertCheckbox = driver.findElement(By.xpath("//input[@value='robert']"));
+
+        // Check if its already selected? otherwise select the Checkbox by calling click() method
+        if(!robertCheckbox.isSelected())
+            robertCheckbox.click();
+
+        // Verify Checkbox is Selected
+        assertTrue(robertCheckbox.isSelected());
+
+        // Check Checkbox id selected? If yes, deselect it
+        if(robertCheckbox.isSelected())
+            robertCheckbox.click();
+
+        // Verify Checkbox is Deselected
+        assertFalse(robertCheckbox.isSelected());
+    }
+
+    @Test
+    public void registryWindows_ControlProcessAndPerformVariousTasks_NothingResultsOnlyAsserts() {
+
+        // Close or kill any process running on the Windows OS by using the tryToKillByName() function of the WindowsUtils class.
+        // We need to pass the name of process we wish to close. If the process does not exist, an exception will be thrown up.
+        // However, the test will continue with the next steps.
+        WindowsUtils.tryToKillByName("firefox");
+
+        // Use WindowsUtil to read the exact name of the operating system on which the test is running and print this information in our test logs.
+        String os = WindowsUtils.readStringRegistryValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\ProductName");
+        System.out.println(os);
     }
 
     @After
     public void tearDown() {
         System.out.println("Cleaning after " + name.getMethodName());
-    }
-
-    /**
-     * OTHER METHODS
-     */
-
-    /**
-     * Method who moves you to proper view based on chapter and example string values
-     * @param url name within url address
-     * @param numberExample number within title of example
-     */
-    private void moveToExample(String url, String numberExample) {
-
-        // Check whether url contains passed value
-        assertTrue(wait.until(ExpectedConditions.urlContains(url)));
-
-        // Wait until located element will be visibility and then click on it.
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.partialLinkText(numberExample))).click();
     }
 }

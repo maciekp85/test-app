@@ -5,11 +5,14 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import pl.wimiip.interfaceTests.config.ITConfigurationForChromeBrowser;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 /**
  * Created by nishi on 2016-06-20.
  */
-public class CommonMethods extends ITConfigurationForChromeBrowser {
+public class CommonMethods extends ITConfigurationForChromeBrowser implements Common {
 
+    @Override
     public void logInAndMoveToSeleniumPage() {
         driver.get("http://localhost:8080/#/");
         try {
@@ -21,6 +24,21 @@ public class CommonMethods extends ITConfigurationForChromeBrowser {
         } catch (NoSuchElementException exc) {
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Selenium"))).click();
         }
+    }
+
+    /**
+     * Method who moves you to proper view based on chapter and example string values
+     * @param url name within url address
+     * @param numberExample number within title of example
+     */
+    @Override
+    public void moveToExample(String url, String numberExample) {
+
+        // Check whether url contains passed value
+        assertTrue(wait.until(ExpectedConditions.urlContains(url)));
+
+        // Wait until located element will be visibility and then click on it.
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.partialLinkText(numberExample))).click();
     }
 
     private void fillInForm() {

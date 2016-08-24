@@ -47,16 +47,20 @@ public class ITLocatingElementsTest extends ITConfigurationForChromeBrowser {
 
     @Test
     public void inputFieldsOfLoginForm_LocatingElementById_NothingResultsOnlyAsserts() {
-        assertTrue(wait.until(ExpectedConditions.urlContains("locating")));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.partialLinkText("1.2"))).click();
+
+        // Move to proper view
+        commonMethods.moveToExample("locating", "1.2");
+
         fillInForm("Maciek", "test");
         clearForm();
     }
 
     @Test
     public void previousAndNextButtons_LocatingElementByName_NothingResultsOnlyAsserts() {
-        assertTrue(wait.until(ExpectedConditions.urlContains("locating")));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.partialLinkText("1.3"))).click();
+
+        // Move to proper view
+        commonMethods.moveToExample("locating", "1.3");
+
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("previous")));
         WebElement previousButton = driver.findElement(By.name("previous"));
         WebElement nextButton = driver.findElement(By.name("next"));
@@ -78,8 +82,10 @@ public class ITLocatingElementsTest extends ITConfigurationForChromeBrowser {
 
     @Test
     public void htmlHeadingElements_LocatingElementByClassName_NothingResultsOnlyAsserts() {
-        assertTrue(wait.until(ExpectedConditions.urlContains("locating")));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.partialLinkText("1.4"))).click();
+
+        // Move to proper view
+        commonMethods.moveToExample("locating", "1.4");
+
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("h1")));
         WebElement h1 = driver.findElement(By.className("h1"));
         assertEquals("Bootstrap heading (36px)", h1.getText());
@@ -94,8 +100,10 @@ public class ITLocatingElementsTest extends ITConfigurationForChromeBrowser {
 
     @Test
     public void htmlUlElement_LocatingElementsByLinkText_NothingResultsOnlyAsserts() {
-        assertTrue(wait.until(ExpectedConditions.urlContains("locating")));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.partialLinkText("1.5"))).click();
+
+        // Move to proper view
+        commonMethods.moveToExample("locating", "1.5");
+
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Onet")));
         WebElement li1 = driver.findElement(By.linkText("Onet"));
         assertEquals("http://onet.pl/", li1.getAttribute("href"));
@@ -105,8 +113,10 @@ public class ITLocatingElementsTest extends ITConfigurationForChromeBrowser {
 
     @Test
     public void dropdownMenu_LocatingElementsUsingFindElementsMethod_NothingResultsOnlyAsserts() {
-        assertTrue(wait.until(ExpectedConditions.urlContains("locating")));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.partialLinkText("1.6"))).click();
+
+        // Move to proper view
+        commonMethods.moveToExample("locating", "1.6");
+
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Pages"))).click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Onet")));
         List<WebElement> links = driver.findElements(By.xpath("//ul[@class='dropdown-menu']/li"));
@@ -124,8 +134,10 @@ public class ITLocatingElementsTest extends ITConfigurationForChromeBrowser {
 
     @Test
     public void htmlUIElement_LocatingElementsByPartialText_NothingResultsOnlyAsserts() {
-        assertTrue(wait.until(ExpectedConditions.urlContains("locating")));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.partialLinkText("1.7"))).click();
+
+        // Move to proper view
+        commonMethods.moveToExample("locating", "1.7");
+
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Onet")));
         WebElement li3 = driver.findElement(By.partialLinkText("Wirtualna"));
         assertEquals("http://wp.pl/", li3.getAttribute("href"));
@@ -133,8 +145,10 @@ public class ITLocatingElementsTest extends ITConfigurationForChromeBrowser {
 
     @Test
     public void thAndTrTagsInTable_LocatingElementsByTagName_NothingResultsOnlyAsserts() {
-        assertTrue(wait.until(ExpectedConditions.urlContains("locating")));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.partialLinkText("1.8"))).click();
+
+        // Move to proper view
+        commonMethods.moveToExample("locating", "1.8");
+
         WebElement table = driver.findElement(By.id("myTable"));
         List<WebElement> columns = table.findElements(By.tagName("th"));
         assertEquals(3, columns.size());
@@ -144,8 +158,9 @@ public class ITLocatingElementsTest extends ITConfigurationForChromeBrowser {
 
     @Test
     public void htmlElements_LocatingElementsUsingCssSelectors_NothingResultsOnlyAsserts() {
-        assertTrue(wait.until(ExpectedConditions.urlContains("locating")));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.partialLinkText("1.9"))).click();
+
+        // Move to proper view
+        commonMethods.moveToExample("locating", "1.9");
 
         // Finding elements with
         // ABSOLUTE PATH
@@ -216,8 +231,9 @@ public class ITLocatingElementsTest extends ITConfigurationForChromeBrowser {
 
     @Test
     public void htmlElements_LocatingElementsUsingXPathSelectors_NothingResultsOnlyAsserts() {
-        assertTrue(wait.until(ExpectedConditions.urlContains("locating")));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.partialLinkText("1.10"))).click();
+
+        // Move to proper view
+        commonMethods.moveToExample("locating", "1.10");
 
         // Finding elements with
         // ABSOLUTE PATH
@@ -312,8 +328,9 @@ public class ITLocatingElementsTest extends ITConfigurationForChromeBrowser {
 
     @Test
     public void tableHtmlElement_LocatingElementsUsingText_NothingResultsOnlyAsserts() {
-        assertTrue(wait.until(ExpectedConditions.urlContains("locating")));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.partialLinkText("1.11"))).click();
+
+        // Move to proper view
+        commonMethods.moveToExample("locating", "1.11");
 
         WebElement cell = driver.findElement(By.xpath("//td[contains(text(), 'Item 1')]"));
         assertEquals("Item 1", cell.getText());
@@ -324,8 +341,9 @@ public class ITLocatingElementsTest extends ITConfigurationForChromeBrowser {
 
     @Test
     public void htmlElements_LocatingElementsUsingAdvancedCssSelectors_NothingResultsOnlyAsserts() {
-        assertTrue(wait.until(ExpectedConditions.urlContains("locating")));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.partialLinkText("1.12"))).click();
+
+        // Move to proper view
+        commonMethods.moveToExample("locating", "1.12");
 
         // Finding child elements
 
@@ -380,8 +398,9 @@ public class ITLocatingElementsTest extends ITConfigurationForChromeBrowser {
 
     @Test
     public void defaultSelectedCheckbox_LocatingElementsUsingJQuerySelectors_NothingResultsOnlyAsserts() {
-        assertTrue(wait.until(ExpectedConditions.urlContains("locating")));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.partialLinkText("1.13"))).click();
+
+        // Move to proper view
+        commonMethods.moveToExample("locating", "1.13");
 
         // Expected list of selected Checkbox
         List<String> checked = Arrays.asList(new String[]{"user128_admin", "user220_browser"});
@@ -405,8 +424,9 @@ public class ITLocatingElementsTest extends ITConfigurationForChromeBrowser {
 
     @Test
     public void table_LocatingRowsAndCells_NothingResultsOnlyAsserts() {
-        assertTrue(wait.until(ExpectedConditions.urlContains("locating")));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.partialLinkText("1.14"))).click();
+
+        // Move to proper view
+        commonMethods.moveToExample("locating", "1.14");
 
         WebElement simpleTable = driver.findElement(By.id("items"));
 
@@ -426,8 +446,9 @@ public class ITLocatingElementsTest extends ITConfigurationForChromeBrowser {
 
     @Test
     public void table_LocatingChildElements_NothingResultsOnlyAsserts() {
-        assertTrue(wait.until(ExpectedConditions.urlContains("locating")));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.partialLinkText("1.15"))).click();
+
+        // Move to proper view
+        commonMethods.moveToExample("locating", "1.15");
 
         // It does not work. Result: method threw 'org.openqa.selenium.InvalidSelectorException' exception.
         // WebElement adminCheckbox = driver.findElement(By.cssSelector("td:contains('Rick')+td+td>div>label:contains('Admin')+input"));
