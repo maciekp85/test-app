@@ -252,6 +252,15 @@ appRoute
                         url: '/automatingcheckboxes',
                         templateUrl: 'app/core/selenium/views/api/selenium-api-automatingcheckboxes.html'
                     })
+                // CONTROLLING THE TEST FLOW
+                .state('selenium.flow', {
+                    url: '/flow',
+                    templateUrl: 'app/core/selenium/views/flow/selenium-flow.html'
+                })
+                    .state('selenium.flow.introduction', {
+                        url: '/introduction',
+                        templateUrl: 'app/core/selenium/views/flow/selenium-flow-introduction.html'
+                    })
 
             // SPRING
             .state('spring', {
