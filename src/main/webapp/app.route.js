@@ -261,6 +261,15 @@ appRoute
                         url: '/introduction',
                         templateUrl: 'app/core/selenium/views/flow/selenium-flow-introduction.html'
                     })
+                    .state('selenium.flow.implicitwait', {
+                        url: '/implicitwait',
+                        templateUrl: 'app/core/selenium/views/flow/selenium-flow-implicitwait.html'
+                    })
+                    .state('selenium.flow.explicitwait', {
+                        url: '/explicitwait',
+                        templateUrl: 'app/core/selenium/views/flow/selenium-flow-explicitwait.html'
+                    })
+
 
             // SPRING
             .state('spring', {

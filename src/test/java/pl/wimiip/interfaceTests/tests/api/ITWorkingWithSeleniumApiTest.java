@@ -44,7 +44,7 @@ public class ITWorkingWithSeleniumApiTest extends ITConfigurationForChromeBrowse
     public void setUp() {
         System.out.println("Starting " + name.getMethodName());
         commonMethods = new CommonMethods();
-        commonMethods.logInAndMoveToSeleniumPage();
+        commonMethods.logInAndMoveToSeleniumPage(driver, wait);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[text()='2. Working with Selenium API']"))).click();
     }
 
