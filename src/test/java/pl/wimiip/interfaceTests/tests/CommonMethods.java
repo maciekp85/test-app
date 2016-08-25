@@ -2,7 +2,9 @@ package pl.wimiip.interfaceTests.tests;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import pl.wimiip.interfaceTests.config.ITConfigurationForChromeBrowser;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -13,12 +15,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class CommonMethods extends ITConfigurationForChromeBrowser implements Common {
 
     @Override
-    public void logInAndMoveToSeleniumPage() {
+    public void logInAndMoveToSeleniumPage(WebDriver driver, WebDriverWait wait) {
         driver.get("http://localhost:8080/#/");
         try {
             if(driver.findElement(By.linkText("Login")).isDisplayed()) {
                 wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Login"))).click();
-                fillInForm();
+                fillInForm(driver, wait);
                 wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Selenium"))).click();
             }
         } catch (NoSuchElementException exc) {
@@ -41,7 +43,7 @@ public class CommonMethods extends ITConfigurationForChromeBrowser implements Co
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.partialLinkText(numberExample))).click();
     }
 
-    private void fillInForm() {
+    private void fillInForm(WebDriver driver, WebDriverWait wait) {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("login"))).click();
         driver.findElement(By.name("login")).sendKeys("maciek");
         driver.findElement(By.name("password")).click();
