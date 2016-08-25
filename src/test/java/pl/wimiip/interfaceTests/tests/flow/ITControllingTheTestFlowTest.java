@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.rules.TestName;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,6 +15,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import pl.wimiip.TestApp;
 import pl.wimiip.interfaceTests.config.ITConfigurationForChromeBrowser;
 import pl.wimiip.interfaceTests.tests.CommonMethods;
+
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -55,6 +58,30 @@ public class ITControllingTheTestFlowTest extends ITConfigurationForChromeBrowse
         // Check if header text is correct
         assertEquals("Hello Selenium Test Flow!", textHeader);
 
+    }
+
+    @Test
+    public void messageText_CheckImplicitWaitToGetMessage_MessageAboutNotFindingElement() {
+
+        // Move to proper view
+        commonMethods.moveToExample("flow", "3.2");
+
+        // Set the Implicit Wait time Out to 10 seconds
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+
+        try {
+
+            // Get link for Page 4 and click on it
+            WebElement page4button = driver.findElement(By.linkText("Page 4"));
+            page4button.click();
+
+            // Get an element with id page4 and verify it's text
+            WebElement message = driver.findElement(By.id("page45"));
+            assertTrue(message.getText().contains("Abcdefgh"));
+
+        } catch (NoSuchElementException e) {
+            System.out.println("Test with implicit wait set on 10 second. Element not found");;
+        }
     }
 
     @After
