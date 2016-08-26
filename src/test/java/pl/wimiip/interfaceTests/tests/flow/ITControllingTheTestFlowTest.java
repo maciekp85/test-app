@@ -156,9 +156,47 @@ public class ITControllingTheTestFlowTest extends ITConfigurationForChromeBrowse
         }
     }
 
+    @Test
+    public void checkbox_TestIsElementPresent_NothingResultsOnlyAsserts() {
+
+        // Move to proper view
+        commonMethods.moveToExample("flow", "3.5");
+
+        // Check if element with locator criteria exists on Page
+        if(isElementPresent(By.id("cat"))) {
+            // Get the checkbox and select it
+            WebElement cat = driver.findElement(By.id("cat"));
+            if(!cat.isSelected())
+                cat.click();
+
+        } else {
+            System.out.println("Cat checbox doesn't exist!");
+        }
+    }
+
     @After
     public void tearDown() {
         System.out.println("Cleaning after " + name.getMethodName());
+    }
+
+    /**
+     * OTHER METHODS
+     */
+
+
+    /**
+     * Method for checking if an element is present on a page.
+     * @param by locator using an instance of By claas
+     * @return true if the element is found and no exception is thrown, false if NoSuchElementException is thrown
+     */
+    private boolean isElementPresent(By by) {
+        try {
+            driver.findElement(by);
+            return true;
+
+        } catch (NoSuchElementException e) {
+            return false;
+        }
     }
 
 }
