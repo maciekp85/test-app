@@ -11,6 +11,7 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -64,7 +65,7 @@ public class ITControllingTheTestFlowTest extends ITConfigurationForChromeBrowse
     }
 
     @Test
-    public void messageText_CheckImplicitWaitToGetMessage_MessageAboutNotFindingElement() {
+    public void button_CheckImplicitWaitToFindElementAndVerifyItsText_MessageAboutNotFindingElement() {
 
         // Move to proper view
         commonMethods.moveToExample("flow", "3.2");
@@ -128,9 +129,74 @@ public class ITControllingTheTestFlowTest extends ITConfigurationForChromeBrowse
         driver.quit();
     }
 
+    @Test
+    public void button_CheckCustomExpectedConditionToFindElementAndVerifyItsText_MessageAboutNotFindingElement() {
+
+        // Move to proper view
+        commonMethods.moveToExample("flow", "3.4");
+
+        try {
+            // Get link for Page 4 and click on it
+            WebElement page4button = driver.findElement(By.linkText("Page 4"));
+            page4button.click();
+
+            // Create wait using WebDriverWait. This will wait for 5 seconds for timeout before page4 element is found.
+            // Element is found in specified time limit test will move to the text step insted of waiting for 10 seconds.
+            // Expected condition is expecting a WebElement to be returned after findElement finds the element with specified locator.
+            WebElement message = (new WebDriverWait(driver, 5)).until(new ExpectedCondition<WebElement>() {
+                @Override
+                public WebElement apply(WebDriver d) {
+                    return d.findElement(By.id("page45"));
+                }});
+
+            assertTrue(message.getText().contains("abcdefgh"));
+
+        } catch (NoSuchElementException e) {
+            System.out.println("Test with custom-expected conditions. Element not found!!");
+        }
+    }
+
+    @Test
+    public void checkbox_TestIsElementPresent_NothingResultsOnlyAsserts() {
+
+        // Move to proper view
+        commonMethods.moveToExample("flow", "3.5");
+
+        // Check if element with locator criteria exists on Page
+        if(isElementPresent(By.id("cat"))) {
+            // Get the checkbox and select it
+            WebElement cat = driver.findElement(By.id("cat"));
+            if(!cat.isSelected())
+                cat.click();
+
+        } else {
+            System.out.println("Cat checbox doesn't exist!");
+        }
+    }
+
     @After
     public void tearDown() {
         System.out.println("Cleaning after " + name.getMethodName());
+    }
+
+    /**
+     * OTHER METHODS
+     */
+
+
+    /**
+     * Method for checking if an element is present on a page.
+     * @param by locator using an instance of By claas
+     * @return true if the element is found and no exception is thrown, false if NoSuchElementException is thrown
+     */
+    private boolean isElementPresent(By by) {
+        try {
+            driver.findElement(by);
+            return true;
+
+        } catch (NoSuchElementException e) {
+            return false;
+        }
     }
 
 }

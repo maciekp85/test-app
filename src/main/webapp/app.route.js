@@ -269,6 +269,14 @@ appRoute
                         url: '/explicitwait',
                         templateUrl: 'app/core/selenium/views/flow/selenium-flow-explicitwait.html'
                     })
+                    .state('selenium.flow.customexpectedconditions', {
+                        url: '/customexpectedconditions',
+                        templateUrl: 'app/core/selenium/views/flow/selenium-flow-customexpectedconditions.html'
+                    })
+                    .state('selenium.flow.checkelementpresence', {
+                        url: '/checkelementpresence',
+                        templateUrl: 'app/core/selenium/views/flow/selenium-flow-checkelementpresence.html'
+                    })
 
 
             // SPRING
