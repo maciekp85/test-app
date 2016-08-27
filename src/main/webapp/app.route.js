@@ -277,6 +277,18 @@ appRoute
                         url: '/checkelementpresence',
                         templateUrl: 'app/core/selenium/views/flow/selenium-flow-checkelementpresence.html'
                     })
+                    .state('selenium.flow.checkelementstatus', {
+                        url: '/checkelementstatus',
+                        templateUrl: 'app/core/selenium/views/flow/selenium-flow-checkelementstatus.html'
+                    })
+                    .state('selenium.flow.popupwindowbyname', {
+                        url: '/popupwindowbyname',
+                        templateUrl: 'app/core/selenium/views/flow/selenium-flow-popupwindowbyname.html'
+                    })
+                    .state('selenium.flow.popupwindowbytitle', {
+                        url: '/popupwindowbytitle',
+                        templateUrl: 'app/core/selenium/views/flow/selenium-flow-popupwindowbytitle.html'
+                    })
 
 
             // SPRING

@@ -6,10 +6,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
 import org.junit.runner.RunWith;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -20,6 +17,7 @@ import pl.wimiip.TestApp;
 import pl.wimiip.interfaceTests.config.ITConfigurationForChromeBrowser;
 import pl.wimiip.interfaceTests.tests.CommonMethods;
 
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -86,6 +84,8 @@ public class ITControllingTheTestFlowTest extends ITConfigurationForChromeBrowse
         } catch (NoSuchElementException e) {
             System.out.println("Test with implicit wait set on 10 second. Element not found");;
         }
+
+        driver.manage().timeouts().implicitlyWait(20, TimeUnit.MILLISECONDS);
     }
 
     @Test
@@ -125,6 +125,8 @@ public class ITControllingTheTestFlowTest extends ITConfigurationForChromeBrowse
         // Verify Title
         assertTrue(driver.getTitle().toLowerCase().startsWith("selenium"));
 
+        wait = new WebDriverWait(driver, 5);
+
         // Quits this driver, closing every associated window.
         driver.quit();
     }
@@ -146,10 +148,10 @@ public class ITControllingTheTestFlowTest extends ITConfigurationForChromeBrowse
             WebElement message = (new WebDriverWait(driver, 5)).until(new ExpectedCondition<WebElement>() {
                 @Override
                 public WebElement apply(WebDriver d) {
-                    return d.findElement(By.id("page45"));
+                    return d.findElement(By.id("page4"));
                 }});
 
-            assertTrue(message.getText().contains("abcdefgh"));
+            assertEquals("Page 4", message.getText());
 
         } catch (NoSuchElementException e) {
             System.out.println("Test with custom-expected conditions. Element not found!!");
@@ -172,6 +174,95 @@ public class ITControllingTheTestFlowTest extends ITConfigurationForChromeBrowse
         } else {
             System.out.println("Cat checbox doesn't exist!");
         }
+    }
+
+    @Test
+    public void checkbox_CheckTwoElementStatesBeforeSelectIt_NothingResultsOnlyAsserts() {
+
+        // Move to proper view
+        commonMethods.moveToExample("flow", "3.6");
+
+        // Get the checkbox as WebElement using it's id attribut
+        WebElement lamp = driver.findElement(By.id("lamp"));
+
+        // Check if its enabled before selecting it
+        if(lamp.isEnabled()) {
+            // Check if it is already selected? otherwise select the Checkbox
+            if(!lamp.isSelected())
+                lamp.click();
+        } else {
+            System.out.println("Lamp checkbox is disabled");
+        }
+    }
+
+    @Test
+    public void popUpWindow_HandlePopupWindowAndSwitchBetweenWindows_NothingResultsOnlyAsserts() {
+
+        // Move to proper view
+        commonMethods.moveToExample("flow", "3.7");
+
+        // Save the WindowHandle of Parent Browser Window
+        String parentWindow = driver.getWindowHandle();
+
+        // Clicking Home pop-up window button will open Home Page in a new Popup Browser
+        WebElement homeButton = driver.findElement(By.id("homeButton"));
+        homeButton.click();
+
+        try {
+            // Switch to the Home pop-up Browser Window
+            driver.switchTo().window("HomeWindow");
+        } catch (NoSuchWindowException e) {
+            System.out.println("NoSuchWindowException threw!");
+        }
+
+        // Verify the driver context is in Home Page pop-up Browser window
+        assertTrue(driver.getCurrentUrl().contains("home"));
+
+        // Close the Home pop-up Browser Window
+        driver.close();
+
+        // Move back to the Parent Browser Window
+        driver.switchTo().window(parentWindow);
+
+        // Verify the driver context is in Parent Browser Window
+        assertTrue(driver.getCurrentUrl().contains("popupwindowbyname"));
+    }
+
+    @Test
+    public void popUpWindow_HandleAllPopupWindowAndSwitchBetweenWindowsBasedOnTheirTitles_NothingResultsOnlyAsserts() {
+
+        // Move to proper view
+        commonMethods.moveToExample("flow", "3.8");
+
+        // Save the WindowHandle of Parent Browser Window
+        String parentWindow = driver.getWindowHandle();
+
+        // Clicking Google pop-up window button will open Google Home Page in a new Popup Browser Window
+        WebElement googleButton = driver.findElement(By.id("googleButton"));
+        googleButton.click();
+
+        // Get Handles of all the open Popup Windows
+        // Iterate through the set and check if title of each window matches with expected Window Title
+        Set<String> allWindows = driver.getWindowHandles();
+        if(!allWindows.isEmpty()) {
+            for(String windowId: allWindows) {
+                try {
+                    if(driver.switchTo().window(windowId).getTitle().contains("Google")) {
+                        // Close the Google Page Popup Window
+                        driver.close();
+                        break;
+                    }
+                } catch (NoSuchWindowException ex) {
+                    System.out.println("NoSuchWindowException threw!");
+                }
+            }
+        }
+
+        // Move back to the Parent Browser Window
+        driver.switchTo().window(parentWindow);
+
+        // Verify the driver context is in Parent Browser Window
+        assertTrue(driver.getTitle().contains("Test App"));
     }
 
     @After
