@@ -6,10 +6,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
 import org.junit.runner.RunWith;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -191,6 +188,39 @@ public class ITControllingTheTestFlowTest extends ITConfigurationForChromeBrowse
         } else {
             System.out.println("Lamp checkbox is disabled");
         }
+    }
+
+    @Test
+    public void popUpWindow_HandlePopupWindowAndSwitchBeetwenWindows_NothingResultsOnlyAsserts() {
+
+        // Move to proper view
+        commonMethods.moveToExample("flow", "3.7");
+
+        // Save the WindowHandle of Parent Browser Window
+        String parentWindow = driver.getWindowHandle();
+
+        // Clicking Home pop-up window button will open Home Page in a new Popup Browser
+        WebElement homeButton = driver.findElement(By.id("homeButton"));
+        homeButton.click();
+
+        try {
+            // Switch to the Home pop-up Browser Window
+            driver.switchTo().window("HomeWindow");
+        } catch (NoSuchWindowException e) {
+            System.out.println("NoSuchWindowException threw!");
+        }
+
+        // Verify the driver context is in Home Page pop-up Browser window
+        assertTrue(driver.getCurrentUrl().contains("home"));
+
+        // Close the Home pop-up Browser Window
+        driver.close();
+
+        // Move back to the Parent Browser Window
+        driver.switchTo().window(parentWindow);
+
+        // Verify the driver context is in Parent Browser Window
+        assertTrue(driver.getCurrentUrl().contains("popupwindowbyname"));
     }
 
     @After

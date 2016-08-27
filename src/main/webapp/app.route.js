@@ -281,6 +281,10 @@ appRoute
                         url: '/checkelementstatus',
                         templateUrl: 'app/core/selenium/views/flow/selenium-flow-checkelementstatus.html'
                     })
+                    .state('selenium.flow.popupwindowbyname', {
+                        url: '/popupwindowbyname',
+                        templateUrl: 'app/core/selenium/views/flow/selenium-flow-popupwindowbyname.html'
+                    })
 
 
             // SPRING
