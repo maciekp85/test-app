@@ -17,6 +17,7 @@ import pl.wimiip.TestApp;
 import pl.wimiip.interfaceTests.config.ITConfigurationForChromeBrowser;
 import pl.wimiip.interfaceTests.tests.CommonMethods;
 
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -83,6 +84,8 @@ public class ITControllingTheTestFlowTest extends ITConfigurationForChromeBrowse
         } catch (NoSuchElementException e) {
             System.out.println("Test with implicit wait set on 10 second. Element not found");;
         }
+
+        driver.manage().timeouts().implicitlyWait(20, TimeUnit.MILLISECONDS);
     }
 
     @Test
@@ -122,6 +125,8 @@ public class ITControllingTheTestFlowTest extends ITConfigurationForChromeBrowse
         // Verify Title
         assertTrue(driver.getTitle().toLowerCase().startsWith("selenium"));
 
+        wait = new WebDriverWait(driver, 5);
+
         // Quits this driver, closing every associated window.
         driver.quit();
     }
@@ -143,10 +148,10 @@ public class ITControllingTheTestFlowTest extends ITConfigurationForChromeBrowse
             WebElement message = (new WebDriverWait(driver, 5)).until(new ExpectedCondition<WebElement>() {
                 @Override
                 public WebElement apply(WebDriver d) {
-                    return d.findElement(By.id("page45"));
+                    return d.findElement(By.id("page4"));
                 }});
 
-            assertTrue(message.getText().contains("abcdefgh"));
+            assertEquals("Page 4", message.getText());
 
         } catch (NoSuchElementException e) {
             System.out.println("Test with custom-expected conditions. Element not found!!");
@@ -191,7 +196,7 @@ public class ITControllingTheTestFlowTest extends ITConfigurationForChromeBrowse
     }
 
     @Test
-    public void popUpWindow_HandlePopupWindowAndSwitchBeetwenWindows_NothingResultsOnlyAsserts() {
+    public void popUpWindow_HandlePopupWindowAndSwitchBetweenWindows_NothingResultsOnlyAsserts() {
 
         // Move to proper view
         commonMethods.moveToExample("flow", "3.7");
@@ -221,6 +226,43 @@ public class ITControllingTheTestFlowTest extends ITConfigurationForChromeBrowse
 
         // Verify the driver context is in Parent Browser Window
         assertTrue(driver.getCurrentUrl().contains("popupwindowbyname"));
+    }
+
+    @Test
+    public void popUpWindow_HandleAllPopupWindowAndSwitchBetweenWindowsBasedOnTheirTitles_NothingResultsOnlyAsserts() {
+
+        // Move to proper view
+        commonMethods.moveToExample("flow", "3.8");
+
+        // Save the WindowHandle of Parent Browser Window
+        String parentWindow = driver.getWindowHandle();
+
+        // Clicking Google pop-up window button will open Google Home Page in a new Popup Browser Window
+        WebElement googleButton = driver.findElement(By.id("googleButton"));
+        googleButton.click();
+
+        // Get Handles of all the open Popup Windows
+        // Iterate through the set and check if title of each window matches with expected Window Title
+        Set<String> allWindows = driver.getWindowHandles();
+        if(!allWindows.isEmpty()) {
+            for(String windowId: allWindows) {
+                try {
+                    if(driver.switchTo().window(windowId).getTitle().contains("Google")) {
+                        // Close the Google Page Popup Window
+                        driver.close();
+                        break;
+                    }
+                } catch (NoSuchWindowException ex) {
+                    System.out.println("NoSuchWindowException threw!");
+                }
+            }
+        }
+
+        // Move back to the Parent Browser Window
+        driver.switchTo().window(parentWindow);
+
+        // Verify the driver context is in Parent Browser Window
+        assertTrue(driver.getTitle().contains("Test App"));
     }
 
     @After
