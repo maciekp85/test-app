@@ -174,6 +174,25 @@ public class ITControllingTheTestFlowTest extends ITConfigurationForChromeBrowse
         }
     }
 
+    @Test
+    public void checkbox_CheckTwoElementStatesBeforeSelectIt_NothingResultsOnlyAsserts() {
+
+        // Move to proper view
+        commonMethods.moveToExample("flow", "3.6");
+
+        // Get the checkbox as WebElement using it's id attribut
+        WebElement lamp = driver.findElement(By.id("lamp"));
+
+        // Check if its enabled before selecting it
+        if(lamp.isEnabled()) {
+            // Check if it is already selected? otherwise select the Checkbox
+            if(!lamp.isSelected())
+                lamp.click();
+        } else {
+            System.out.println("Lamp checkbox is disabled");
+        }
+    }
+
     @After
     public void tearDown() {
         System.out.println("Cleaning after " + name.getMethodName());
