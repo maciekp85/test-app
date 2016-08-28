@@ -21,14 +21,14 @@ public class ITConfigurationForFirefoxBrowser {
     protected static WebDriverWait wait;
 
     @BeforeClass
-    public static void setUp() {
+    public static void setUpBeforeClass() {
         driver = new FirefoxDriver();
         driver.manage().window().maximize();
         wait = new WebDriverWait(driver, 5);
     }
 
     @AfterClass
-    public static void tearDown() {
+    public static void tearDownAfterClass() {
         driver.close();
     }
 }

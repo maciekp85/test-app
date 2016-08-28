@@ -293,6 +293,10 @@ appRoute
                         url: '/popupwindowbycontent',
                         templateUrl: 'app/core/selenium/views/flow/selenium-flow-popupwindowbycontent.html'
                     })
+                    .state('selenium.flow.alertjavascript', {
+                        url: '/alertjavascript',
+                        templateUrl: 'app/core/selenium/views/flow/selenium-flow-alertjavascript.html'
+                    })
 
 
             // SPRING

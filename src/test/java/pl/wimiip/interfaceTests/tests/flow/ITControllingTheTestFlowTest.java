@@ -15,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import pl.wimiip.TestApp;
 import pl.wimiip.interfaceTests.config.ITConfigurationForChromeBrowser;
+import pl.wimiip.interfaceTests.config.ITConfigurationForFirefoxBrowser;
 import pl.wimiip.interfaceTests.tests.CommonMethods;
 
 import java.util.Set;
@@ -132,7 +133,7 @@ public class ITControllingTheTestFlowTest extends ITConfigurationForChromeBrowse
     }
 
     @Test
-    public void button_CheckCustomExpectedConditionToFindElementAndVerifyItsText_MessageAboutNotFindingElement() {
+    public void button_CheckCustomExpectedConditionToFindElementAndVerifyItsText_NothingResultsOnlyAsserts() {
 
         // Move to proper view
         commonMethods.moveToExample("flow", "3.4");
@@ -305,6 +306,38 @@ public class ITControllingTheTestFlowTest extends ITConfigurationForChromeBrowse
 
         // Verify the driver context is in Parent Browser Window
         assertTrue(driver.getPageSource().contains("Identifying and handling a pop-up window by its content"));
+    }
+
+    @Test
+    public void alertWindow_TestCase_NothingResultsOnlyAsserts() {
+
+        // Move to proper view
+        commonMethods.moveToExample("flow", "3.10");
+
+        // Clicking button will show a simple Alert with OK button
+        WebElement alertButton = driver.findElement(By.id("alertButton"));
+        alertButton.click();
+
+        try {
+
+            // Wait until alert will be present
+            wait.until(ExpectedConditions.alertIsPresent());
+
+//            // Get the Alert
+            Alert alert = driver.switchTo().alert();
+
+            // Get the Text displayed on Alert using getText() method of Alert class
+            String textOnAlert = alert.getText();
+
+            // Click OK button, by calling accept() method of Alert Class
+            alert.accept();
+
+            // Verify Alert displayed correct message to user
+            assertEquals("Hello! I am an alert box!", textOnAlert);
+
+        } catch (NoAlertPresentException ex) {
+            System.out.println("NoAlertPresentException threw!");
+        }
     }
 
     @After
