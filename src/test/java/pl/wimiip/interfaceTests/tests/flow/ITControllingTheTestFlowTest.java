@@ -367,6 +367,36 @@ public class ITControllingTheTestFlowTest extends ITConfigurationForChromeBrowse
 
     }
 
+    @Test
+    public void promptBoxAlert_HandlePromptBoxAlertEnterInputValueAndCheckIfTheSameValueIsDisplayedOnThePage_NothingResultsOnlyAsserts() {
+
+        // Move to proper view
+        commonMethods.moveToExample("flow", "3.12");
+
+        // Clicking button will show a Prompt Alert asking user to enter value/text with OK and Cancel Button
+        WebElement promptBoxAlertButton = driver.findElement(By.id("promptBoxAlertButton"));
+        promptBoxAlertButton.click();
+
+        try {
+
+            // Get the Alert
+            Alert alert = driver.switchTo().alert();
+
+            // Enter some value on Prompt by calling sendKeys() method of Alert class
+            alert.sendKeys("John Rambo");
+
+            // Click OK button, by calling accept() method of Alert class
+            alert.accept();
+
+            // Verify Page displays message with value entered in Prompt
+            WebElement message = driver.findElement(By.id("message"));
+            assertEquals("Hello John Rambo! How are you today?", message.getText());
+
+        } catch (NoAlertPresentException ex) {
+            System.out.println("NoAlertPresentException threw!");
+        }
+    }
+
     @After
     public void tearDown() {
         System.out.println("Cleaning after " + name.getMethodName());
