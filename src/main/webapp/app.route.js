@@ -305,6 +305,19 @@ appRoute
                         url: '/promptboxalert',
                         templateUrl: 'app/core/selenium/views/flow/selenium-flow-promptboxalert.html'
                     })
+                    .state('selenium.flow.handlingiframes', {
+                        url: '/handlingiframes',
+                        templateUrl: 'app/core/selenium/views/flow/selenium-flow-handlingiframes.html'
+                    })
+                        .state('selenium.flow.handlingiframes.1', {
+                            url: '/1',
+                            templateUrl: 'app/core/selenium/views/flow/selenium-flow-handlingiframes-1.html'
+                        })
+                        .state('selenium.flow.handlingiframes.2', {
+                            url: '/2',
+                            templateUrl: 'app/core/selenium/views/flow/selenium-flow-handlingiframes-2.html'
+                        })
+
 
 
             // SPRING

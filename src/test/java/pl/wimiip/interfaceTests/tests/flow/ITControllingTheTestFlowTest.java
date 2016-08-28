@@ -18,6 +18,7 @@ import pl.wimiip.interfaceTests.config.ITConfigurationForChromeBrowser;
 import pl.wimiip.interfaceTests.config.ITConfigurationForFirefoxBrowser;
 import pl.wimiip.interfaceTests.tests.CommonMethods;
 
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -395,6 +396,88 @@ public class ITControllingTheTestFlowTest extends ITConfigurationForChromeBrowse
         } catch (NoAlertPresentException ex) {
             System.out.println("NoAlertPresentException threw!");
         }
+    }
+
+    @Test
+    public void iFrames_TestIFrameByIdOrName_NothingResultsOnlyAsserts() {
+
+        // Move to proper view
+        commonMethods.moveToExample("flow", "3.13");
+
+        // Move to first example
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("First example"))).click();
+
+        // Activate the iframe on left side using it's id attribute
+        driver.switchTo().frame("left");
+
+        // Get an element from the iframe on left side and verify it's contents
+        WebElement leftMessage = driver.findElement(By.tagName("p"));
+        assertEquals("The language for building web pages", leftMessage.getText());
+
+        // Activate the Page, this will move context from frame back to the Page
+        driver.switchTo().defaultContent();
+
+        // Activate the iframe on right side using it's name attribute
+        driver.switchTo().frame("right");
+
+        // Get an element from the iframe on left side and verify it's message
+        WebElement rightMessage = driver.findElement(By.tagName("p"));
+        assertEquals("Strona główna", rightMessage.getText());
+
+        // Activate the Page, this will move context from frame back to the Page
+        driver.switchTo().defaultContent();
+    }
+
+    @Test
+    public void iFrames_TestIFrameByIndex_NothingResultsOnlyAsserts() {
+
+        // Move to proper view
+        commonMethods.moveToExample("flow", "3.13");
+
+        // Move to first example
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("First example"))).click();
+
+        // Activate the iframe in middle using it's index. Index starts at 0.
+        driver.switchTo().frame(1);
+
+        // Get an element from the iframe in the middle and verify it's contents
+        WebElement middleMessage = driver.findElement(By.tagName("p"));
+        assertEquals("What is your favourite sport?", middleMessage.getText());
+
+        // Activate the Page, this will move context from frame back to the Page
+        driver.switchTo().defaultContent();
+    }
+
+    @Test
+    public void iFrames_TestIFrameByItsContent_NothingResultsOnlyAsserts() {
+
+        // Move to proper view
+        commonMethods.moveToExample("flow", "3.13");
+
+        // Move to first example
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("First example"))).click();
+
+        // Get all iframes on the Page, created with <iframe> tag
+        List<WebElement> iframes = driver.findElements(By.tagName("iframe"));
+
+        // In this example iframe in the middle is activated by checking the contents
+        // Activate iframe and check if it has the desired content. It found perform the operations,
+        // if not, then switch back to the Page and continue checking next frame
+        for(WebElement iframe: iframes) {
+
+            // switchTo().frame() also accepts frame elements apart from id, name or index
+            driver.switchTo().frame(iframe);
+
+            if(driver.getPageSource().contains("TEST PAGE'S MACIEK")) {
+                assertTrue(true, "Middle Frame Found");
+                break;
+            } else {
+                driver.switchTo().defaultContent();
+            }
+        }
+
+        // Activate the Page, this will move context from frame back to the Page
+        driver.switchTo().defaultContent();
     }
 
     @After
