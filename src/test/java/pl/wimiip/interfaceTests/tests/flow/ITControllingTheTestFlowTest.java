@@ -480,6 +480,46 @@ public class ITControllingTheTestFlowTest extends ITConfigurationForChromeBrowse
         driver.switchTo().defaultContent();
     }
 
+    @Test
+    public void iFramesAndWindows_TestTwitterIFrameByItsWebElementAndSwitchBetweenOpenWindows_NothingResultsOnlyAsserts() {
+
+        // Move to proper view
+        commonMethods.moveToExample("flow", "3.13");
+
+        // Move to second example
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Second example"))).click();
+
+        // Get the iframe element
+        WebElement twitterFrame = driver.findElement(By.tagName("iframe"));
+
+        // Activate the iframe
+        driver.switchTo().frame(twitterFrame);
+
+        // Get and Click the follow button from iframe
+        WebElement button = driver.findElement(By.id("follow-button"));
+        button.click();
+
+        // Store the the handle of current driver window
+        String currentWindow = driver.getWindowHandle();
+
+        // The Twitter Popup does not have name or title. Script will get handles of all open windows and
+        // desired window will be activated by checking it's Title
+        Set<String> allWindows = driver.getWindowHandles();
+        if(!allWindows.isEmpty()) {
+            for(String windowId: allWindows) {
+                driver.switchTo().window(windowId);
+                if(driver.getTitle().equals("Unmesh Gundecha (@upgundecha) na Twitterze")) {
+                    assertTrue(true, "Twitter Login Popup Window Found");
+                    driver.close();
+                    break;
+                }
+            }
+        }
+
+        // Switch back to original driver window
+        driver.switchTo().window(currentWindow);
+    }
+
     @After
     public void tearDown() {
         System.out.println("Cleaning after " + name.getMethodName());
