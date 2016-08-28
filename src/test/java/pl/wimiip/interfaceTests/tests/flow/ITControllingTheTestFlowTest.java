@@ -265,6 +265,48 @@ public class ITControllingTheTestFlowTest extends ITConfigurationForChromeBrowse
         assertTrue(driver.getTitle().contains("Test App"));
     }
 
+    @Test
+    public void popUpWindow_HandleAllPopupWindowAndSwitchBetweenWindowsBasedOnTheirContents_NothingResultsOnlyAsserts() {
+
+        // Move to proper view
+        commonMethods.moveToExample("flow", "3.9");
+
+        // Save the WindowHandle of Parent Browser
+        String currentWindowId = driver.getWindowHandle();
+
+        // Clicking Selenium Button will open Selenium Page in a new Popup Browser Window
+        WebElement seleniumButton = driver.findElement(By.id("seleniumButton"));
+        seleniumButton.click();
+
+        // There is no name or title provided for Selenium Page Popup
+        // We will iterate through all the open Windows and check the contents to find out if it's Selenium Window
+        Set<String> allWindows = driver.getWindowHandles();
+
+        if(!allWindows.isEmpty()) {
+            for (String windowId: allWindows) {
+                driver.switchTo().window(windowId);
+
+                if(driver.getPageSource().contains("Table of contents:")) {
+                    try {
+
+                        // Close the Selenium Page PopupWindow
+                        driver.close();
+                        break;
+
+                    } catch (NoSuchWindowException ex) {
+                        System.out.println("NoSuchWindowException threw!");
+                    }
+                }
+            }
+        }
+
+        // Move back to the Parent Browser Window
+        driver.switchTo().window(currentWindowId);
+
+        // Verify the driver context is in Parent Browser Window
+        assertTrue(driver.getPageSource().contains("Identifying and handling a pop-up window by its content"));
+    }
+
     @After
     public void tearDown() {
         System.out.println("Cleaning after " + name.getMethodName());

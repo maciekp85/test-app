@@ -289,6 +289,10 @@ appRoute
                         url: '/popupwindowbytitle',
                         templateUrl: 'app/core/selenium/views/flow/selenium-flow-popupwindowbytitle.html'
                     })
+                    .state('selenium.flow.popupwindowbycontent', {
+                        url: '/popupwindowbycontent',
+                        templateUrl: 'app/core/selenium/views/flow/selenium-flow-popupwindowbycontent.html'
+                    })
 
 
             // SPRING
