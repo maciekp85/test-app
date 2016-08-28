@@ -297,6 +297,10 @@ appRoute
                         url: '/alertjavascript',
                         templateUrl: 'app/core/selenium/views/flow/selenium-flow-alertjavascript.html'
                     })
+                    .state('selenium.flow.confirmboxalert', {
+                        url: '/confirmboxalert',
+                        templateUrl: 'app/core/selenium/views/flow/selenium-flow-confirmboxalert.html'
+                    })
 
 
             // SPRING

@@ -309,7 +309,7 @@ public class ITControllingTheTestFlowTest extends ITConfigurationForChromeBrowse
     }
 
     @Test
-    public void alertWindow_TestCase_NothingResultsOnlyAsserts() {
+    public void alertWindow_SwitchingToElementWindowAndVerifyTextDisplayedOnElement_NothingResultsOnlyAsserts() {
 
         // Move to proper view
         commonMethods.moveToExample("flow", "3.10");
@@ -340,6 +340,33 @@ public class ITControllingTheTestFlowTest extends ITConfigurationForChromeBrowse
         }
     }
 
+    @Test
+    public void confirmBoxAlert_TestConfirmAccept_NothingResultsOnlyAsserts() {
+
+        // Move to proper view
+        commonMethods.moveToExample("flow", "3.11");
+
+        // Clicking button will show a Confirmation Alert with OK and Cancel Button
+        WebElement confirmBoxAlertButton = driver.findElement(By.id("confirmBoxAlertButton"));
+        confirmBoxAlertButton.click();
+
+        clickedOKButton(true);
+    }
+
+    @Test
+    public void confirmBoxAlert_TestConfirmDismiss_NothingResultsOnlyAsserts() {
+
+        // Move to proper view
+        commonMethods.moveToExample("flow", "3.11");
+
+        // Clicking button will show a Confirmation Alert with OK and Cancel Button
+        WebElement confirmBoxAlertButton = driver.findElement(By.id("confirmBoxAlertButton"));
+        confirmBoxAlertButton.click();
+
+        clickedOKButton(false);
+
+    }
+
     @After
     public void tearDown() {
         System.out.println("Cleaning after " + name.getMethodName());
@@ -351,7 +378,7 @@ public class ITControllingTheTestFlowTest extends ITConfigurationForChromeBrowse
 
 
     /**
-     * Method for checking if an element is present on a page.
+     * Method for checking if an element is present on a page (3.5 example).
      * @param by locator using an instance of By claas
      * @return true if the element is found and no exception is thrown, false if NoSuchElementException is thrown
      */
@@ -362,6 +389,36 @@ public class ITControllingTheTestFlowTest extends ITConfigurationForChromeBrowse
 
         } catch (NoSuchElementException e) {
             return false;
+        }
+    }
+
+    /**
+     * Method which clicks on appropriate button and verify if text is correct (3.11 example).
+     * @param choice - (booleand value) what button you should click (selectable: "yes: for Accept or "no" for Cancel)
+     */
+    private void clickedOKButton(boolean choice) {
+        try {
+            // Get the Alert
+            Alert alert = driver.switchTo().alert();
+
+            if(choice) {
+                // Click OK button, by calling accept() method of Alert class
+                alert.accept();
+
+                // Verify Page displays correct message on Accept
+                WebElement message = driver.findElement(By.id("message"));
+                assertEquals("You pressed OK!", message.getText());
+            } else {
+                // Click Cancel button, by calling dismiss() method of Alert class
+                alert.dismiss();
+
+                // Verify Page displays correct message on Accept
+                WebElement message = driver.findElement(By.id("message"));
+                assertEquals("You pressed Cancel!", message.getText());
+            }
+
+        } catch (NoAlertPresentException ex) {
+            System.out.println("NoAlertPresentException threw!");
         }
     }
 
