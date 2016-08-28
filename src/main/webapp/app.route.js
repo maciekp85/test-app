@@ -289,6 +289,22 @@ appRoute
                         url: '/popupwindowbytitle',
                         templateUrl: 'app/core/selenium/views/flow/selenium-flow-popupwindowbytitle.html'
                     })
+                    .state('selenium.flow.popupwindowbycontent', {
+                        url: '/popupwindowbycontent',
+                        templateUrl: 'app/core/selenium/views/flow/selenium-flow-popupwindowbycontent.html'
+                    })
+                    .state('selenium.flow.alertjavascript', {
+                        url: '/alertjavascript',
+                        templateUrl: 'app/core/selenium/views/flow/selenium-flow-alertjavascript.html'
+                    })
+                    .state('selenium.flow.confirmboxalert', {
+                        url: '/confirmboxalert',
+                        templateUrl: 'app/core/selenium/views/flow/selenium-flow-confirmboxalert.html'
+                    })
+                    .state('selenium.flow.promptboxalert', {
+                        url: '/promptboxalert',
+                        templateUrl: 'app/core/selenium/views/flow/selenium-flow-promptboxalert.html'
+                    })
 
 
             // SPRING

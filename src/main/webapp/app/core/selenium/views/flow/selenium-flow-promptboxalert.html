@@ -1,0 +1,20 @@
+<form class="well form-horizontal" role="form">
+    <div class="form-group">
+        <label class="controls-pane col-sm-4">Handling a prompt box alert</label>
+    </div>
+    <div class="well">
+        <button class="btn btn-success" id="promptBoxAlertButton" onclick='promptBoxAlertFunction()'>Prompt box alert</button><br />
+        <br />
+        <p id="message"></p>
+    </div>
+</form>
+
+<script>
+    function promptBoxAlertFunction() {
+        var person = prompt("Please enter your name", "");
+
+        if (person != null) {
+            document.getElementById("message").innerHTML = "Hello " + person + "! How are you today?";
+        }
+    }
+</script>

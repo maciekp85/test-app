@@ -15,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import pl.wimiip.TestApp;
 import pl.wimiip.interfaceTests.config.ITConfigurationForChromeBrowser;
+import pl.wimiip.interfaceTests.config.ITConfigurationForFirefoxBrowser;
 import pl.wimiip.interfaceTests.tests.CommonMethods;
 
 import java.util.Set;
@@ -132,7 +133,7 @@ public class ITControllingTheTestFlowTest extends ITConfigurationForChromeBrowse
     }
 
     @Test
-    public void button_CheckCustomExpectedConditionToFindElementAndVerifyItsText_MessageAboutNotFindingElement() {
+    public void button_CheckCustomExpectedConditionToFindElementAndVerifyItsText_NothingResultsOnlyAsserts() {
 
         // Move to proper view
         commonMethods.moveToExample("flow", "3.4");
@@ -265,6 +266,137 @@ public class ITControllingTheTestFlowTest extends ITConfigurationForChromeBrowse
         assertTrue(driver.getTitle().contains("Test App"));
     }
 
+    @Test
+    public void popUpWindow_HandleAllPopupWindowAndSwitchBetweenWindowsBasedOnTheirContents_NothingResultsOnlyAsserts() {
+
+        // Move to proper view
+        commonMethods.moveToExample("flow", "3.9");
+
+        // Save the WindowHandle of Parent Browser
+        String currentWindowId = driver.getWindowHandle();
+
+        // Clicking Selenium Button will open Selenium Page in a new Popup Browser Window
+        WebElement seleniumButton = driver.findElement(By.id("seleniumButton"));
+        seleniumButton.click();
+
+        // There is no name or title provided for Selenium Page Popup
+        // We will iterate through all the open Windows and check the contents to find out if it's Selenium Window
+        Set<String> allWindows = driver.getWindowHandles();
+
+        if(!allWindows.isEmpty()) {
+            for (String windowId: allWindows) {
+                driver.switchTo().window(windowId);
+
+                if(driver.getPageSource().contains("Table of contents:")) {
+                    try {
+
+                        // Close the Selenium Page PopupWindow
+                        driver.close();
+                        break;
+
+                    } catch (NoSuchWindowException ex) {
+                        System.out.println("NoSuchWindowException threw!");
+                    }
+                }
+            }
+        }
+
+        // Move back to the Parent Browser Window
+        driver.switchTo().window(currentWindowId);
+
+        // Verify the driver context is in Parent Browser Window
+        assertTrue(driver.getPageSource().contains("Identifying and handling a pop-up window by its content"));
+    }
+
+    @Test
+    public void alertWindow_SwitchingToElementWindowAndVerifyTextDisplayedOnElement_NothingResultsOnlyAsserts() {
+
+        // Move to proper view
+        commonMethods.moveToExample("flow", "3.10");
+
+        // Clicking button will show a simple Alert with OK button
+        WebElement alertButton = driver.findElement(By.id("alertButton"));
+        alertButton.click();
+
+        try {
+
+            // Wait until alert will be present
+            wait.until(ExpectedConditions.alertIsPresent());
+
+//            // Get the Alert
+            Alert alert = driver.switchTo().alert();
+
+            // Get the Text displayed on Alert using getText() method of Alert class
+            String textOnAlert = alert.getText();
+
+            // Click OK button, by calling accept() method of Alert Class
+            alert.accept();
+
+            // Verify Alert displayed correct message to user
+            assertEquals("Hello! I am an alert box!", textOnAlert);
+
+        } catch (NoAlertPresentException ex) {
+            System.out.println("NoAlertPresentException threw!");
+        }
+    }
+
+    @Test
+    public void confirmBoxAlert_TestConfirmAccept_NothingResultsOnlyAsserts() {
+
+        // Move to proper view
+        commonMethods.moveToExample("flow", "3.11");
+
+        // Clicking button will show a Confirmation Alert with OK and Cancel Button
+        WebElement confirmBoxAlertButton = driver.findElement(By.id("confirmBoxAlertButton"));
+        confirmBoxAlertButton.click();
+
+        clickedOKButton(true);
+    }
+
+    @Test
+    public void confirmBoxAlert_TestConfirmDismiss_NothingResultsOnlyAsserts() {
+
+        // Move to proper view
+        commonMethods.moveToExample("flow", "3.11");
+
+        // Clicking button will show a Confirmation Alert with OK and Cancel Button
+        WebElement confirmBoxAlertButton = driver.findElement(By.id("confirmBoxAlertButton"));
+        confirmBoxAlertButton.click();
+
+        clickedOKButton(false);
+
+    }
+
+    @Test
+    public void promptBoxAlert_HandlePromptBoxAlertEnterInputValueAndCheckIfTheSameValueIsDisplayedOnThePage_NothingResultsOnlyAsserts() {
+
+        // Move to proper view
+        commonMethods.moveToExample("flow", "3.12");
+
+        // Clicking button will show a Prompt Alert asking user to enter value/text with OK and Cancel Button
+        WebElement promptBoxAlertButton = driver.findElement(By.id("promptBoxAlertButton"));
+        promptBoxAlertButton.click();
+
+        try {
+
+            // Get the Alert
+            Alert alert = driver.switchTo().alert();
+
+            // Enter some value on Prompt by calling sendKeys() method of Alert class
+            alert.sendKeys("John Rambo");
+
+            // Click OK button, by calling accept() method of Alert class
+            alert.accept();
+
+            // Verify Page displays message with value entered in Prompt
+            WebElement message = driver.findElement(By.id("message"));
+            assertEquals("Hello John Rambo! How are you today?", message.getText());
+
+        } catch (NoAlertPresentException ex) {
+            System.out.println("NoAlertPresentException threw!");
+        }
+    }
+
     @After
     public void tearDown() {
         System.out.println("Cleaning after " + name.getMethodName());
@@ -276,7 +408,7 @@ public class ITControllingTheTestFlowTest extends ITConfigurationForChromeBrowse
 
 
     /**
-     * Method for checking if an element is present on a page.
+     * Method for checking if an element is present on a page (3.5 example).
      * @param by locator using an instance of By claas
      * @return true if the element is found and no exception is thrown, false if NoSuchElementException is thrown
      */
@@ -287,6 +419,36 @@ public class ITControllingTheTestFlowTest extends ITConfigurationForChromeBrowse
 
         } catch (NoSuchElementException e) {
             return false;
+        }
+    }
+
+    /**
+     * Method which clicks on appropriate button and verify if text is correct (3.11 example).
+     * @param choice - (booleand value) what button you should click (selectable: "yes: for Accept or "no" for Cancel)
+     */
+    private void clickedOKButton(boolean choice) {
+        try {
+            // Get the Alert
+            Alert alert = driver.switchTo().alert();
+
+            if(choice) {
+                // Click OK button, by calling accept() method of Alert class
+                alert.accept();
+
+                // Verify Page displays correct message on Accept
+                WebElement message = driver.findElement(By.id("message"));
+                assertEquals("You pressed OK!", message.getText());
+            } else {
+                // Click Cancel button, by calling dismiss() method of Alert class
+                alert.dismiss();
+
+                // Verify Page displays correct message on Accept
+                WebElement message = driver.findElement(By.id("message"));
+                assertEquals("You pressed Cancel!", message.getText());
+            }
+
+        } catch (NoAlertPresentException ex) {
+            System.out.println("NoAlertPresentException threw!");
         }
     }
 

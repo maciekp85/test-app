@@ -332,6 +332,7 @@ public class ITLocatingElementsTest extends ITConfigurationForChromeBrowser {
         // Move to proper view
         commonMethods.moveToExample("locating", "1.11");
 
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//td[contains(text(), 'Item 1')]")));
         WebElement cell = driver.findElement(By.xpath("//td[contains(text(), 'Item 1')]"));
         assertEquals("Item 1", cell.getText());
 
