@@ -468,7 +468,7 @@ public class ITControllingTheTestFlowTest extends ITConfigurationForChromeBrowse
             // switchTo().frame() also accepts frame elements apart from id, name or index
             driver.switchTo().frame(iframe);
 
-            if(driver.getPageSource().contains("TEST PAGE'S MACIEK")) {
+            if(driver.getPageSource().contains("MACIEK'S TEST PAGE")) {
                 assertTrue(true, "Middle Frame Found");
                 break;
             } else {
