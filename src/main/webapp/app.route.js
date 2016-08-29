@@ -318,7 +318,19 @@ appRoute
                             templateUrl: 'app/core/selenium/views/flow/selenium-flow-handlingiframes-2.html'
                         })
 
-
+                // DATA-DRIVEN TESTING
+                .state('selenium.datadriven', {
+                    url: '/datadriven',
+                    templateUrl: 'app/core/selenium/views/datadriven/selenium-datadriven.html'
+                })
+                    .state('selenium.datadriven.introduction', {
+                        url: '/introduction',
+                        templateUrl: 'app/core/selenium/views/datadriven/selenium-datadriven-introduction.html'
+                    })
+                    .state('selenium.datadriven.createtestwithjunit', {
+                        url: '/createtestwithjunit',
+                        templateUrl: 'app/core/selenium/views/datadriven/selenium-datadriven-createtestwithjunit.html'
+                    })
 
             // SPRING
             .state('spring', {
