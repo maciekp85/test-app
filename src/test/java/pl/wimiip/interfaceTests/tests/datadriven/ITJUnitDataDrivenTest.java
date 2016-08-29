@@ -10,12 +10,15 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Duration;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Sleeper;
 import pl.wimiip.interfaceTests.config.ITConfigurationForChromeBrowser;
 import pl.wimiip.interfaceTests.tests.CommonMethods;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.*;
 
@@ -25,7 +28,7 @@ import static org.junit.Assert.*;
 
 // Use a parameterized runner
 @RunWith(value = Parameterized.class)
-public class SimpleDDTTest extends ITConfigurationForChromeBrowser {
+public class ITJUnitDataDrivenTest extends ITConfigurationForChromeBrowser {
 
     private CommonMethods commonMethods;
 
@@ -44,16 +47,16 @@ public class SimpleDDTTest extends ITConfigurationForChromeBrowser {
     public static Collection testData() {
         return Arrays.asList(
                 new Object[][] {
-                        {"45", "1", "60", "17.6", "Underweight"}
-//                        {"168","1", "70", "24.8", "Normal"},
-//                        {"181", "1", "89" "27.2", "Overweight"},
-//                        {"178","1", "00", "31.6", "Obesity"}
+                        {"45", "1", "60", "BMI 17.5", "Underweight"},
+                        {"70","1", "68", "BMI 24.9", "Normal"},
+                        {"89", "1", "81", "BMI 27.3", "Overweight"},
+                        {"100","1", "78", "BMI 31.6", "Obese"}
                     }
                 );
     }
 
     // Add a constructor which will be used by the test runner to pass the parameters to the SimpleDDT class instance
-    public SimpleDDTTest(String weight, String heightMeter, String heightCm, String bmi, String bmiCategory)
+    public ITJUnitDataDrivenTest(String weight, String heightMeter, String heightCm, String bmi, String bmiCategory)
     {
         this.weight = weight;
         this.heightMeter = heightMeter;
@@ -73,7 +76,7 @@ public class SimpleDDTTest extends ITConfigurationForChromeBrowser {
 
     // Add the test case method testBMICalculator() that uses parameterized variables
     @Test
-    public void testBMICalculator() throws Exception {
+    public void bmiCalculatorApplication_UseParameterizedVariableFromCollectionAndCompareThemWithVariablesFromApplication_NothingResultsOnlyAsserts() throws Exception {
 
         // Move to proper view
         commonMethods.moveToExample("datadriven", "4.2");
@@ -108,15 +111,27 @@ public class SimpleDDTTest extends ITConfigurationForChromeBrowser {
         WebElement calculateButton = driver.findElement(By.id("calcButtonKg"));
         calculateButton.click();
 
-        // ...
+        Thread.sleep(100);
+
+        try {
+            // Get the BMI element and verify its value using parameterized bmi variable
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='bmiDisplayKg']/div[2]/div[2]")));
+            String bmiLabel = driver.findElement(By.xpath("//*[@id='bmiDisplayKg']/div[2]/div[2]")).getText();
+            assertEquals(bmi, bmiLabel);
+
+            // Get the BMI Category element and verify its value using parameterized bmiCategory variable
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='bmiDisplayKg']/div[1]/div[@class='fit" + bmiCategory + "']")));
+            String bmiCategoryLabel = driver.findElement(By.xpath("//*[@id='bmiDisplayKg']/div[1]/div[@class='fit" + bmiCategory + "']")).getText();
+            assertEquals(bmiCategory.toLowerCase(), bmiCategoryLabel);
+
+        } catch (Exception ec) {
+            System.out.println("Exception threw!");
+        }
     }
 
     @After
     public void tearDown() {
         System.out.println("Cleaning after " + name.getMethodName());
     }
-
-
-
 
 }
