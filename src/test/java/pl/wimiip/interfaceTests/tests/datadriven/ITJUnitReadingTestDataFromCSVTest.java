@@ -14,10 +14,15 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import pl.wimiip.interfaceTests.config.ITConfigurationForChromeBrowser;
 import pl.wimiip.interfaceTests.tests.CommonMethods;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by nishi on 2016-08-29.
@@ -26,7 +31,7 @@ import static org.junit.Assert.*;
 
 // Use a parameterized runner
 @RunWith(value = Parameterized.class)
-public class ITJUnitDataDrivenTest extends ITConfigurationForChromeBrowser {
+public class ITJUnitReadingTestDataFromCSVTest extends ITConfigurationForChromeBrowser {
 
     private CommonMethods commonMethods;
 
@@ -40,21 +45,14 @@ public class ITJUnitDataDrivenTest extends ITConfigurationForChromeBrowser {
     private String bmi;
     private String bmiCategory;
 
-    // Define a method that will return the collection of parameters by using the @Parameters annotation
+    // Define a method that will return test data from the CSV file as a collection. This method internally calls the getTestData() method
     @Parameters
-    public static Collection testData() {
-        return Arrays.asList(
-                new Object[][] {
-                        {"45", "1", "60", "BMI 17.5", "Underweight"},
-                        {"70","1", "68", "BMI 24.9", "Normal"},
-                        {"89", "1", "81", "BMI 27.3", "Overweight"},
-                        {"100","1", "78", "BMI 31.6", "Obese"}
-                    }
-                );
+    public static Collection testData() throws IOException {
+        return getTestData(".\\src\\test\\resources\\Data.csv");
     }
 
-    // Add a constructor which will be used by the test runner to pass the parameters to the SimpleDDT class instance
-    public ITJUnitDataDrivenTest(String weight, String heightMeter, String heightCm, String bmi, String bmiCategory)
+    // Add a constructor which maps the instance variables with the test data
+    public ITJUnitReadingTestDataFromCSVTest(String weight, String heightMeter, String heightCm, String bmi, String bmiCategory)
     {
         this.weight = weight;
         this.heightMeter = heightMeter;
@@ -77,7 +75,7 @@ public class ITJUnitDataDrivenTest extends ITConfigurationForChromeBrowser {
     public void bmiCalculatorApplication_UseParameterizedVariableFromCollectionAndCompareThemWithVariablesFromApplication_NothingResultsOnlyAsserts() throws Exception {
 
         // Move to proper view
-        commonMethods.moveToExample("datadriven", "4.2");
+        commonMethods.moveToExample("datadriven", "4.3");
 
         // Activate the BMI Calculator iframe
         driver.switchTo().frame("bmiCal");
@@ -111,8 +109,7 @@ public class ITJUnitDataDrivenTest extends ITConfigurationForChromeBrowser {
 
         Thread.sleep(100);
 
-        verifyVariables(bmi, bmiCategory);
-
+        ITJUnitDataDrivenTest.verifyVariables(bmi, bmiCategory);
     }
 
     @After
@@ -122,25 +119,23 @@ public class ITJUnitDataDrivenTest extends ITConfigurationForChromeBrowser {
 
 
     /**
-     * Method which gets BMI element and BMI Category elements and verify their values using parameterized variables
-     * @param bmi - value of BMI element from collection
-     * @param bmiCategory - value of BMI category from collection
+     * Method which reads a CSV file line-by-line, then splits lines into an array of strings using comma delimeter.
+     * This array is then added to Collection, either of which is returned to the testData() method.
+     * @param fileName - path to CSV file
+     * @return - collection where each element (array of Strings) represents record from CSV file
+     * @throws IOException
      */
-    public static void verifyVariables(String bmi, String bmiCategory) {
+    public static Collection<String[]> getTestData(String fileName) throws IOException {
+        List<String[]> records = new ArrayList<String[]>();
+        String record;
 
-        try {
-            // Get the BMI element and verify its value using parameterized bmi variable
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='bmiDisplayKg']/div[2]/div[2]")));
-            String bmiLabel = driver.findElement(By.xpath("//*[@id='bmiDisplayKg']/div[2]/div[2]")).getText();
-            assertEquals(bmi, bmiLabel);
-
-            // Get the BMI Category element and verify its value using parameterized bmiCategory variable
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='bmiDisplayKg']/div[1]/div[@class='fit" + bmiCategory + "']")));
-            String bmiCategoryLabel = driver.findElement(By.xpath("//*[@id='bmiDisplayKg']/div[1]/div[@class='fit" + bmiCategory + "']")).getText();
-            assertEquals(bmiCategory.toLowerCase(), bmiCategoryLabel);
-
-        } catch (Exception ec) {
-            System.out.println("Exception threw!");
+        BufferedReader file = new BufferedReader(new FileReader(fileName));
+        while ((record=file.readLine())!=null) {
+            String fields[] = record.split(",");
+            records.add(fields);
         }
+        file.close();
+        return records;
     }
+
 }

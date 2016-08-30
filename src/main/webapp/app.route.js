@@ -331,6 +331,11 @@ appRoute
                         url: '/createtestwithjunit',
                         templateUrl: 'app/core/selenium/views/datadriven/selenium-datadriven-createtestwithjunit.html'
                     })
+                    .state('selenium.datadriven.readtestdatafromcsv', {
+                        url: '/readtestdatafromcsv',
+                        templateUrl: 'app/core/selenium/views/datadriven/selenium-datadriven-readtestdatafromcsv.html'
+                    })
+
 
             // SPRING
             .state('spring', {
