@@ -72,10 +72,13 @@ public class ITJUnitReadingTestDataFromCSVTest extends ITConfigurationForChromeB
 
     // Add the test case method testBMICalculator() that uses parameterized variables
     @Test
-    public void bmiCalculatorApplication_UseParameterizedVariableFromCollectionAndCompareThemWithVariablesFromApplication_NothingResultsOnlyAsserts() throws Exception {
+    public void bmiCalculatorApplication_UseParameterizedVariableFromCSVFileAndCompareThemWithVariablesFromApplication_NothingResultsOnlyAsserts() throws Exception {
 
         // Move to proper view
-        commonMethods.moveToExample("datadriven", "4.3");
+        commonMethods.moveToExample("datadriven", "4.2 - 4.5 ");
+
+        // Wait until checkbox will be visibility and then click it
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input[value=csvCheckbox]"))).click();
 
         // Activate the BMI Calculator iframe
         driver.switchTo().frame("bmiCal");
