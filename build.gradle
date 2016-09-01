@@ -60,6 +60,12 @@ dependencies {
 	compile 'org.springframework.boot:spring-boot-starter-web'
 	compile 'org.springframework.boot:spring-boot-starter-security'
 	compile 'javax.servlet:jstl:1.2'
+	compile 'org.apache.poi:poi:3.14'
+	compile 'org.apache.poi:poi-ooxml:3.14'
+	compile 'org.apache.poi:poi-ooxml-schemas:3.14'
+	compile 'dom4j:dom4j:1.6.1'
+	compile 'stax:stax-api:1.0.1'
+	compile 'org.apache.xmlbeans:xmlbeans:2.6.0'
 
 	// JUnit Jupiter API and TestEngine implementation
 	testCompile("org.junit.jupiter:junit-jupiter-api:${junitJupiterVersion}")

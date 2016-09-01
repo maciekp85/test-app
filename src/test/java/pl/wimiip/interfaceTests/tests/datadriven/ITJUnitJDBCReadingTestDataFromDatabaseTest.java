@@ -14,10 +14,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import pl.wimiip.interfaceTests.config.ITConfigurationForChromeBrowser;
 import pl.wimiip.interfaceTests.tests.CommonMethods;
 
-import java.util.Arrays;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.Collection;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by nishi on 2016-08-29.
@@ -26,7 +25,7 @@ import static org.junit.Assert.*;
 
 // Use a parameterized runner
 @RunWith(value = Parameterized.class)
-public class ITJUnitDataDrivenTest extends ITConfigurationForChromeBrowser {
+public class ITJUnitJDBCReadingTestDataFromDatabaseTest extends ITConfigurationForChromeBrowser {
 
     private CommonMethods commonMethods;
 
@@ -40,21 +39,14 @@ public class ITJUnitDataDrivenTest extends ITConfigurationForChromeBrowser {
     private String bmi;
     private String bmiCategory;
 
-    // Define a method that will return the collection of parameters by using the @Parameters annotation
+    // Define a method that will return test data from the database as a collection of strings. This method internally calls the getTestData() method
     @Parameters
-    public static Collection testData() {
-        return Arrays.asList(
-                new Object[][] {
-                        {"45", "1", "60", "17.5", "Underweight"},
-                        {"70","1", "68", "24.9", "Normal"},
-                        {"89", "1", "81", "27.3", "Overweight"},
-                        {"100","1", "78", "31.6", "Obese"}
-                    }
-                );
+    public static Collection testData() throws Exception {
+        return getTestData("src/test/resources/BmiTesting.accdb", "SELECT Weight, HeightMt, HeightCm, Bmi, Category FROM TestData");
     }
 
-    // Add a constructor which will be used by the test runner to pass the parameters to the SimpleDDT class instance
-    public ITJUnitDataDrivenTest(String weight, String heightMeter, String heightCm, String bmi, String bmiCategory)
+    // Add a constructor which maps the instance variables with the test data
+    public ITJUnitJDBCReadingTestDataFromDatabaseTest(String weight, String heightMeter, String heightCm, String bmi, String bmiCategory)
     {
         this.weight = weight;
         this.heightMeter = heightMeter;
@@ -74,13 +66,13 @@ public class ITJUnitDataDrivenTest extends ITConfigurationForChromeBrowser {
 
     // Add the test case method testBMICalculator() that uses parameterized variables
     @Test
-    public void bmiCalculatorApplication_UseParameterizedVariableFromCollectionAndCompareThemWithVariablesFromApplication_NothingResultsOnlyAsserts() throws Exception {
+    public void bmiCalculatorApplication_UseParameterizedVariableFromMicrosoftAccessDatabaseFileAndCompareThemWithVariablesFromApplication_NothingResultsOnlyAsserts() throws Exception {
 
         // Move to proper view
         commonMethods.moveToExample("datadriven", "4.2 - 4.5");
 
         // Wait until checkbox will be visibility and then click it
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input[value=dataDrivenCheckbox]"))).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input[value=accessCheckbox]"))).click();
 
         // Activate the BMI Calculator iframe
         driver.switchTo().frame("bmiCal");
@@ -114,8 +106,7 @@ public class ITJUnitDataDrivenTest extends ITConfigurationForChromeBrowser {
 
         Thread.sleep(100);
 
-        verifyVariables(bmi, bmiCategory);
-
+        ITJUnitDataDrivenTest.verifyVariables(bmi, bmiCategory);
     }
 
     @After
@@ -123,27 +114,46 @@ public class ITJUnitDataDrivenTest extends ITConfigurationForChromeBrowser {
         System.out.println("Cleaning after " + name.getMethodName());
     }
 
-
     /**
-     * Method which gets BMI element and BMI Category elements and verify their values using parameterized variables
-     * @param bmi - value of BMI element from collection
-     * @param bmiCategory - value of BMI category from collection
+     * Method which reads a database query results and returns the data in the collection.
+     * @param accdbFile - path to Microsoft Access Database file
+     * @return - collection where each element (collection of Strings array) represents record from database table
+     * @throws Exception
      */
-    public static void verifyVariables(String bmi, String bmiCategory) {
+    public static Collection<String[]> getTestData(String accdbFile, String sqlQuery) throws Exception {
 
-        try {
-            // Get the BMI element and verify its value using parameterized bmi variable
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='bmiDisplayKg']/div[2]/div[2]")));
-            String bmiLabel = driver.findElement(By.xpath("//*[@id='bmiDisplayKg']/div[2]/div[2]")).getText().substring(4);
-            assertEquals(bmi, bmiLabel);
+        ArrayList<String[]> records = new ArrayList<String[]>();
 
-            // Get the BMI Category element and verify its value using parameterized bmiCategory variable
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='bmiDisplayKg']/div[1]/div[@class='fit" + bmiCategory + "']")));
-            String bmiCategoryLabel = driver.findElement(By.xpath("//*[@id='bmiDisplayKg']/div[1]/div[@class='fit" + bmiCategory + "']")).getText();
-            assertEquals(bmiCategory.toLowerCase(), bmiCategoryLabel);
+        String myDB = "jdbc:ucanaccess://" + accdbFile;
+        Connection conn = DriverManager.getConnection(myDB);
 
-        } catch (Exception ec) {
-            System.out.println("Exception threw!");
+        Statement stmt = null;
+        ResultSet rs = null;
+
+        stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+
+        rs = stmt.executeQuery(sqlQuery);
+
+        ResultSetMetaData rsMetaData = rs.getMetaData();
+
+        int cols = rsMetaData.getColumnCount();
+
+        while(rs.next()) {
+            String fields[] = new String[cols];
+            int col = 0;
+
+            for(int colIdx=1; colIdx<=cols; colIdx++) {
+                fields[col] = rs.getString(colIdx);
+                col++;
+            }
+            records.add(fields);
         }
+
+        rs.close();
+        stmt.close();
+        conn.close();
+
+        return records;
     }
+
 }
