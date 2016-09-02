@@ -66,6 +66,7 @@ dependencies {
 	compile 'dom4j:dom4j:1.6.1'
 	compile 'stax:stax-api:1.0.1'
 	compile 'org.apache.xmlbeans:xmlbeans:2.6.0'
+	compile group: 'net.sf.ucanaccess', name: 'ucanaccess', version: '3.0.6'
 
 	// JUnit Jupiter API and TestEngine implementation
 	testCompile("org.junit.jupiter:junit-jupiter-api:${junitJupiterVersion}")
