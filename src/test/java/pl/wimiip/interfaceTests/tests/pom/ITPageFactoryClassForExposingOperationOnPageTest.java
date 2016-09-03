@@ -9,18 +9,17 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import pl.wimiip.interfaceTests.config.ITConfigurationForChromeBrowser;
-import pl.wimiip.interfaceTests.pageobjects.BmiCalcPageElements;
+import pl.wimiip.interfaceTests.pageobjects.BmiCalcPageOperations;
 import pl.wimiip.interfaceTests.tests.CommonMethods;
-import pl.wimiip.interfaceTests.tests.datadriven.ITJUnitDataDrivenTest;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 /**
  * Created by nishi on 2016-08-29.
  * Based partly on examples from the "Selenium Testing Tools Cookbook" book by Unmesh Gundecha
  */
 
-public class ITPageFactoryClassForExposingElementsFromPageTest extends ITConfigurationForChromeBrowser {
+public class ITPageFactoryClassForExposingOperationOnPageTest extends ITConfigurationForChromeBrowser {
 
     private CommonMethods commonMethods;
 
@@ -40,10 +39,10 @@ public class ITPageFactoryClassForExposingElementsFromPageTest extends ITConfigu
      * @throws Exception
      */
     @Test
-    public void bmiCalculatorApplication_CheckUsingPageFactoryClassForExposingElementsFromPage_NothingResultsOnlyAsserts() throws Exception {
+    public void bmiCalculatorApplication_CheckUsingPageFactoryClassForExposingOperationsOnPage_NothingResultsOnlyAsserts() throws Exception {
 
         // Create instance of BmiCalcPageElements and pass the driver
-        BmiCalcPageElements bmiCalcPageElements = new BmiCalcPageElements(driver);
+        BmiCalcPageOperations bmiCalcPageOperations = new BmiCalcPageOperations(driver);
 
         // Move to proper view
         commonMethods.moveToExample("pom", "5.2 - 5.3");
@@ -56,20 +55,8 @@ public class ITPageFactoryClassForExposingElementsFromPageTest extends ITConfigu
 
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Metric - kg/cm"))).click();
 
-        // Get the Weight element using BMI Calculator page's elements from BmiCalcPageElements class and then set its value
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='tabStrip-2']/div[1]/span/span/input[1]"))).click();
-        bmiCalcPageElements.weight.clear();
-        bmiCalcPageElements.weight.sendKeys("89");
-
-        // Get the HeightMeter element using BMI Calculator page's elements from BmiCalcPageElements class and then set its value
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='tabStrip-2']/div[2]/span/span/input[1]"))).click();
-        bmiCalcPageElements.heightMeter.clear();
-        bmiCalcPageElements.heightMeter.sendKeys("1");
-
-        // Get the HeightCm element using BMI Calculator page's elements from BmiCalcPageElements class and then set its value
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='tabStrip-2']/div[2]/span[2]/span/input[1]"))).click();
-        bmiCalcPageElements.heightCm.clear();
-        bmiCalcPageElements.heightCm.sendKeys("81");
+        // Calculate the Bmi for passed values (weight, heightMt, heightCm)
+        bmiCalcPageOperations.calculateBmi("89", "1", "81");
 
         // Click on Calculate Button
         WebElement calculateButton = driver.findElement(By.id("calcButtonKg"));
@@ -78,7 +65,8 @@ public class ITPageFactoryClassForExposingElementsFromPageTest extends ITConfigu
         Thread.sleep(100);
 
         // Verify Bmi & Bmi Category values
-        ITJUnitDataDrivenTest.verifyVariables("27.3", "Overweight");
+        assertEquals("27.3", bmiCalcPageOperations.getBmi());
+        assertEquals("overweight", bmiCalcPageOperations.getBmiCategory("Overweight"));
     }
 
     @After

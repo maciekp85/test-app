@@ -9,7 +9,7 @@ import org.openqa.selenium.support.PageFactory;
 /**
  * Created by nishi on 2016-09-02.
  */
-public class BmiCalcPage {
+public class BmiCalcPageElements {
 
     // Define elements from the BMI Calculator Application as instance variables
     // Using the FindBy annotation, we can locate the elements within the PageFactory class
@@ -30,7 +30,7 @@ public class BmiCalcPage {
 
     // Add constructor which call the PageFactory.initElements() method to initialize the elements in the class
     // In other words, map the elements to the variables in the class
-    public BmiCalcPage(WebDriver driver) {
+    public BmiCalcPageElements(WebDriver driver) {
         PageFactory.initElements(driver, this);
     }
 }
