@@ -1,0 +1,34 @@
+<!-- selenium-pom-introduction -->
+<form class="well form-horizontal" role="form">
+    <div class="form-group">
+        <label class="controls-pane col-sm-2">Hello Page Object Model!</label>
+    </div>
+    <div class="well">
+        <code>
+            Developing a maintainable automation code is one of the keys to a successful test-automation<br />
+            project. Test-automation code needs to be treated as production code and similar standards<br />
+            and patterns should to be applied while developing this code.<br />
+            <br />
+            While developing Selenium WebDriver tests, we can use the Page Object model pattern. This<br />
+            pattern helps in enhancing the tests, making them highly maintainable, reducing the code<br />
+            duplication, building a layer of abstraction, and hiding the inner implementation from tests.<br />
+            <br />
+            By applying object-oriented development principles, we can develop a class that serves as an<br />
+            interface to a web page in the application, modeling its properties and behavior. This helps<br />
+            in creating a layer of separation between the test code and code specific to the page, by<br />
+            hiding the technical implementation such as locators used to identify elements on the page,<br />
+            layout, and so on. The Page Object design pattern provides tests for an interface where a test<br />
+            can operate on that page in a manner similar to the user accessing the page, but by hiding<br />
+            its internals. For example, if we build a Page Object test for a login page, then it will provide<br />
+            a method to log in, which will accept the username and password and take the user to the<br />
+            home page of the application. The test need not worry about how input controls are used for<br />
+            the login page, their locator details, and so on.<br />
+            <br />
+            Tests should use objects of a page at a high level, where any change in layout or attributes<br />
+            used for the fields in the underlying page should not break the test.<br />
+            <br />
+            This chapter covers recipes to build tests using Page Object model and related design.<br />
+        </code>
+    </div>
+</form>
+<!-- /#selenium-pom-introduction.html -->

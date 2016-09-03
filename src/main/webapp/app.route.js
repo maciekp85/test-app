@@ -331,6 +331,20 @@ appRoute
                         url: '/testbmicalculator',
                         templateUrl: 'app/core/selenium/views/datadriven/selenium-datadriven-testbmicalculator.html'
                     })
+                        
+                // PAGE OBJECT MODEL
+                .state('selenium.pom', {
+                    url: '/pom',
+                    templateUrl: 'app/core/selenium/views/pom/selenium-pom.html'
+                })
+                    .state('selenium.pom.introduction', {
+                        url: '/introduction',
+                        templateUrl: 'app/core/selenium/views/pom/selenium-pom-introduction.html'
+                    })
+                    .state('selenium.pom.testbmicalculator', {
+                        url: '/testbmicalculator',
+                        templateUrl: 'app/core/selenium/views/pom/selenium-pom-testbmicalculator.html'
+                    })
 
             // SPRING
             .state('spring', {
