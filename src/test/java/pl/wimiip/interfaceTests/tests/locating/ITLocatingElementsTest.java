@@ -201,7 +201,7 @@ public class ITLocatingElementsTest extends ITConfigurationForChromeBrowser {
 
         // to lookup all the <img> elements which have alt attribute
         List<WebElement> imagesWithAlt = driver.findElements(By.cssSelector("img[alt]"));
-        assertEquals(1, imagesWithAlt.size());
+        assertEquals(2, imagesWithAlt.size());
 
         // A Boolean not() pseudo-class can also be used to locate elements not matching the specified criteria.
         List<WebElement> imagesWithoutAlt = driver.findElements(By.cssSelector("img:not([alt])"));
@@ -261,7 +261,7 @@ public class ITLocatingElementsTest extends ITConfigurationForChromeBrowser {
 
         // Finding elements using attributes with XPath
         List<WebElement> pictures = driver.findElements(By.xpath("//img[@alt]"));
-        assertEquals(2, pictures.size());
+        assertEquals(3, pictures.size());
 
         // Performing partial match on attribute values
 
