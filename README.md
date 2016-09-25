@@ -12,7 +12,7 @@
 <hr>
 <p align="center">
   <p>Selenium page</p>
-  <a href="https://raw.githubusercontent.com/maciekp85/test-app/52dd49bd8862882e2a206fb68824fb5b24818468/src/main/webapp/assets/images/selenium_page.png"><img src="https://raw.githubusercontent.com/maciekp85/test-app/52dd49bd8862882e2a206fb68824fb5b24818468/src/main/webapp/assets/images/selenium_page_small.png" /></a>
+  <a href="https://raw.githubusercontent.com/maciekp85/test-app/26228256afa50bc863823837f6795ea7d79425f7/src/main/webapp/assets/images/selenium_page.png"><img src="https://raw.githubusercontent.com/maciekp85/test-app/26228256afa50bc863823837f6795ea7d79425f7/src/main/webapp/assets/images/selenium_page_small.png" /></a>
 </p>
 <hr>
 <p align="center">
