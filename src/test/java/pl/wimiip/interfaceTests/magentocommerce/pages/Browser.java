@@ -8,7 +8,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
  */
 public class Browser {
 
-    private static String system = System.setProperty("webdriver.chrome.driver", "C:\\tools\\chromedriver.exe");
+    private static String system = System.setProperty("webdriver.chrome.driver", "src/test/resources/driver/chromedriver.exe");
     private static WebDriver driver = new ChromeDriver();
 
     public static WebDriver driver() {

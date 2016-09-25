@@ -11,9 +11,6 @@ import pl.wimiip.interfaceTests.config.ITConfigurationForChromeBrowser;
 /**
  * Created by nishi on 2016-05-02.
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = TestApp.class)
-@WebAppConfiguration
 public class BasicTestChrome extends ITConfigurationForChromeBrowser {
 
     @Test

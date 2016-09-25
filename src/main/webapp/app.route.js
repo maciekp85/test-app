@@ -345,6 +345,15 @@ appRoute
                         url: '/testbmicalculator',
                         templateUrl: 'app/core/selenium/views/pom/selenium-pom-testbmicalculator.html'
                     })
+                // EXTENDING SELENIUM
+                .state('selenium.extending', {
+                    url: '/extending',
+                    templateUrl: 'app/core/selenium/views/extending/selenium-extending.html'
+                })
+                    .state('selenium.extending.introduction', {
+                        url: '/introduction',
+                        templateUrl: 'app/core/selenium/views/extending/selenium-extending-introduction.html'
+                    })
 
             // SPRING
             .state('spring', {
