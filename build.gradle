@@ -7,21 +7,17 @@ buildscript {
 	}
 	dependencies {
 		//Required dependency for spring-boot plugin
-		classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.4.0.BUILD-SNAPSHOT'
-		classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.0-M2'
+		classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.4.7.RELEASE'
+		classpath 'org.junit.platform:junit-platform-gradle-plugin:1.2.0'
 	}
 }
 
 ext.junit4Version        = '4.12'
-ext.junitVintageVersion  = '4.12.0-M2'
-ext.junitPlatformVersion = '1.0.0-M2'
-ext.junitJupiterVersion  = '5.0.0-M2'
 ext.log4JVersion         = '2.5'
 
 apply plugin: 'java'
 apply plugin: 'war'
-apply plugin: 'spring-boot'
-apply plugin: 'org.junit.platform.gradle.plugin'
+apply plugin: 'org.springframework.boot'
 
 war {
 	baseName = 'companies'
@@ -29,8 +25,8 @@ war {
 }
 
 compileTestJava {
-	sourceCompatibility = 1.8
-	targetCompatibility = 1.8
+	sourceCompatibility = 11
+	targetCompatibility = 11
 	options.compilerArgs += '-parameters'
 }
 
@@ -40,23 +36,13 @@ repositories {
 	maven { url "http://repo.spring.io/milestone" }
 }
 
-junitPlatform {
-	// platformVersion '1.0.0-SNAPSHOT'
-	engines {
-		// include 'junit-jupiter', 'junit-vintage'
-		// exclude 'custom-engine'
-	}
-	tags {
-		// include 'fast'
-		exclude 'slow'
-	}
-	//includeClassNamePattern '.*Test'
-	enableStandardTestTask true
-	// reportsDir "build/test-results/junit-platform" // this is the default
-	logManager 'org.apache.logging.log4j.jul.LogManager'
-}
-
 dependencies {
+	testImplementation("junit:junit:4.12")
+	testRuntimeOnly("org.junit.vintage:junit-vintage-engine:5.5.2")
+	implementation "javax.xml.bind:jaxb-api:2.2.11"
+	testImplementation("org.junit.jupiter:junit-jupiter-api:5.5.2")
+	testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.5.2")
+
 	compile 'org.springframework.boot:spring-boot-starter-web'
 	compile 'org.springframework.boot:spring-boot-starter-security'
 	compile 'javax.servlet:jstl:1.2'
@@ -68,14 +54,9 @@ dependencies {
 	compile 'org.apache.xmlbeans:xmlbeans:2.6.0'
 	compile group: 'net.sf.ucanaccess', name: 'ucanaccess', version: '3.0.6'
 
-	// JUnit Jupiter API and TestEngine implementation
-	testCompile("org.junit.jupiter:junit-jupiter-api:${junitJupiterVersion}")
-	testRuntime("org.junit.jupiter:junit-jupiter-engine:${junitJupiterVersion}")
 
 	// If you also want to support JUnit 3 and JUnit 4 tests
 	testCompile("junit:junit:${junit4Version}")
-	testRuntime("org.junit.vintage:junit-vintage-engine:${junitVintageVersion}")
-
 	testRuntime("org.apache.logging.log4j:log4j-core:${log4JVersion}")
 	testRuntime("org.apache.logging.log4j:log4j-jul:${log4JVersion}")
 

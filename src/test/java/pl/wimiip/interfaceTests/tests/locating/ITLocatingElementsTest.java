@@ -18,6 +18,7 @@ import pl.wimiip.interfaceTests.tests.CommonMethods;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -40,6 +41,7 @@ public class ITLocatingElementsTest extends ITConfigurationForChromeBrowser {
     @Before
     public void setUp() {
         System.out.println("Starting " + name.getMethodName());
+        driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
         commonMethods = new CommonMethods();
         commonMethods.logInAndMoveToSeleniumPage(driver, wait);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.tagName("button"))).click();

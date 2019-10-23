@@ -7,6 +7,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import pl.wimiip.interfaceTests.config.ITConfigurationForChromeBrowser;
 
+import java.util.concurrent.TimeUnit;
+
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
@@ -41,6 +43,7 @@ public class CommonMethods extends ITConfigurationForChromeBrowser implements Co
 
         // Wait until located element will be visibility and then click on it.
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.partialLinkText(numberExample))).click();
+        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
     }
 
     private void fillInForm(WebDriver driver, WebDriverWait wait) {
